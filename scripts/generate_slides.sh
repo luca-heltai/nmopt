@@ -13,7 +13,7 @@ set -euo pipefail
 # Defaults (adjustable via flags)
 SLIDES_DIR="jupyterbook/slides"
 LECTURES_DIR="jupyterbook/lectures"
-TEMPLATES_DIR="codes/lab01"
+TEMPLATES_DIR="scripts"
 OUTPUT_DIR="jupyterbook/slides"
 BASE_URL=""
 DRY_RUN=0

@@ -27,12 +27,6 @@ project:
     - title: Lectures
       children:
         - file: lectures/lecture01.md
-    - title: Slides content
-      children:
-        - file: slides/slides01.md
-    - title: Exercises
-      children:
-        - file: exercises/lecture01.md
 site:
   options:
     logo: slides/logo.png

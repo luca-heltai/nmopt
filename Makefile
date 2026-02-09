@@ -23,9 +23,8 @@ copy:
 	cp -r `pwd`/jupyterbook/slides `pwd`/jupyterbook/_build/html/slideshow
 
 slides:
-	./codes/lab01/generate_slides.sh -v
+	./scripts/generate_slides.sh -v
 
 all: build slides copy
 
 .PHONY: build clean serve start link copy slides all
-

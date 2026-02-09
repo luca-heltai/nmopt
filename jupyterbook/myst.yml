@@ -1,0 +1,45 @@
+version: 1
+project:
+  title: NMOPT — Numerical Methods for Optimal Control
+  authors:
+    - id: LH
+      name: Luca Heltai
+      affiliation: unipi
+      email: luca.heltai@unipi.it
+      orcid: 0000-0001-5514-4683
+      github: luca-heltai
+      linkedin: https://www.linkedin.com/in/heltai/
+      youtube: UCK0glvtKYmVPJbpurdlt9pw
+  affiliations:
+    - id: unipi
+      name: University of Pisa
+      ror: https://ror.org/03ad39j10
+      department: Department of Mathematics
+      address: Largo Bruno Pontecorvo 5, 56127 Pisa, Italy
+      city: Pisa
+      country: Italy
+      postal_code: 56127
+      phone: +39 050 221 3824
+  copyright: "2025"
+  github: luca-heltai/nmopt
+  toc:
+    - file: index.md
+    - title: Lectures
+      children:
+        - file: lectures/lecture01.md
+    - title: Slides content
+      children:
+        - file: slides/slides01.md
+    - title: Exercises
+      children:
+        - file: exercises/lecture01.md
+site:
+  options:
+    logo: slides/logo.png
+    logo_dark: slides/logo_white.png
+    logo_text: ""
+    favicon: slides/logo.png
+    folders: true
+    footer_text: ""
+    style: custom.css
+  template: book-theme

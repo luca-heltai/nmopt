@@ -9,7 +9,7 @@
 
 Master’s Degree Course  
 **Numerical Methods for Optimal Control**  
-Instructor: Luca Heltai (University of Pisa)
+Teacher: Luca Heltai (University of Pisa)
 Total workload: 40 hours (lectures + laboratories)  
 Main numerical library: **deal.II**
 

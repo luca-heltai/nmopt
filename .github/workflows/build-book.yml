@@ -1,0 +1,31 @@
+name: Jupyter Book (via myst) GitHub Pages Deploy
+on:
+  push:
+    branches: [main]
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+env:
+  BASE_URL: /nmopt/
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build HTML Assets
+        run: |
+          ./scripts/generate_slides.sh -v --base-url /nmopt
+          make build
+          make copy
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./jupyterbook/_build/html
+          publish_branch: gh-pages

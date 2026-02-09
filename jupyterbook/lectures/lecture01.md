@@ -1,5 +1,11 @@
 # Lecture 1 — Introduction and Motivation for PDE-Constrained Optimal Control
 
+```{admonition} Slides for this lecture
+:class: tip
+
+[Open slides](/slideshow/slides01.html)
+```
+
 ## Overview
 
 This lecture introduces the general framework of **optimal control problems (OCPs)** with a particular focus on problems governed by **partial differential equations (PDEs)**.  
@@ -289,3 +295,15 @@ Suggested reading:
 3. Discuss the role of control constraints in modeling real systems.  
 4. Which difficulties do you expect when moving from elliptic to parabolic  
    optimal control problems?
+
+<!-- FOOTER START -->
+<iframe src="/slideshow/slides01.html" width="100%" height="800px" style="border: none;"></iframe>
+
+---
+
+```{admonition} 🎬 View Slides
+:class: tip
+
+**[Open slides in full screen](/slideshow/slides01.html)** for the best viewing experience.
+```
+<!-- FOOTER END -->

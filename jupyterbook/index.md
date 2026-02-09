@@ -1,5 +1,5 @@
 ```{include} ../README.md
-:start-after: "# Numerical Methods for Optimal Control (NMOPT)"
+:start-after: Master’s Degree Course
 ```
 
 Use the table of contents to navigate the 20 sessions (each ~2h).
@@ -9,7 +9,7 @@ Use the table of contents to navigate the 20 sessions (each ~2h).
 
 - Format: 20 sessions (~2h each), lectures + laboratories.
 - Structure: 3 blocks (Foundations -> Numerics -> Nonlinear/advanced topics).
-- Quick links: [Lecture 01](lectures/lecture01.md).
+- Quick links: [Lecture 01](lectures/lecture01.md), [Slides 01](/slideshow/slides01.html).
 ```
 
 Below is a concise, structured summary of the course topics, following the three-block / 20-lecture split. This is suitable for the Jupyter Book landing page, syllabus summary, or course webpage.

@@ -130,7 +130,7 @@ If moreover $D^2 f(\bar u)$ is positive definite, then $\bar u$ is a strict loca
 
 ---
 
-## 6. Constrained Minimizzazione (2D Example)
+## 6. Constrained minimization (2D Example)
 
 Let
 $$
@@ -174,23 +174,12 @@ $$
 \nabla_\lambda\mathcal{L}=-Bu+g=0,
 $$
 which is the KKT linear system
-$$
-\begin{pmatrix}
-A & -B^T\\
--B & 0
-\end{pmatrix}
-\begin{pmatrix}
-u\\\lambda
-\end{pmatrix}
-=
-\begin{pmatrix}
-0\\-g
-\end{pmatrix}.
-$$
+$$ \begin{pmatrix}A & -B^T \\\ -B & 0\end{pmatrix}\begin{pmatrix}u \\\ \lambda\end{pmatrix}=\begin{pmatrix}0 \\\ -g\end{pmatrix}. $$
 
-![Geometry of the 2D minimizzazione example](../slides/assets/lecture01/minimizzazione_geometry.png)
-
-![Objective restricted to the feasible line](../slides/assets/lecture01/minimizzazione_on_constraint.png)
+<div style="display: flex; gap: 10px;">
+<img src="../slides/assets/lecture01/minimization_geometry.png" alt="Geometry of the 2D minimization example" style="width: 50%;">
+<img src="../slides/assets/lecture01/minimization_on_constraint.png" alt="Objective restricted to the feasible line" style="width: 50%;">
+</div>
 
 ---
 

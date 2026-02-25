@@ -13,10 +13,13 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT_DIR = ROOT / "jupyterbook" / "slides" / "assets" / "lecture01"
 
 
-def save(fig: plt.Figure, name: str) -> None:
+def save(fig: plt.Figure, name: str, tight: bool = True) -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     path = OUT_DIR / name
-    fig.savefig(path, dpi=200, bbox_inches="tight")
+    if tight:
+        fig.savefig(path, dpi=200, bbox_inches="tight")
+    else:
+        fig.savefig(path, dpi=200)
     plt.close(fig)
 
 
@@ -30,7 +33,8 @@ def control_to_state_diagram() -> None:
     def box(x: float, y: float, w: float, h: float, text: str) -> None:
         rect = plt.Rectangle((x, y), w, h, fill=False, linewidth=2)
         ax.add_patch(rect)
-        ax.text(x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=12)
+        ax.text(x + w / 2, y + h / 2, text,
+                ha="center", va="center", fontsize=12)
 
     box(0.05, 0.35, 0.18, 0.30, "control\n$u$")
     box(0.30, 0.35, 0.18, 0.30, "PDE\nsolve")
@@ -90,12 +94,12 @@ def reduced_cost_1d() -> None:
     save(fig, "reduced_cost_1d.png")
 
 
-def minimizzazione_geometry() -> None:
+def minimization_geometry() -> None:
     # 2D constrained minimization example:
     # min 0.5 * u^T A u s.t. B u = g.
     A = np.array([[3.0, 1.0], [1.0, 2.0]], dtype=float)
-    B = np.array([[1.0, -1.0]], dtype=float)
-    g = np.array([0.5], dtype=float)
+    B = np.array([[2.0, -1.0]], dtype=float)
+    g = np.array([-1], dtype=float)
 
     # Solve KKT system [A, -B^T; -B, 0] [u; lambda] = [0; -g].
     kkt = np.block([[A, -B.T], [-B, np.zeros((1, 1))]])
@@ -111,14 +115,24 @@ def minimizzazione_geometry() -> None:
         A[0, 0] * U1**2 + 2.0 * A[0, 1] * U1 * U2 + A[1, 1] * U2**2
     )
 
-    fig, ax = plt.subplots(figsize=(6.2, 4.6))
-    levels = np.linspace(0.1, 4.0, 9)
-    ax.contour(U1, U2, F, levels=levels, cmap="Greens", linewidths=1.5)
+    f_star = 0.5 * u_star @ A @ u_star
+    min_f = F.min()
+    max_f = F.max()
+    df = (f_star - min_f)/4.01
 
-    # Constraint: B u = g => u2 = u1 - g.
+    fig, ax = plt.subplots(figsize=(5.5, 5.5))
+    levels = np.linspace(min_f+0.01, max_f, 21)
+    levels[-1] = f_star
+    levels.sort()
+    cmap = plt.get_cmap("Greens")
+    colors = cmap(np.linspace(0.35, 0.95, len(levels)))
+    ax.contour(U1, U2, F, levels=levels, colors=colors, linewidths=1.5)
+
+    # Constraint: B u = g => u2 = (g - B[0]*u1) / B[1].
     line_u1 = np.array([u1.min(), u1.max()])
-    line_u2 = line_u1 - g[0]
-    ax.plot(line_u1, line_u2, color="purple", linewidth=2.2, label=r"$\varphi(u)=Bu-g=0$")
+    line_u2 = (g[0] - B[0, 0]*line_u1) / B[0, 1]
+    ax.plot(line_u1, line_u2, color="purple",
+            linewidth=2.2, label=r"$\varphi(u)=Bu-g=0$")
 
     # Feasible minimizer and gradients at u*.
     ax.scatter(u_star[0], u_star[1], color="navy", s=50, zorder=5)
@@ -138,8 +152,8 @@ def minimizzazione_geometry() -> None:
         length_includes_head=True,
     )
     ax.text(
-        u_star[0] + scale * grad_f[0] + 0.03,
-        u_star[1] + scale * grad_f[1] + 0.02,
+        u_star[0] + scale * grad_f[0] - 0.1,
+        u_star[1] + scale * grad_f[1] + 0.05,
         r"$\nabla f(u^\star)$",
         color="tab:red",
     )
@@ -161,7 +175,7 @@ def minimizzazione_geometry() -> None:
         color="tab:blue",
     )
 
-    ax.set_title("2D constrained minimizzazione: geometry")
+    ax.set_title("2D constrained minimization: geometry")
     ax.set_xlabel(r"$u_1$")
     ax.set_ylabel(r"$u_2$")
     ax.set_aspect("equal", adjustable="box")
@@ -169,10 +183,11 @@ def minimizzazione_geometry() -> None:
     ax.set_ylim(u2.min(), u2.max())
     ax.grid(True, alpha=0.25)
     ax.legend(loc="upper left")
-    save(fig, "minimizzazione_geometry.png")
+    # Keep the original canvas size (no tight crop) so paired figures match dimensions.
+    save(fig, "minimization_geometry.png", tight=False)
 
 
-def minimizzazione_along_constraint() -> None:
+def minimization_along_constraint() -> None:
     # Same model, reduced to one scalar variable along the feasible line.
     A = np.array([[3.0, 1.0], [1.0, 2.0]], dtype=float)
     c = np.array([1.0, -1.0], dtype=float)
@@ -188,12 +203,13 @@ def minimizzazione_along_constraint() -> None:
 
     t_star = t[int(np.argmin(vals))]
 
-    fig, ax = plt.subplots(figsize=(6.0, 3.6))
+    fig, ax = plt.subplots(figsize=(5.5, 5.5))
     ax.plot(t, vals, linewidth=2.0)
     ax.axvline(t_star, linestyle="--", linewidth=1.5)
     ax.set_title(r"$f(u(t))$ on the constraint $\varphi(u)=0$")
     ax.set_xlabel(r"$t$ (feasible direction parameter)")
     ax.set_ylabel(r"$f(u(t))$")
+    ax.set_aspect("auto")
     ax.grid(True, alpha=0.25)
     ax.text(
         t_star + 0.04,
@@ -201,14 +217,15 @@ def minimizzazione_along_constraint() -> None:
         rf"$t^\star \approx {t_star:.3f}$",
         fontsize=10,
     )
-    save(fig, "minimizzazione_on_constraint.png")
+    # Keep the original canvas size (no tight crop) so paired figures match dimensions.
+    save(fig, "minimization_on_constraint.png", tight=False)
 
 
 def main() -> None:
     control_to_state_diagram()
     reduced_cost_1d()
-    minimizzazione_geometry()
-    minimizzazione_along_constraint()
+    minimization_geometry()
+    minimization_along_constraint()
     print(f"Wrote figures to: {OUT_DIR}")
 
 

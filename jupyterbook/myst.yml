@@ -27,6 +27,12 @@ project:
     - title: Lectures
       children:
         - file: lectures/lecture01.md
+    - title: Codes
+      children:
+        - file: ../codes/lecture01/finite_dim_analogy.ipynb
+    - title: Slides
+      children:
+        - file: slides/slides01.md
 site:
   options:
     logo: slides/logo.png

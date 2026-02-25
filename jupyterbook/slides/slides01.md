@@ -1,6 +1,8 @@
-# Lecture 1: Introduction & Motivation (PDE-Constrained Optimal Control)
+# Introduction & Motivation
 
 Numerical Methods for Optimal Control (NMOPT)
+
+Luca Heltai (<luca.heltai@unipi.it>)
 
 ----
 
@@ -24,6 +26,7 @@ $$
 $$
 
 Typical pieces:
+
 - state equation (PDE)
 - admissible controls $u \in \mathcal{U}_{\mathrm{ad}}$
 - constraints (box constraints, etc.)
@@ -43,7 +46,7 @@ Key point: the PDE is a *constraint*, not the objective.
 
 ----
 
-## Reduced Formulation (The Big Idea)
+## Reduced Formulation
 
 If the state equation defines a control-to-state map $S$:
 $$
@@ -59,6 +62,7 @@ $$
 $$
 
 Why it matters:
+
 - separates "PDE solve" from "optimization step"
 - makes gradients/adjoins systematic
 
@@ -105,6 +109,7 @@ This is the template we will reuse in infinite dimensions.
 States: temperature, displacement, velocity, concentration, ...
 
 Controls:
+
 - distributed sources
 - boundary inputs
 - initial conditions
@@ -129,6 +134,7 @@ u_{\min} \le u \le u_{\max}.
 $$
 
 Leads to:
+
 - variational inequalities
 - KKT conditions
 - active-set / projection-type algorithms
@@ -140,5 +146,6 @@ Leads to:
 Continuous theory -> discretization -> algorithms -> implementation -> applications
 
 Next up:
+
 - adjoints and gradients
 - elliptic linear-quadratic control as a core model problem

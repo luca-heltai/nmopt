@@ -1,4 +1,4 @@
-# Lecture 1 — Introduction and Motivation for PDE-Constrained Optimal Control
+# Introduction and Motivation for PDE-Constrained Optimal Control
 
 ```{admonition} Slides for this lecture
 :class: tip
@@ -8,293 +8,256 @@
 
 ## Overview
 
-This lecture introduces the general framework of **optimal control problems (OCPs)** with a particular focus on problems governed by **partial differential equations (PDEs)**.  
-The goal is to clarify *what* an optimal control problem is, *why* PDEs arise naturally in this context, and *how* control and optimization interact.
-
-## Structure of the Lecture
-
-- Motivation and real-world examples
-- General formulation of optimal control problems
-- Finite-dimensional analogy and reduced formulation
-- From ODEs to PDEs: infinite-dimensional issues
-- Types of controls, observations, and constraints
-- Discussion, perspective, and roadmap of the course
+This lecture introduces optimal control as an optimization problem constrained by equations.
+We first build the finite-dimensional analogy, then move to PDE-constrained models.
 
 ---
 
-## 1. What Is an Optimal Control Problem?
+## 1. General Optimal Control Problem
 
-An **optimal control problem** consists of determining a control variable  
+Choose a control variable $u$ and a state variable $y$ such that
 $$
-u
+(y^\star,u^\star)\in\operatorname*{argmin}_{(y,u)} J(y,u)
 $$
-such that a given **cost functional**
+subject to
 $$
-J(y,u)
+\mathcal{E}(y,u)=0,\qquad u\in\mathcal{U}_{\mathrm{ad}}.
 $$
-is minimized (or maximized), subject to the constraint that the **state variable**
-$$
-y
-$$
-solves a governing equation.
 
-### Abstract structure
+Key ingredients:
 
-- **State equation**
-  $$
-  \mathcal{E}(y,u) = 0
-  $$
-  (ODE, PDE, or algebraic system)
-
-- **Control variable**
-  $$
-  u \in \mathcal{U}_{\mathrm{ad}}
-  $$
-
-- **Cost functional**
-  $$
-  J(y,u)
-  $$
-
-- **Constraints**
-  - control constraints: $u \in \mathcal{U}_{\mathrm{ad}}$
-  - possibly state constraints: $y \in \mathcal{Y}_{\mathrm{ad}}$
-
-An optimal control problem can be seen as an **optimization problem with constraints**, where the constraints are given by a differential equation.
+- state equation $\mathcal{E}(y,u)=0$ (ODE/PDE/algebraic)
+- admissible controls $u\in\mathcal{U}_{\mathrm{ad}}$
+- cost functional $J(y,u)$
+- optional extra constraints (box constraints, state constraints, etc.)
 
 ---
 
-## 2. Forward Problems vs Optimal Control Problems
+## 2. Forward Problem vs Control Problem
 
-### Forward (direct) problem
+Forward problem:
 
-- Input data (coefficients, sources, boundary conditions) are given.
-- The PDE is solved once to compute the state $y$.
+- data are fixed
+- solve once for $y$
 
-### Optimal control problem
+Optimal control:
 
-- Some input data (the control $u$) are *unknown*.
-- The PDE solution depends on $u$: $y = y(u)$.
-- We seek the control $u$ that optimizes a performance criterion.
+- $u$ is unknown
+- solve the state equation repeatedly inside optimization
 
-**Key difference**:  
-> In optimal control, the PDE is part of the constraint, not the objective.
+```{admonition} Key point
+:class: important
+
+In optimal control, the PDE is a constraint, not the objective.
+```
 
 ---
 
-## 2.1 A Finite-Dimensional Analogy
+## 3. Finite-Dimensional Setting (Simultaneous vs Reduced)
 
-To understand the structure of optimal control problems without technical overhead,  
-we begin with a finite-dimensional constrained optimization problem.
+Consider
+$$
+\min_{y\in\mathbb{R}^n,\,u\in\mathbb{R}^m} J(y,u)
+\quad\text{s.t.}\quad Ay=Bu,
+$$
+with $A\in\mathbb{R}^{n\times n}$ invertible.
+
+### 3.1 Simultaneous formulation
+
+Optimize in $(y,u)$ and enforce $Ay=Bu$ explicitly.
+
+### 3.2 Reduced formulation
+
+Since $A$ is invertible,
+$$
+y=A^{-1}Bu=:S(u),
+$$
+where $S$ is the control-to-state operator.
+Then define
+$$
+f(u):=J(S(u),u),
+$$
+and solve
+$$
+\min_{u\in\mathcal{U}_{\mathrm{ad}}} f(u).
+$$
+
+This reduces a finite-dimensional control problem to a standard finite-dimensional optimization problem.
+
+---
+
+## 4. Existence in Finite Dimensions
+
+A standard existence result for the reduced problem:
+
+If
+
+- $f$ is lower semicontinuous and bounded from below,
+- one level set $L_t:=\{u\in\mathcal{U}_{\mathrm{ad}}:f(u)\le t\}$ is nonempty, closed, and bounded,
+
+then a minimizer exists.
+
+Reason: in finite dimensions, closed and bounded sets are compact (Weierstrass theorem).
+
+```{admonition} Important warning
+:class: note
+
+In infinite-dimensional spaces, closed and bounded sets are generally not compact.
+This is one of the main analytical difficulties for PDE-constrained optimization.
+```
+
+---
+
+## 5. Unconstrained First/Second-Order Conditions
+
+For convex differentiable $f$ on a convex set $K$:
+$$
+\nabla f(\bar u)\cdot (u-\bar u)\ge 0\quad\forall u\in K
+$$
+is the first-order optimality condition.
+
+Special case (interior point):
+$$
+\nabla f(\bar u)=0.
+$$
+
+If $f\in C^2$ and $\bar u$ is a local minimizer:
+
+- $\nabla f(\bar u)=0$
+- $D^2 f(\bar u)$ is positive semidefinite
+
+If moreover $D^2 f(\bar u)$ is positive definite, then $\bar u$ is a strict local minimizer.
+
+---
+
+## 6. Constrained Minimizzazione (2D Example)
 
 Let
 $$
-J(y,u) \in \mathbb{R}, \quad y \in \mathbb{R}^n, \quad u \in \mathbb{R}^m,
+\mathcal{U}_{\mathrm{ad}}=\mathbb{R}^2,\qquad
+f(u)=\frac12 u^T A u,\qquad
+\varphi(u)=Bu-g=0,
 $$
-and consider
+with
 $$
-\min_{y,u} J(y,u) \quad \text{subject to} \quad A y = B u,
-$$
-where $A \in \mathbb{R}^{n \times n}$ is invertible.
-
-Solving the constraint yields
-$$
-y = A^{-1} B u =: S u,
-$$
-where $S$ is the **control-to-state operator**.
-
-Substituting into the cost functional leads to the **reduced problem**
-$$
-\min_{u} f(u) := J(Su,u).
+A\in\mathbb{R}^{2\times 2}\text{ SPD},\quad B\in\mathbb{R}^{1\times 2},\quad g\in\mathbb{R}.
 $$
 
-This reduction is the conceptual blueprint for PDE-constrained optimization.
-
----
-
-## 3. Why PDEs?
-
-Many physical, biological, and engineering systems are naturally modeled by PDEs:
-
-- heat conduction and diffusion;
-- fluid dynamics;
-- elasticity and structural mechanics;
-- electromagnetism;
-- reaction–diffusion systems;
-- transport and advection.
-
-In these contexts:
-
-- the **state** represents a physical quantity (temperature, velocity, concentration);
-- the **control** represents an external action (source term, boundary input, coefficient).
-
----
-
-## 3.1 From Finite to Infinite Dimensions
-
-When passing from finite-dimensional systems to PDEs, several new mathematical  
-issues arise:
-
-- the state and control live in infinite-dimensional function spaces;
-- bounded sets are no longer compact;
-- existence of minimizers is nontrivial;
-- derivatives must be understood in Banach or Hilbert spaces.
-
-As a result, tools from functional analysis become essential.  
-Throughout the course, we will primarily work in Hilbert spaces,  
-where inner products allow a natural generalization of gradients and adjoints.
-
----
-
-## 4. Typical Examples
-
-### 4.1 Optimal Heating (Elliptic PDE)
-
-- **State**: temperature $y(x)$
-- **PDE**: stationary heat equation
-- **Control**: heat source or boundary temperature
-- **Cost**: tracking a desired temperature distribution
-
-This is the prototypical **linear–quadratic elliptic control problem**.
-
----
-
-### 4.2 Time-Dependent Heating (Parabolic PDE)
-
-- **State**: temperature $y(x,t)$
-- **PDE**: heat equation
-- **Control**: time-dependent source or boundary input
-- **Cost**: tracking at final time or over time
-
-Introduces:
-
-- adjoint equations backward in time;
-- space–time discretization issues.
-
----
-
-### 4.3 Flow Control (Navier–Stokes)
-
-- **State**: velocity and pressure fields
-- **PDE**: Navier–Stokes equations
-- **Control**: body force or boundary velocity
-- **Cost**: drag reduction, vorticity minimization
-
-Leads to **nonlinear PDE-constrained optimization**.
-
----
-
-### 4.4 Parameter Estimation and Data Assimilation
-
-- **Control**: unknown parameters or initial conditions
-- **State**: PDE solution
-- **Cost**: mismatch between model output and observations
-
-These problems are common in:
-
-- meteorology;
-- inverse problems;
-- uncertainty quantification.
-
----
-
-## 4.5 Classes of Control and Observation
-
-Depending on how the control enters the PDE, we distinguish between:
-
-- **distributed controls** (source terms in the domain);
-- **boundary controls** (Dirichlet, Neumann, Robin);
-- **initial controls** (for time-dependent problems);
-- **parameter controls** (coefficients in the PDE).
-
-Similarly, observations may be:
-
-- distributed in the domain;
-- restricted to subdomains;
-- located on the boundary;
-- taken at final time or over time intervals.
-
----
-
-## 5. Control vs Controllability
-
-- **Controllability**: can we drive the system exactly to a desired state?
-- **Optimal control**: can we *approximately* reach a target in an optimal way?
-
-For many PDEs:
-
-- exact controllability may fail;
-- optimal control remains well-posed and meaningful.
-
----
-
-## 6. Components of a PDE-Constrained OCP
-
-A PDE-constrained optimal control problem is characterized by:
-
-1. **State equation**
-2. **Control space**
-3. **Observation operator**
-4. **Cost functional**
-5. **Constraints**
-
-Graphically:
-
-```
-u  ──►  PDE  ──►  y  ──►  observation
- \__________________________/
-              |
-           cost
-```
-
----
-
-## 6.1 Control Constraints and Modeling Considerations
-
-In realistic applications, controls are subject to constraints, such as:
+At an optimal feasible point, $\nabla f$ is orthogonal to the feasible tangent direction,
+so it must be parallel to $\nabla\varphi$:
 $$
-u_{\min} \le u \le u_{\max}.
+\nabla f(\bar u)=(\nabla\varphi(\bar u))^T\lambda.
 $$
 
-These constraints model physical, technological, or safety limitations and  
-lead to **variational inequalities** and **Karush–Kuhn–Tucker (KKT) conditions**  
-in the optimality system.
+Equivalent first-order form:
+$$
+\nabla f(\bar u)-(\nabla\varphi(\bar u))^T\lambda=0,
+\qquad
+\varphi(\bar u)=0.
+$$
 
-Control constraints play a crucial role both in the analysis and in the  
-design of numerical algorithms.
+Define the Lagrangian
+$$
+\mathcal{L}(u,\lambda)=f(u)-\varphi(u)\cdot\lambda.
+$$
+Stationarity gives
+$$
+\frac{\partial\mathcal{L}}{\partial u}=0,
+\qquad
+\frac{\partial\mathcal{L}}{\partial \lambda}=0.
+$$
+
+For this quadratic/affine case:
+$$
+\nabla_u\mathcal{L}=Au-B^T\lambda=0,
+\qquad
+\nabla_\lambda\mathcal{L}=-Bu+g=0,
+$$
+which is the KKT linear system
+$$
+\begin{pmatrix}
+A & -B^T\\
+-B & 0
+\end{pmatrix}
+\begin{pmatrix}
+u\\\lambda
+\end{pmatrix}
+=
+\begin{pmatrix}
+0\\-g
+\end{pmatrix}.
+$$
+
+![Geometry of the 2D minimizzazione example](../slides/assets/lecture01/minimizzazione_geometry.png)
+
+![Objective restricted to the feasible line](../slides/assets/lecture01/minimizzazione_on_constraint.png)
 
 ---
 
-## 7. Outlook: What Comes Next
+## 7. From Finite to Infinite Dimensions
 
-In the next lectures we will:
+For PDE-constrained control, state/control live in function spaces (typically Hilbert spaces):
 
-- introduce the **control-to-state map** $u \mapsto y(u)$;
-- derive **first-order optimality conditions** using adjoint equations;
-- study **linear–quadratic elliptic problems** in detail;
-- move progressively toward numerical approximation and implementation.
+- state space $Y$ (e.g. Sobolev spaces)
+- control space $U$
+- PDE operator $\mathcal{E}(y,u)=0$
+
+Typical difficulties:
+
+- non-compactness in infinite dimension
+- weak vs strong convergence issues
+- differentiability in Banach/Hilbert spaces
+- adjoint equations for gradient computation
+
+---
+
+## 8. Prototypical PDE-Constrained Models
+
+### 8.1 Elliptic distributed control
+
+$$
+\min_{(y,u)}
+\frac12\|y-y_d\|_{L^2(\Omega)}^2
++\frac\alpha2\|u\|_{L^2(\Omega)}^2
+$$
+subject to
+$$
+-\Delta y=u\text{ in }\Omega,
+\qquad y=0\text{ on }\partial\Omega,
+\qquad u\in U_{\mathrm{ad}}.
+$$
+
+### 8.2 Parabolic control
+
+$$
+\partial_t y-\Delta y=u\text{ in }Q,
+\qquad y(\cdot,0)=y_0,
+$$
+with tracking over space-time and Tikhonov regularization.
+
+### 8.3 Flow and inverse problems
+
+- Navier-Stokes control (nonlinear constraints)
+- parameter estimation/data assimilation
+
+---
+
+## 9. Control Constraints
+
+Common box constraints:
+$$
+u_{\min}\le u\le u_{\max}.
+$$
+
+They lead to variational inequalities and KKT systems in function spaces.
 
 ---
 
 ## References for This Lecture
 
-Suggested reading:
-
-- F. Tröltzsch, *Optimal Control of Partial Differential Equations*, Chapter 1  
-- A. Manzoni, A. Quarteroni, S. Salsa, *Optimal Control of PDEs*, Chapter 1  
+- F. Tröltzsch, *Optimal Control of Partial Differential Equations*, Chapter 1
+- A. Manzoni, A. Quarteroni, S. Salsa, *Optimal Control of PDEs*, Chapter 1
 - J. C. De los Reyes, *Numerical PDE-Constrained Optimization*, Section 1
-
----
-
-## Exercises and Discussion
-
-1. Write down a forward PDE problem you are familiar with and identify which  
-   quantities could realistically act as controls.  
-2. Explain why the reduced formulation is computationally preferable to a  
-   naive optimization over both state and control.  
-3. Discuss the role of control constraints in modeling real systems.  
-4. Which difficulties do you expect when moving from elliptic to parabolic  
-   optimal control problems?
 
 <!-- FOOTER START -->
 <iframe src="/slideshow/slides01.html" width="100%" height="800px" style="border: none;"></iframe>

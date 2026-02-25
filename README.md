@@ -37,14 +37,14 @@ At the end of the course, students will be able to develop and analyze research-
 - Advanced calculus
 - Partial differential equations (elliptic and parabolic)
 - Numerical methods for PDEs (finite element methods)
-- Programming in **C++**
-- Basic familiarity with Linux and scientific software compilation
+- Programming in **C++** and **Python** is helpful for the laboratories, but not required for the lectures
+- Basic familiarity with Linux and scientific software tools.
 
 Previous experience with **deal.II** is helpful but not mandatory.
 
 ---
 
-## Numerical Laboratories (deal.II)
+## Numerical Laboratories (deal.II, Python)
 
 The laboratories are an integral part of the course and include:
 
@@ -56,9 +56,10 @@ The laboratories are an integral part of the course and include:
 
 The codes:
 
-- are written in **C++**;
+- are written in **C++** and **Python**;
 - are based on **deal.II**
-- are designed as starting points for extensions and final projects.
+- are designed as starting points for extensions and final projects
+- will be provided with detailed documentation and comments for you to understand and modify.
 
 ---
 

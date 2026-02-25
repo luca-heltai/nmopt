@@ -55,6 +55,14 @@
       height: 30px;
       vertical-align: middle;
     }
+
+    /* Keep large figures inside slide viewport (title + footer aware). */
+    .reveal .slides img.fit-figure {
+      max-height: 62vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
   </style>
 </head>
 

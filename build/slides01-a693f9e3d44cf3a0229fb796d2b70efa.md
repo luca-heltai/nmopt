@@ -104,7 +104,57 @@ This is the template we will reuse in infinite dimensions.
 
 ----
 
-## Why PDEs Show Up
+## Constrained Minimization in 2D
+
+Consider
+$$
+\min_{u\in\mathbb{R}^2} f(u)=\frac12 u^T A u
+\quad \text{s.t.} \quad
+\varphi(u)=Bu-g=0,
+$$
+with $A$ SPD, $B\in\mathbb{R}^{1\times 2}$.
+
+At an optimum:
+$$
+\nabla f(\bar u)-(\nabla\varphi(\bar u))^T\lambda=0,
+\qquad
+\varphi(\bar u)=0.
+$$
+
+----
+
+## Lagrangian and KKT System
+
+Lagrangian:
+$$
+\mathcal{L}(u,\lambda)=f(u)-\varphi(u)\cdot \lambda
+$$
+
+Stationarity:
+$$
+\nabla_u\mathcal{L}=Au-B^T\lambda=0,\qquad
+\nabla_\lambda\mathcal{L}=-Bu+g=0.
+$$
+
+Equivalent saddle-point linear system
+
+$$\begin{pmatrix}A & -B^T \\\ -B & 0\end{pmatrix}\begin{pmatrix}u \\\ \lambda\end{pmatrix}=\begin{pmatrix}0 \\\ -g\end{pmatrix}$$
+
+----
+
+## 2D Constrained Geometry
+
+<img class="fit-figure" src="assets/lecture01/minimization_geometry.png" alt="2D constrained geometry">
+
+----
+
+## Objective on the Feasible Line
+
+<img class="fit-figure" src="assets/lecture01/minimization_on_constraint.png" alt="Objective restricted to the feasible set">
+
+----
+
+## When PDEs Show Up
 
 States: temperature, displacement, velocity, concentration, ...
 
@@ -138,14 +188,3 @@ Leads to:
 - variational inequalities
 - KKT conditions
 - active-set / projection-type algorithms
-
-----
-
-## Course Trajectory
-
-Continuous theory -> discretization -> algorithms -> implementation -> applications
-
-Next up:
-
-- adjoints and gradients
-- elliptic linear-quadratic control as a core model problem

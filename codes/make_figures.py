@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-ROOT = Path(__file__).resolve().parents[2]
-OUT_DIR = ROOT / "jupyterbook" / "slides" / "assets" / "lecture01"
+ROOT = Path(__file__).resolve().parents[1]
+OUT_DIR = ROOT / "jupyterbook" / "slides" / "assets"
 
 
 def save(fig: plt.Figure, name: str, tight: bool = True) -> None:
@@ -62,7 +62,7 @@ def control_to_state_diagram() -> None:
         fontsize=12,
     )
 
-    save(fig, "control_to_state.png")
+    save(fig, "01_control_to_state.png")
 
 
 def reduced_cost_1d() -> None:
@@ -91,7 +91,7 @@ def reduced_cost_1d() -> None:
         fontsize=10,
     )
 
-    save(fig, "reduced_cost_1d.png")
+    save(fig, "01_reduced_cost_1d.png")
 
 
 def minimization_geometry() -> None:
@@ -184,7 +184,7 @@ def minimization_geometry() -> None:
     ax.grid(True, alpha=0.25)
     ax.legend(loc="upper left")
     # Keep the original canvas size (no tight crop) so paired figures match dimensions.
-    save(fig, "minimization_geometry.png", tight=False)
+    save(fig, "01_minimization_geometry.png", tight=False)
 
 
 def minimization_along_constraint() -> None:
@@ -218,7 +218,94 @@ def minimization_along_constraint() -> None:
         fontsize=10,
     )
     # Keep the original canvas size (no tight crop) so paired figures match dimensions.
-    save(fig, "minimization_on_constraint.png", tight=False)
+    save(fig, "01_minimization_on_constraint.png", tight=False)
+
+
+def polar_single_active_constraint() -> None:
+    # One active inequality varphi(u) >= 0 at ubar:
+    # T(ubar) = {d : grad(varphi)(ubar) . d >= 0}, T(ubar)^o is a ray.
+    grad_varphi = np.array([0.7, 0.35], dtype=float)
+    polar_dir = -grad_varphi
+
+    t = np.linspace(-2.0, 2.0, 200)
+    perp = np.array([grad_varphi[1], -grad_varphi[0]], dtype=float)
+    line = np.outer(t, perp)
+
+    fig, ax = plt.subplots(figsize=(5.5, 5.5))
+    ax.axhline(0.0, color="0.35", linewidth=1.0)
+    ax.axvline(0.0, color="0.35", linewidth=1.0)
+    ax.plot(line[:, 0], line[:, 1], color="black", linewidth=1.5)
+
+    ax.quiver(0, 0, grad_varphi[0], grad_varphi[1],
+              angles="xy", scale_units="xy", scale=1, color="tab:blue")
+    ax.quiver(0, 0, polar_dir[0], polar_dir[1],
+              angles="xy", scale_units="xy", scale=1, color="tab:red")
+
+    ax.text(grad_varphi[0] + 0.03, grad_varphi[1] + 0.03,
+            r"$\nabla\varphi(\bar u)$", color="tab:blue")
+    ax.text(polar_dir[0] - 0.02, polar_dir[1] - 0.06,
+            r"$T(\bar u)^\circ$", color="tab:red")
+    ax.text(-1.02, -0.68, r"$T(\bar u)=\{d:\nabla\varphi(\bar u)\cdot d\geq 0\}$")
+
+    ax.set_aspect("equal", "box")
+    ax.set_xlim(-1.2, 1.2)
+    ax.set_ylim(-1.2, 1.2)
+    ax.set_xlabel(r"$d_1$")
+    ax.set_ylabel(r"$d_2$")
+    ax.set_title("Tangent halfspace and its polar ray")
+    ax.grid(True, alpha=0.25)
+    save(fig, "02_polar_single_active_constraint.png", tight=False)
+
+
+def polar_first_quadrant() -> None:
+    # K = {d: d1 >= 0, d2 >= 0}, K^o = {v: v1 <= 0, v2 <= 0}.
+    fig, ax = plt.subplots(figsize=(5.5, 5.5))
+    ax.axhline(0.0, color="0.35", linewidth=1.0)
+    ax.axvline(0.0, color="0.35", linewidth=1.0)
+
+    # Rays for K
+    ax.plot([0.0, 1.1], [0.0, 0.0], color="tab:blue", linewidth=2.0)
+    ax.plot([0.0, 0.0], [0.0, 1.1], color="tab:blue", linewidth=2.0)
+    ax.text(0.58, 0.25, r"$K$", color="tab:blue")
+
+    # Rays for K^o
+    ax.plot([0.0, -1.1], [0.0, 0.0], color="tab:red", linewidth=2.0)
+    ax.plot([0.0, 0.0], [0.0, -1.1], color="tab:red", linewidth=2.0)
+    ax.text(-0.72, -0.26, r"$K^\circ$", color="tab:red")
+
+    ax.set_aspect("equal", "box")
+    ax.set_xlim(-1.2, 1.2)
+    ax.set_ylim(-1.2, 1.2)
+    ax.set_xlabel(r"$d_1$")
+    ax.set_ylabel(r"$d_2$")
+    ax.set_title("First quadrant cone and its polar")
+    ax.grid(True, alpha=0.25)
+    save(fig, "02_polar_first_quadrant.png", tight=False)
+
+
+def polar_ray_halfspace() -> None:
+    # K = {d = t e1 : t >= 0}; K^o = {v: v1 <= 0}.
+    fig, ax = plt.subplots(figsize=(5.5, 5.5))
+    ax.axhline(0.0, color="0.35", linewidth=1.0)
+    ax.axvline(0.0, color="0.35", linewidth=1.0)
+
+    # Ray K along +d1
+    ax.arrow(0.0, 0.0, 1.1, 0.0, width=0.01, head_width=0.07,
+             color="tab:blue", length_includes_head=True)
+
+    # Boundary of K^o: v1 = 0
+    ax.plot([0.0, 0.0], [-1.1, 1.1], color="tab:red", linewidth=2.0)
+    ax.text(0.82, -0.12, r"$K$", color="tab:blue")
+    ax.text(-1.08, 0.92, r"$K^\circ=\{v_1\leq 0\}$", color="tab:red")
+
+    ax.set_aspect("equal", "box")
+    ax.set_xlim(-1.2, 1.2)
+    ax.set_ylim(-1.2, 1.2)
+    ax.set_xlabel(r"$d_1$")
+    ax.set_ylabel(r"$d_2$")
+    ax.set_title("Ray and its polar halfspace")
+    ax.grid(True, alpha=0.25)
+    save(fig, "02_polar_ray_halfspace.png", tight=False)
 
 
 def main() -> None:
@@ -226,6 +313,9 @@ def main() -> None:
     reduced_cost_1d()
     minimization_geometry()
     minimization_along_constraint()
+    polar_single_active_constraint()
+    polar_first_quadrant()
+    polar_ray_halfspace()
     print(f"Wrote figures to: {OUT_DIR}")
 
 

@@ -79,13 +79,13 @@ File: `codes/lecture01/finite_dim_analogy.ipynb`
 
 ## Example: Reduced Cost Shape
 
-![Reduced cost in 1D](assets/lecture01/reduced_cost_1d.png)
+![Reduced cost in 1D](assets/01_reduced_cost_1d.png)
 
 ----
 
 ## Control-to-State Pipeline
 
-![Control-to-state diagram](assets/lecture01/control_to_state.png)
+![Control-to-state diagram](assets/01_control_to_state.png)
 
 ----
 
@@ -144,13 +144,13 @@ $$\begin{pmatrix}A & -B^T \\\ -B & 0\end{pmatrix}\begin{pmatrix}u \\\ \lambda\en
 
 ## 2D Constrained Geometry
 
-<img class="fit-figure" src="assets/lecture01/minimization_geometry.png" alt="2D constrained geometry">
+<img class="fit-figure" src="assets/01_minimization_geometry.png" alt="2D constrained geometry">
 
 ----
 
 ## Objective on the Feasible Line
 
-<img class="fit-figure" src="assets/lecture01/minimization_on_constraint.png" alt="Objective restricted to the feasible set">
+<img class="fit-figure" src="assets/01_minimization_on_constraint.png" alt="Objective restricted to the feasible set">
 
 ----
 

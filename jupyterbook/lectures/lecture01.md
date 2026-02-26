@@ -177,8 +177,8 @@ which is the KKT linear system
 $$ \begin{pmatrix}A & -B^T \\\ -B & 0\end{pmatrix}\begin{pmatrix}u \\\ \lambda\end{pmatrix}=\begin{pmatrix}0 \\\ -g\end{pmatrix}. $$
 
 <div style="display: flex; gap: 10px;">
-<img src="../slides/assets/lecture01/minimization_geometry.png" alt="Geometry of the 2D minimization example" style="width: 50%;">
-<img src="../slides/assets/lecture01/minimization_on_constraint.png" alt="Objective restricted to the feasible line" style="width: 50%;">
+<img src="../slides/assets/01_minimization_geometry.png" alt="Geometry of the 2D minimization example" style="width: 50%;">
+<img src="../slides/assets/01_minimization_on_constraint.png" alt="Objective restricted to the feasible line" style="width: 50%;">
 </div>
 
 ---

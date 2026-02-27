@@ -1,235 +1,138 @@
-# Karush-Kuhn-Tucker Conditions for Inequality Constraints
+# KKT Conditions in Finite Dimensions
 
 ## Overview
 
-This lecture introduces first-order and second-order optimality conditions for finite-dimensional optimization problems with inequality constraints, expressed as
-$$
-\varphi_j(u)\ge 0, \qquad j=1,\dots,m.
-$$
+In this lecture we show the core ideas needed to understand inequality constrained first-order and second-order optimality in finite dimensions.
 
----
-
-## 1. Problem Setting
-
-Consider
+We focus on the problem
 $$
 \min_{u\in\mathbb{R}^n} f(u)
 \quad\text{s.t.}\quad
- \varphi_j(u)\ge 0,\; j=1,\dots,m,
+\varphi_j(u)\ge 0,\; j=1,\dots,m,
 $$
-where $f,\varphi_j\in C^1(\mathbb{R}^n)$.
+with $f,\varphi_j\in C^1(\mathbb{R}^n)$.
+
+The take-home message is simple:
+
+1. at a constrained minimum there is no admissible descent direction;
+2. this forces the objective gradient to balance active constraint normals;
+3. this balance is exactly the KKT system;
+4. second order is curvature of the Lagrangian along directions that remain tangent to active constraints.
+5. with the convention $\mathcal L=f-\sum_j\lambda_j\varphi_j$ and $\varphi_j\ge 0$, active multipliers are nonnegative, and they vanish for inactive constraints (complementarity).
+
+---
+
+## 1. Problem Setting and Active Constraints
 
 Define the feasible set
 $$
-\mathcal{U}_{\mathrm{ad}}:=\{u\in\mathbb{R}^n: \varphi_j(u)\ge 0\ \forall j\}.
+\mathcal U_{\mathrm{ad}}:=\{u\in\mathbb R^n:\varphi_j(u)\ge 0\ \forall j\}.
 $$
 
-Let $\bar u\in\mathcal{U}_{\mathrm{ad}}$ be a local minimizer and define the active set
+Let $\bar u\in\mathcal U_{\mathrm{ad}}$ be a local minimizer.
+
+Not all constraints matter equally at $\bar u$.
+Only the constraints that are exactly at the boundary can influence first-order optimality.
+So we define the active set
 $$
-\mathcal{A}(\bar u):=\{j\in\{1,\dots,m\}: \varphi_j(\bar u)=0\}.
+\mathcal A(\bar u):=\{j\in\{1,\dots,m\}:\varphi_j(\bar u)=0\}.
 $$
+
+Inactive constraints satisfy $\varphi_j(\bar u)>0$ and do not contribute at first order. For example: if we have a contact constraint between two bodies (that cannot penetrate), then only the constraints corresponding to points in contact are active, while the others are inactive.
 
 ---
 
-## 2. Geometry and First-Order Necessary Condition
+## 2. Admissible First-Order Directions
 
-### 2.1 Tangent Cone (Linearized)
-
-At $\bar u$, the linearized feasible directions are
+Near $\bar u$, a direction $d\in\mathbb R^n$ is first-order admissible if it does not decrease active constraints.
+Linearizing active constraints gives
 $$
-T_{\mathcal{U}_{\mathrm{ad}}}(\bar u)
-:=
-\{d\in\mathbb{R}^n: \nabla \varphi_j(\bar u)\cdot d\ge 0\ \forall j\in\mathcal{A}(\bar u)\}.
+\nabla\varphi_j(\bar u)\cdot d\ge 0
+\quad\forall j\in\mathcal A(\bar u).
 $$
 
-### 2.2 Variational Inequality Form
+This condition is the local geometric ingredient we need.
 
-A first-order necessary condition at a local minimizer is
+Interpretation:
+
+- if $\nabla\varphi_j(\bar u)\cdot d<0$, then moving along $d$ pushes outside feasibility for constraint $j$;
+- if $\nabla\varphi_j(\bar u)\cdot d\ge 0$, then constraint $j$ is not violated at first order.
+
+---
+
+## 3. First-Order Necessary Condition
+
+At a local minimizer, every admissible first-order direction must be non-descent:
 $$
 \nabla f(\bar u)\cdot d\ge 0
-\quad\forall d\in T_{\mathcal{U}_{\mathrm{ad}}}(\bar u).
+\quad\text{for every } d \text{ such that }
+\nabla\varphi_j(\bar u)\cdot d\ge 0\ \forall j\in\mathcal A(\bar u).
 $$
 
-Equivalently,
-$$
--\nabla f(\bar u)\in T_{\mathcal{U}_{\mathrm{ad}}}(\bar u)^\circ,
-$$
-where the *polar cone* of a set $T\subseteq\mathbb{R}^n$ is defined by
-$$
-T^\circ:=\{v\in\mathbb{R}^n:\; v\cdot d\le 0\ \forall d\in T\}.
-$$
+Why this is unavoidable:
 
-### 2.3 Geometric examples of polar cones
+- if there existed one admissible $d$ with $\nabla f(\bar u)\cdot d<0$,
+- then a small step $\bar u+t d$ (with $t>0$ small) would decrease the objective while remaining feasible at first order,
+- contradicting local minimality.
 
-#### Example A: one active inequality
-
-For one active constraint $\varphi(\bar u)=0$, the linearized tangent cone is
-$$
-T(\bar u)=\{d:\nabla\varphi(\bar u)\cdot d\ge 0\},
-$$
-a halfspace. Its polar is the ray
-$$
-T(\bar u)^\circ=\{-\lambda\nabla\varphi(\bar u):\lambda\ge 0\}.
-$$
-
-<img src="../slides/assets/02_polar_single_active_constraint.png" alt="Tangent halfspace and polar ray" width="50%">
-
-This picture is the key local mechanism behind KKT: the normal direction comes from active constraints.
-
-#### Example B: first quadrant cone
-
-Let
-$$
-K=\{d:d_1\ge 0,\ d_2\ge 0\}.
-$$
-Then
-$$
-K^\circ=\{v:v_1\le 0,\ v_2\le 0\}.
-$$
-
-<img src="../slides/assets/02_polar_first_quadrant.png" alt="First quadrant cone and its polar" width="50%">
-
-So the polar collects vectors making non-positive scalar product with every direction in $K$.
-
-#### Example C: a ray and its polar halfspace
-
-Let
-$$
-K=\{d=t\,e_1:\ t\ge 0\}.
-$$
-Then
-$$
-K^\circ=\{v:v_1\le 0\},
-$$
-while $v_2$ is free.
-
-<img src="../slides/assets/02_polar_ray_halfspace.png" alt="Ray and its polar halfspace" width="50%">
-
-This is the dual picture of Example A: halfspace $\leftrightarrow$ ray.
+This is the true origin of KKT.
 
 ---
 
-## 3. KKT Conditions
+## 4. From First-Order Geometry to KKT
 
-Under suitable regularity (also known as **constraint qualification** or **CQ**, see below), there exist multipliers
-$\lambda_j\ge 0$ such that
+For regular active constraints (the standard finite-dimensional nondegenerate case),
+there exist multipliers $\lambda_j\ge 0$ such that
 $$
-\nabla f(\bar u)-\sum_{j=1}^m \lambda_j\nabla \varphi_j(\bar u)=0.
-$$
-
-Indeed, under CQ one can represent the polar as
-$$ T_{\mathcal{U}_{\mathrm{ad}}}(\bar u)^\circ = \left\{-\sum_{j\in\mathcal A(\bar u)}\lambda_j\nabla\varphi_j(\bar u):\lambda_j\ge 0\right\},$$
-and therefore
-$$
--\nabla f(\bar u)\in T_{\mathcal{U}_{\mathrm{ad}}}(\bar u)^\circ
-\;\Longleftrightarrow\;
 \nabla f(\bar u)-\sum_{j\in\mathcal A(\bar u)}\lambda_j\nabla\varphi_j(\bar u)=0.
 $$
 
-The multiplier $\lambda_j$ is associated with the $j$-th constraint $\varphi_j(u)\ge 0$, and the full KKT system is:
+Extending by $\lambda_j=0$ on inactive constraints yields the standard stationarity form
+$$
+\nabla f(\bar u)-\sum_{j=1}^m\lambda_j\nabla\varphi_j(\bar u)=0.
+$$
+
+Together with primal feasibility and complementarity, we obtain
 $$
 \begin{aligned}
-\nabla f(\bar u)-\sum_{j=1}^m \lambda_j\nabla \varphi_j(\bar u) &= 0,\\
+\nabla f(\bar u)-\sum_{j=1}^m\lambda_j\nabla\varphi_j(\bar u) &= 0,\\
 \varphi_j(\bar u) &\ge 0,\quad j=1,\dots,m,\\
 \lambda_j &\ge 0,\quad j=1,\dots,m,\\
-\lambda_j \varphi_j(\bar u) &= 0,\quad j=1,\dots,m.
+\lambda_j\,\varphi_j(\bar u) &= 0,\quad j=1,\dots,m.
 \end{aligned}
 $$
 
-Complementarity can be interpreted as:
+Complementarity meaning:
 
-- if $\varphi_j(\bar u)>0$ (the $j$-th constraint is inactive), then $\lambda_j=0$;
-- if $\lambda_j>0$, then $\varphi_j(\bar u)=0$ (the $j$-th constraint is active).
+- if $\varphi_j(\bar u)>0$ (inactive), then $\lambda_j=0$;
+- if $\lambda_j>0$, then necessarily $\varphi_j(\bar u)=0$ (active).
 
----
+```{admonition} Regularity Note
+:class: note
 
-## 4. Constraint Qualifications
-
-KKT multipliers do not automatically exist at every local minimizer.
-
-### 4.1 LICQ (**Linear Independence CQ**)
-
-LICQ holds at $\bar u$ if
-$$
-\{\nabla \varphi_j(\bar u): j\in\mathcal{A}(\bar u)\}
-$$
-are linearly independent, where $\mathcal{A}(\bar u)$ is the active set of constraints at $\bar u$, i.e., the set of indices $j$ such that $\varphi_j(\bar u)=0$.
-
-Consequences:
-
-- existence of KKT multipliers;
-- uniqueness of multipliers.
-
-### 4.2 MFCQ (**Mangasarian-Fromovitz CQ**)
-
-MFCQ holds at $\bar u$ if there exists $d\in\mathbb{R}^n$ such that
-$$
-\nabla \varphi_j(\bar u)\cdot d>0
-\quad\forall j\in\mathcal{A}(\bar u).
-$$
-
-Consequences:
-
-- existence of KKT multipliers;
-- multipliers may be non-unique.
-
-LICQ implies MFCQ.
-
-### 4.3 Slater Condition (Convex Problems)
-
-If $f$ is convex, each $\varphi_j$ is concave (so $\varphi_j(u)\ge 0$ defines a convex feasible set), and there exists $u_0$ such that
-$$
-\varphi_j(u_0)>0\quad\forall j,
-$$
-then KKT conditions are necessary and sufficient, and strong duality holds.
+In finite dimensions, this KKT form is valid under standard nondegeneracy assumptions on active constraints.
+For box constraints, this regularity is automatic in the usual formulation.
+```
 
 ---
 
-## 5. Second-Order Conditions
-
-Assume KKT holds at $(\bar u,\lambda)$ and define the critical cone
-$$
-\mathcal{C}(\bar u,\lambda)
-:=
-\left\{d\in\mathbb{R}^n:
-\begin{array}{l}
-\nabla \varphi_j(\bar u)\cdot d=0\ \text{for } j\in\mathcal{A}(\bar u)\ \text{with } \lambda_j>0,\\
-\nabla \varphi_j(\bar u)\cdot d\ge 0\ \text{for } j\in\mathcal{A}(\bar u)\ \text{with } \lambda_j=0
-\end{array}
-\right\}.
-$$
-
-Use the Lagrangian
-$$
-\mathcal{L}(u,\lambda):=f(u)-\sum_{j=1}^m \lambda_j \varphi_j(u).
-$$
-
-Second-order necessary condition:
-$$
-d^T\nabla^2_{uu}\mathcal{L}(\bar u,\lambda)d\ge 0
-\quad\forall d\in\mathcal{C}(\bar u,\lambda).
-$$
-
-Second-order sufficient condition:
-$$
-d^T\nabla^2_{uu}\mathcal{L}(\bar u,\lambda)d>0
-\quad\forall d\in\mathcal{C}(\bar u,\lambda)\setminus\{0\}
-$$
-which implies that $\bar u$ is a strict local minimizer.
-
----
-
-## 6. Example: Box Constraints
+## 5. Box Constraints: The Prototype Case
 
 Consider
 $$
-\min_{u\in\mathbb{R}^n} f(u)
+\min_{u\in\mathbb R^n} f(u)
 \quad\text{s.t.}\quad
-u_i-a_i\ge 0,\quad b_i-u_i\ge 0,
-\quad i=1,\dots,n.
+a_i\le u_i\le b_i,\quad i=1,\dots,n.
 $$
 
-Componentwise KKT conditions become
+Equivalent inequality form:
+$$
+u_i-a_i\ge 0,
+\qquad
+b_i-u_i\ge 0.
+$$
+
+The componentwise first-order condition becomes
 $$
 \begin{cases}
 \partial_i f(\bar u)\ge 0 & \text{if } \bar u_i=a_i,\\
@@ -238,15 +141,61 @@ $$
 \end{cases}
 $$
 
-This is the finite-dimensional prototype of bound-constrained control variables in PDE-constrained optimization.
+This is the exact finite-dimensional model behind bound-constrained control variables in PDE-constrained optimization.
+
+---
+
+## 6. Second-Order Conditions
+
+Define the Lagrangian
+$$
+\mathcal L(u,\lambda):=f(u)-\sum_{j=1}^m\lambda_j\varphi_j(u).
+$$
+
+After first-order conditions are satisfied, the next question is curvature along first-order feasible/tangent directions.
+A practical critical set is
+$$
+\mathcal C(\bar u):=\{d:\nabla\varphi_j(\bar u)\cdot d\ge 0\ \forall j\in\mathcal A(\bar u),\ \nabla f(\bar u)\cdot d=0\}.
+$$
+
+Second-order necessary condition:
+$$
+d^T\nabla^2_{uu}\mathcal L(\bar u,\lambda)d\ge 0
+\quad\forall d\in\mathcal C(\bar u).
+$$
+
+Second-order sufficient condition (strict local minimality):
+$$
+d^T\nabla^2_{uu}\mathcal L(\bar u,\lambda)d>0
+\quad\forall d\in\mathcal C(\bar u)\setminus\{0\}.
+$$
+
+Interpretation:
+
+- first order kills linear descent along admissible directions;
+- second order checks that curvature is positive on directions where first order is neutral.
 
 ---
 
 ## 7. Summary
 
-At a local minimizer:
+At a constrained local minimizer:
 
-1. first-order optimality is a variational inequality on feasible directions;
-2. with suitable CQ (LICQ/MFCQ), this becomes KKT;
-3. complementarity links active constraints and positive multipliers;
-4. second-order conditions refine local optimality.
+1. no admissible first-order direction can decrease $f$;
+2. this forces a balance between objective gradient and active constraint normals;
+3. that balance is KKT with nonnegative multipliers and complementarity;
+4. second order is positivity of Lagrangian curvature on critical directions.
+
+This is the essential finite-dimensional picture we need before moving to PDE-constrained settings.
+
+<!-- FOOTER START -->
+<iframe src="/slideshow/slides02.html" width="100%" height="800px" style="border: none;"></iframe>
+
+---
+
+```{admonition} 🎬 View Slides
+:class: tip
+
+**[Open slides in full screen](/slideshow/slides02.html)** for the best viewing experience.
+```
+<!-- FOOTER END -->

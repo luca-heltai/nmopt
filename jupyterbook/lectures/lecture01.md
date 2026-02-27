@@ -11,6 +11,14 @@
 This lecture introduces optimal control as an optimization problem constrained by equations.
 We first build the finite-dimensional analogy, then move to PDE-constrained models.
 
+Logical path of the lecture:
+
+1. start from a constrained optimization problem in $(y,u)$;
+2. eliminate the state through the model equation when possible;
+3. obtain a reduced optimization problem in the control variable only;
+4. derive first-order conditions in finite dimension;
+5. transfer the same structure to PDE settings.
+
 ---
 
 ## 1. General Optimal Control Problem
@@ -66,6 +74,12 @@ with $A\in\mathbb{R}^{n\times n}$ invertible.
 
 Optimize in $(y,u)$ and enforce $Ay=Bu$ explicitly.
 
+Interpretation:
+
+- optimization variable: the pair $(y,u)$;
+- coupling: $y$ and $u$ are linked by the model equation;
+- computational consequence: every candidate pair must satisfy the constraint.
+
 ### 3.2 Reduced formulation
 
 Since $A$ is invertible,
@@ -84,6 +98,13 @@ $$
 
 This reduces a finite-dimensional control problem to a standard finite-dimensional optimization problem.
 
+Step-by-step logic:
+
+1. the constraint $Ay=Bu$ defines $y$ uniquely as a function of $u$;
+2. therefore the only independent decision variable is $u$;
+3. the objective becomes a composite map $u\mapsto J(S(u),u)$;
+4. all constraint information is encoded in $S$.
+
 ---
 
 ## 4. Existence in Finite Dimensions
@@ -98,6 +119,12 @@ If
 then a minimizer exists.
 
 Reason: in finite dimensions, closed and bounded sets are compact (Weierstrass theorem).
+
+Why this matters for control:
+
+- before deriving optimality conditions, we need existence of at least one minimizer;
+- existence is easy in finite dimension under compactness of level sets;
+- this argument will fail in infinite dimensions unless additional structure is used.
 
 ```{admonition} Important warning
 :class: note
@@ -143,6 +170,12 @@ $$
 A\in\mathbb{R}^{2\times 2}\text{ SPD},\quad B\in\mathbb{R}^{1\times 2},\quad g\in\mathbb{R}.
 $$
 
+Logical interpretation:
+
+1. objective level sets are ellipses (because $A$ is SPD);
+2. feasible points lie on an affine line $Bu-g=0$;
+3. the minimizer is where the first objective level set touches that feasible line.
+
 At an optimal feasible point, $\nabla f$ is orthogonal to the feasible tangent direction,
 so it must be parallel to $\nabla\varphi$:
 $$
@@ -156,10 +189,23 @@ $$
 \varphi(\bar u)=0.
 $$
 
+Meaning:
+
+- $\varphi(\bar u)=0$: feasibility at the solution;
+- gradient balance: objective gradient is compensated by constraint normal direction;
+- multiplier $\lambda$: strength/sign of that compensation.
+
+### Lagrangian Formalism
+
 Define the Lagrangian
 $$
 \mathcal{L}(u,\lambda)=f(u)-\varphi(u)\cdot\lambda.
 $$
+and search for saddle points:
+$$
+\bar u, \bar\lambda = \arg\min_u \arg\max_\lambda \mathcal{L}(u,\lambda).
+$$
+
 Stationarity gives
 $$
 \frac{\partial\mathcal{L}}{\partial u}=0,
@@ -175,6 +221,12 @@ $$
 $$
 which is the KKT linear system
 $$ \begin{pmatrix}A & -B^T \\\ -B & 0\end{pmatrix}\begin{pmatrix}u \\\ \lambda\end{pmatrix}=\begin{pmatrix}0 \\\ -g\end{pmatrix}. $$
+
+This is the prototype for all later optimality systems:
+
+- state/constraint equation;
+- adjoint or multiplier equation;
+- coupling through stationarity.
 
 <div style="display: flex; gap: 10px;">
 <img src="../slides/assets/01_minimization_geometry.png" alt="Geometry of the 2D minimization example" style="width: 50%;">
@@ -197,6 +249,13 @@ Typical difficulties:
 - weak vs strong convergence issues
 - differentiability in Banach/Hilbert spaces
 - adjoint equations for gradient computation
+
+Conceptual continuity with the finite-dimensional case:
+
+1. same optimization structure;
+2. same reduced-vs-simultaneous viewpoints;
+3. same KKT logic;
+4. only the functional-analytic setting changes.
 
 ---
 
@@ -239,6 +298,27 @@ u_{\min}\le u\le u_{\max}.
 $$
 
 They lead to variational inequalities and KKT systems in function spaces.
+
+---
+
+## 10. Typical Variations of OCP Formulations
+
+Many optimal control models keep the same abstract structure but vary in where the control acts, what is observed, and how the objective is measured.
+
+Common variations include:
+
+- **Localized distributed control**: $u$ acts only on a subdomain $\omega\subset\Omega$ (for example through $\chi_\omega u$ in the PDE).
+- **Boundary control**: $u$ appears in Dirichlet/Neumann/Robin boundary conditions on part of $\partial\Omega$.
+- **Initial-condition control**: $u$ is an unknown initial datum in time-dependent models.
+- **Parameter control**: $u$ is a coefficient (diffusivity, reaction rate, material parameter), not a source term.
+- **Different tracking norms**: replace $L^2$ tracking by $H^1$, weighted norms, or mixed space-time norms.
+- **Different control penalties**: use $L^2$, $H^1$, or sparsity-promoting terms (e.g. $L^1$-type penalties).
+- **Pointwise state constraints**: enforce bounds on the state (or output) in the domain or on the boundary.
+- **Multi-objective costs**: combine tracking, regularization, and engineering criteria (energy, drag, flux, etc.).
+- **Inverse problems / data assimilation**: identify unknown inputs/parameters from measurements with regularization.
+- **Uncertainty-aware OCPs**: optimize expected cost, risk measures, or robust worst-case criteria.
+
+These variants motivate why we need a flexible theoretical framework and multiple numerical methods in the rest of the course.
 
 ---
 

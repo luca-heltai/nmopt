@@ -188,3 +188,16 @@ Leads to:
 - variational inequalities
 - KKT conditions
 - active-set / projection-type algorithms
+
+----
+
+## Typical OCP Variations
+
+- distributed control on a subdomain $\omega\subset\Omega$
+- boundary control on part of $\partial\Omega$
+- initial-condition control in time-dependent models
+- parameter identification (inverse problems / data assimilation)
+- alternative tracking norms ($L^2$, $H^1$, weighted, mixed)
+- alternative regularization ($L^2$, $H^1$, sparsity-promoting terms)
+- pointwise state constraints
+- robust / uncertainty-aware objectives

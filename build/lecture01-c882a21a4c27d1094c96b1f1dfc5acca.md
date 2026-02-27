@@ -1,11 +1,5 @@
 # Introduction and Motivation for PDE-Constrained Optimal Control
 
-```{admonition} Slides for this lecture
-:class: tip
-
-[Open slides](/slideshow/slides01.html)
-```
-
 ## Overview
 
 This lecture introduces optimal control as an optimization problem constrained by equations.
@@ -329,13 +323,13 @@ These variants motivate why we need a flexible theoretical framework and multipl
 - J. C. De los Reyes, *Numerical PDE-Constrained Optimization*, Section 1
 
 <!-- FOOTER START -->
-<iframe src="/nmopt/slideshow/slides01.html" width="100%" height="800px" style="border: none;"></iframe>
+<iframe src="/slideshow/slides01.html" width="100%" height="800px" style="border: none;"></iframe>
 
 ---
 
 ```{admonition} 🎬 View Slides
 :class: tip
 
-**[Open slides in full screen](/nmopt/slideshow/slides01.html)** for the best viewing experience.
+**[Open slides in full screen](/slideshow/slides01.html)** for the best viewing experience.
 ```
 <!-- FOOTER END -->

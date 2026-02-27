@@ -8,9 +8,15 @@
     <loc>http://localhost:3000/lectures/lecture01</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/lectures/lecture02</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/finite-dim-analogy</loc>
   </url>
   <url>
     <loc>http://localhost:3000/slides/slides01</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/slides/slides02</loc>
   </url>
 </urlset>

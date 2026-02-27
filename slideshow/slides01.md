@@ -79,13 +79,13 @@ File: `codes/lecture01/finite_dim_analogy.ipynb`
 
 ## Example: Reduced Cost Shape
 
-![Reduced cost in 1D](assets/lecture01/reduced_cost_1d.png)
+![Reduced cost in 1D](assets/01_reduced_cost_1d.png)
 
 ----
 
 ## Control-to-State Pipeline
 
-![Control-to-state diagram](assets/lecture01/control_to_state.png)
+![Control-to-state diagram](assets/01_control_to_state.png)
 
 ----
 
@@ -144,13 +144,13 @@ $$\begin{pmatrix}A & -B^T \\\ -B & 0\end{pmatrix}\begin{pmatrix}u \\\ \lambda\en
 
 ## 2D Constrained Geometry
 
-<img class="fit-figure" src="assets/lecture01/minimization_geometry.png" alt="2D constrained geometry">
+<img class="fit-figure" src="assets/01_minimization_geometry.png" alt="2D constrained geometry">
 
 ----
 
 ## Objective on the Feasible Line
 
-<img class="fit-figure" src="assets/lecture01/minimization_on_constraint.png" alt="Objective restricted to the feasible set">
+<img class="fit-figure" src="assets/01_minimization_on_constraint.png" alt="Objective restricted to the feasible set">
 
 ----
 
@@ -188,3 +188,16 @@ Leads to:
 - variational inequalities
 - KKT conditions
 - active-set / projection-type algorithms
+
+----
+
+## Typical OCP Variations
+
+- distributed control on a subdomain $\omega\subset\Omega$
+- boundary control on part of $\partial\Omega$
+- initial-condition control in time-dependent models
+- parameter identification (inverse problems / data assimilation)
+- alternative tracking norms ($L^2$, $H^1$, weighted, mixed)
+- alternative regularization ($L^2$, $H^1$, sparsity-promoting terms)
+- pointwise state constraints
+- robust / uncertainty-aware objectives

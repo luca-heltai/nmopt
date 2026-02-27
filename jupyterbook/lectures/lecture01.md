@@ -1,11 +1,5 @@
 # Introduction and Motivation for PDE-Constrained Optimal Control
 
-```{admonition} Slides for this lecture
-:class: tip
-
-[Open slides](/slideshow/slides01.html)
-```
-
 ## Overview
 
 This lecture introduces optimal control as an optimization problem constrained by equations.

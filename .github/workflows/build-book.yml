@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build HTML Assets
         run: |
-          ./scripts/generate_slides.sh -v --base-url /nmopt
+          ./scripts/generate_slides.sh -v # --base-url /nmopt
           make build
           make copy
 

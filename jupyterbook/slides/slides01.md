@@ -6,7 +6,7 @@ Luca Heltai (<luca.heltai@unipi.it>)
 
 ----
 
-## What Is Optimal Control?
+## Optimal Control Definition
 
 - Choose a control $u$ to minimize a cost $J(y,u)$.
 - The state $y$ is constrained by a model (often a PDE).
@@ -61,14 +61,14 @@ $$
 \min_{u} f(u).
 $$
 
-Why it matters:
+Key implications:
 
 - separates "PDE solve" from "optimization step"
 - makes gradients/adjoins systematic
 
 ---
 
-## Tiny Example Notebook
+## Example Notebook
 
 - Finite-dimensional LQ reduction + a 1D slice plot.
 - Generates figures used in these slides.
@@ -77,7 +77,7 @@ File: `codes/lecture01/finite_dim_analogy.ipynb`
 
 ----
 
-## Example: Reduced Cost Shape
+## Reduced-Cost Shape
 
 ![Reduced cost in 1D](assets/01_reduced_cost_1d.png)
 
@@ -89,7 +89,7 @@ File: `codes/lecture01/finite_dim_analogy.ipynb`
 
 ----
 
-## A Finite-Dimensional Analogy
+## Finite-Dimensional Analogy
 
 Given $A y = B u$ with invertible $A$:
 $$
@@ -154,7 +154,7 @@ $$\begin{pmatrix}A & -B^T \\\ -B & 0\end{pmatrix}\begin{pmatrix}u \\\ \lambda\en
 
 ----
 
-## When PDEs Show Up
+## PDE-Control Context
 
 States: temperature, displacement, velocity, concentration, ...
 

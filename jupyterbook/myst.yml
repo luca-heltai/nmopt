@@ -28,13 +28,16 @@ project:
       children:
         - file: lectures/lecture01.md
         - file: lectures/lecture02.md
+        - file: lectures/lecture03.md
     - title: Codes
       children:
         - file: ../codes/lecture01/finite_dim_analogy.ipynb
+        - file: ../codes/lecture03/optimization_toolbox.ipynb
     - title: Slides
       children:
         - file: slides/slides01.md
         - file: slides/slides02.md
+        - file: slides/slides03.md
 site:
   options:
     logo: slides/logo.png

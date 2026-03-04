@@ -25,6 +25,15 @@ copy:
 slides:
 	./scripts/generate_slides.sh -v
 
+serve-slides:
+	@. ./start.sh && \
+	PORT=3002; \
+	while lsof -iTCP:$$PORT -sTCP:LISTEN >/dev/null 2>&1; do \
+		PORT=$$((PORT+1)); \
+	done; \
+	echo "Serving slides on http://localhost:$$PORT"; \
+	cd jupyterbook/slides && python -m http.server $$PORT
+
 all: build slides copy
 
-.PHONY: build clean serve start link copy slides all
+.PHONY: build clean serve start link copy slides serve-slides all

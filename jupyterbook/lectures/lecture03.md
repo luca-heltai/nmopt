@@ -1,0 +1,288 @@
+# Numerical Optimization Toolbox for Reduced OCPs
+
+## Overview
+
+This lecture is a numerical optimization toolbox for the reduced formulation
+$$
+\min_{u\in\mathbb{R}^n} f(u).
+$$
+The same algorithms will later be reused for PDE-constrained optimization, where
+$f(u)=J(S(u),u)$ and each gradient evaluation typically requires state/adjoint solves.
+
+Main goals:
+
+1. put `GD`, `nonlinear CG`, `BFGS`, and `trust-region` in one common framework;
+2. isolate the role of Armijo/Wolfe conditions;
+3. compare methods by cost per iteration and robustness;
+4. prepare the transition to reduced PDE-constrained optimization.
+
+---
+
+## 1. Unified Iterative Template
+
+Most unconstrained methods fit, at a high level, the same iterative template:
+Choose $u_0\in\mathbb{R}^n$ and for $k=0,1,2,\ldots$ compute
+$$
+u_{k+1}=u_k+\alpha_k p_k,
+$$
+with four design choices:
+
+- model of local "geometry", i.e., what we know about the "landscape" of $f$ in the surrounding of $u_k$ (gradient only, Hessian, Hessian approximation);
+- search direction $p_k$;
+- step acceptance/globalisation rule;
+- stopping criteria.
+
+Typical stopping checks (often combined):
+$$
+\|\nabla f(u_k)\|\le \varepsilon_g,\qquad
+\frac{|f(u_{k+1})-f(u_k)|}{\max(1,|f(u_k)|)}\le \varepsilon_f,\qquad \|u_{k+1}-u_k\|\le \varepsilon_u, \qquad k\le k_{\max}.
+$$
+
+---
+
+## 2. Line Search and Armijo
+
+Given a descent direction $p_k$ with $\nabla f(u_k)^T p_k<0$, line search picks
+$\alpha_k>0$ to ensure robust decrease.
+
+The ideal choice is the exact line-search minimizer
+$$
+\alpha_k^{\star}\in \operatorname*{argmin}_{\alpha\ge 0}\phi(\alpha),
+\qquad \phi(\alpha):=f(u_k+\alpha p_k).
+$$
+Since
+$$
+\phi'(\alpha)=\nabla f(u_k+\alpha p_k)^T p_k,
+$$
+an interior minimizer satisfies $\phi'(\alpha_k^\star)=0$.
+Using the second-order expansion at $\alpha=0$,
+$$
+\phi(\alpha)\approx \phi(0)+\alpha\, g_k^Tp_k+\frac{\alpha^2}{2}\,p_k^T H_k p_k,
+$$
+with $g_k=\nabla f(u_k)$ and $H_k=\nabla^2 f(u_k)$, the minimizer of this local model is
+$$
+\alpha_k^{\star}\approx -\frac{g_k^T p_k}{p_k^T H_k p_k}.
+$$
+For a quadratic $f(u)=\frac12 u^T H u-b^T u$ (constant Hessian), this is exact:
+$$
+\alpha_k^{\star}= -\frac{g_k^T p_k}{p_k^T H p_k},
+$$
+and for steepest descent ($p_k=-g_k$):
+$$
+\alpha_k^{\star}= \frac{g_k^T g_k}{g_k^T H g_k}.
+$$
+In general nonlinear problems, exact line search is usually too expensive; **backtracking** is the standard practical alternative.
+
+### Armijo backtracking
+
+Choose $\alpha_0>0$, $c_1\in(0,1)$, $\beta\in(0,1)$.
+Set $\alpha\leftarrow \alpha_0$ and reduce $\alpha\leftarrow \beta\alpha$ until
+$$
+f(u_k+\alpha p_k)\le f(u_k)+c_1\alpha \nabla f(u_k)^T p_k.
+$$
+
+Interpretation:
+
+- right-hand side is a conservative linear prediction of decrease;
+- if condition fails, the step is too optimistic for local curvature;
+- backtracking is cheap and usually enough in practice.
+
+Wolfe conditions (for $0<c_1<c_2<1$):
+$$
+\begin{aligned}
+f(u_k+\alpha p_k) &\le f(u_k)+c_1\alpha \nabla f(u_k)^T p_k,\\
+\nabla f(u_k+\alpha p_k)^T p_k &\ge c_2\,\nabla f(u_k)^T p_k.
+\end{aligned}
+$$
+Strong Wolfe replaces the curvature inequality with
+$$
+\left|\nabla f(u_k+\alpha p_k)^T p_k\right|
+\le c_2\left|\nabla f(u_k)^T p_k\right|.
+$$
+
+Geometric interpretation along the line $\phi(\alpha):=f(u_k+\alpha p_k)$:
+
+- Armijo enforces sufficient decrease in function value (step not too large);
+- Wolfe curvature condition enforces $\phi'(\alpha)$ to be much less negative than
+  $\phi'(0)$, so the step is not stopped too early;
+- strong Wolfe additionally controls oscillations by requiring small absolute slope
+  at the accepted point.
+
+---
+
+## 3. Gradient Descent (GD)
+
+Direction:
+$$
+p_k=-\nabla f(u_k).
+$$
+
+Strengths:
+
+- minimal per-iteration cost;
+- robust with Armijo backtracking;
+- simple baseline for any new model.
+
+Limitations:
+
+- sensitive to conditioning;
+- slow on narrow valleys (zig-zag behavior);
+- linear convergence under strong convexity.
+
+Use case in this course: reference solver for reduced OCP prototypes.
+
+---
+
+## 4. Nonlinear Conjugate Gradient (CG)
+
+Replace steepest descent with
+$$
+p_k=-g_k+\beta_k p_{k-1},\qquad g_k=\nabla f(u_k),
+$$
+with reset $p_k=-g_k$ when needed.
+
+Popular $\beta_k$ formulas:
+
+- Fletcher-Reeves: $\beta_k^{FR}=\frac{g_k^T g_k}{g_{k-1}^T g_{k-1}}$;
+- Polak-Ribiere+: $\beta_k^{PR+}=\max\!\left(0,\frac{g_k^T(g_k-g_{k-1})}{g_{k-1}^T g_{k-1}}\right)$.
+
+Key facts:
+
+- for SPD quadratics with exact line search, linear CG terminates in at most $n$ steps;
+- nonlinear CG is memory-light (`O(n)` storage) and often faster than GD;
+- practical performance depends strongly on line-search quality and resets.
+
+---
+
+## 5. BFGS Quasi-Newton
+
+BFGS stands for **Broyden-Fletcher-Goldfarb-Shanno** (the four authors who
+proposed this update family).
+
+Core idea: mimic Newton's method without computing the exact Hessian.
+Instead, build a sequence of positive-definite inverse-Hessian approximations
+from gradient differences, so directions keep curvature information while each
+iteration only needs function/gradient evaluations.
+
+Approximate inverse Hessian $H_k\approx \nabla^2 f(u_k)^{-1}$ and use
+$$
+p_k=-H_k g_k.
+$$
+
+With
+$$
+s_k=u_{k+1}-u_k,\qquad y_k=g_{k+1}-g_k,\qquad y_k^T s_k>0,
+$$
+BFGS update is
+$$
+H_{k+1}=\left(I-\rho_k s_k y_k^T\right)H_k\left(I-\rho_k y_k s_k^T\right)+\rho_k s_k s_k^T,
+\quad \rho_k=\frac{1}{y_k^T s_k}.
+$$
+Equivalent expanded form:
+$$
+H_{k+1}
+=H_k
+-\frac{H_k y_k y_k^T H_k}{y_k^T H_k y_k}
++\frac{s_k s_k^T}{y_k^T s_k}.
+$$
+So the inverse-Hessian approximation is updated through rank-1 outer-product
+terms (overall a rank-2 correction per iteration).
+
+Practical points:
+
+- much faster than GD on ill-conditioned smooth problems;
+- good local behavior (often superlinear with standard assumptions);
+- more memory and linear algebra than GD/CG.
+
+For large scale: use L-BFGS (limited-memory variant):
+keep only the last $m$ pairs $(s_i,y_i)$ (typically $m\in[5,20]$), do not form
+$H_k$ explicitly, and compute $p_k=-H_k g_k$ via the two-loop recursion.
+Memory drops from $O(n^2)$ to $O(mn)$ and matrix factorizations are avoided.
+
+---
+
+## 6. Trust-Region (TR) Methods
+
+Instead of fixing a direction then line-searching, solve a local model:
+$$
+\min_{\|p\|\le \Delta_k} m_k(p)
+=f_k+g_k^Tp+\frac12 p^T B_k p.
+$$
+
+Accept/reject with
+$$
+\rho_k=\frac{f(u_k)-f(u_k+p_k)}{m_k(0)-m_k(p_k)}.
+$$
+
+Rule of thumb:
+
+- $\rho_k$ small: model inaccurate -> shrink radius $\Delta_k$;
+- $\rho_k$ good: accept step, maybe enlarge $\Delta_k$.
+
+Advantages:
+
+- very robust under nonconvexity or poor Hessian quality;
+- natural handling of negative curvature.
+
+Typical subproblem solvers: Cauchy step, dogleg, truncated CG.
+
+---
+
+## 7. Method Selection Cheat Sheet
+
+- `GD + Armijo`: safest baseline, cheapest iteration, slowest asymptotically.
+- `Nonlinear CG`: cheap memory, often better than GD, more tuning-sensitive.
+- `BFGS`: strong default for smooth medium-size problems.
+- `Trust-region`: robust when curvature is difficult/nonconvex.
+
+In reduced PDE-constrained optimization:
+
+- dominant cost = gradient/Hessian-vector evaluation (state/adjoint solves);
+- iteration count matters less than "PDE solves per accepted step";
+- robust globalisation is critical.
+
+---
+
+## 8. Finite-Dimensional Conceptual Experiments (Notebook)
+
+In `codes/lecture03/optimization_toolbox.ipynb`:
+
+1. GD + Armijo on an anisotropic quadratic.
+2. Nonlinear CG (FR and PR+) on Rosenbrock.
+3. BFGS vs GD comparison on Rosenbrock.
+4. Trust-region (dogleg) on a shifted nonconvex quadratic.
+
+Each experiment reports:
+
+- objective history;
+- gradient norm decay;
+- trajectory in 2D (when applicable).
+
+---
+
+## 9. Summary and Bridge to Lecture 4
+
+Core message:
+
+1. all methods share the same iterative skeleton;
+2. they differ in geometry model and globalisation;
+3. Armijo/Wolfe or trust-region acceptance is not optional, it is structural;
+4. this toolbox transfers directly to reduced OCPs with $u$ as control variable.
+
+Next lecture:
+
+- derive reduced gradient via adjoint for linear elliptic OCPs;
+- plug that gradient into the methods introduced today;
+- compare optimize-then-discretize and discretize-then-optimize at algorithm level.
+
+<!-- FOOTER START -->
+<iframe src="/slideshow/slides03.html" width="100%" height="800px" style="border: none;"></iframe>
+
+---
+
+```{admonition} 🎬 View Slides
+:class: tip
+
+**[Open slides in full screen](/slideshow/slides03.html)** for the best viewing experience.
+```
+<!-- FOOTER END -->

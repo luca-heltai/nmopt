@@ -41,7 +41,7 @@ At a local constrained minimizer:
 
 $$\nabla f(\bar u)\cdot d\ge 0\quad\text{for all admissible }d.$$ 
 
-Why:
+Interpretation:
 
 - if an admissible $d$ had $\nabla f(\bar u)\cdot d<0$
 - then $\bar u+t d$ would decrease $f$ for small $t>0$

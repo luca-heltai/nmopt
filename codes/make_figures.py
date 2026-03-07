@@ -313,7 +313,9 @@ def armijo_condition_plot() -> None:
     phi0 = 1.0
     dphi0 = -2.0
     curvature = 5.0
-    c1 = 1e-4
+    # Use a visible c1 so the Armijo affine bound is clearly non-horizontal
+    # in lecture slides (theoretical c1 is often much smaller).
+    c1 = 0.2
 
     alpha = np.linspace(0.0, 1.2, 500)
     phi = phi0 + dphi0 * alpha + 0.5 * curvature * alpha**2
@@ -328,6 +330,16 @@ def armijo_condition_plot() -> None:
             label=r"$\phi(0)+c_1\alpha\phi'(0)$")
     ax.axvline(alpha_acc, color="tab:green", linewidth=1.8,
                linestyle=":", label=rf"max accepted $\alpha\approx {alpha_acc:.2f}$")
+    slope = c1 * dphi0
+    ax.annotate(
+        rf"$c_1\phi'(0)={slope:.2f}$",
+        xy=(0.0, phi0),
+        xytext=(0.18, phi0 + 0.11),
+        textcoords="data",
+        arrowprops=dict(arrowstyle="->", linewidth=1.2, color="black"),
+        fontsize=10,
+        bbox=dict(boxstyle="round,pad=0.2", fc="white", ec="0.7", alpha=0.9),
+    )
     ax.set_xlabel(r"$\alpha$")
     ax.set_ylabel(r"value")
     ax.set_title("Armijo sufficient decrease condition")
@@ -370,9 +382,12 @@ def gd_path_quadratic() -> None:
     grid = np.linspace(-1.7, 1.8, 320)
     X, Y = np.meshgrid(grid, grid)
     Z = 0.5 * (A[0, 0] * X**2 + 2.0 * A[0, 1] * X * Y + A[1, 1] * Y**2)
+    zmax = float(np.max(Z))
+    # Geometric spacing keeps many contour lines close to the minimizer (origin).
+    levels = np.geomspace(max(1e-5, 3e-4 * zmax), 0.98 * zmax, 12)
 
     fig, ax = plt.subplots(figsize=(5.8, 5.8))
-    ax.contour(X, Y, Z, levels=20, cmap="viridis")
+    ax.contour(X, Y, Z, levels=levels, cmap="viridis")
     ax.plot(path[:, 0], path[:, 1], marker="o", linewidth=1.8,
             markersize=4, color="tab:red")
     ax.scatter(path[0, 0], path[0, 1], s=55, color="black", label="start")

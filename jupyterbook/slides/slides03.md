@@ -37,6 +37,31 @@ Design blocks:
 
 ----
 
+## Ideal Step Length
+
+Exact line search along (positive) direction $p_k$:
+$$
+\alpha_k^\star\in\arg\min_{\alpha\ge 0}\phi(\alpha),
+\qquad \phi(\alpha)=f(u_k+\alpha p_k).
+$$
+
+Optimality condition (interior minimizer):
+$$
+\phi'(\alpha_k^\star)=\nabla f(u_k+\alpha_k^\star p_k)^T p_k=0.
+$$
+
+Quadratic model near $u_k$ gives ($g_k := \nabla f(u_k)$ and $H_k := \nabla^2 f(u_k)$):
+$$
+\alpha_k^\star \approx-\frac{g_k^Tp_k}{p_k^T H_k p_k}.
+$$
+
+For quadratic $f(u)=\frac12u^T H u-b^T u$ this is exact, and with $p_k=-g_k$:
+$$
+\alpha_k^\star=\frac{g_k^Tg_k}{g_k^T H g_k}.
+$$
+
+----
+
 ## Line Search and Armijo
 
 Given descent direction $g_k^T p_k<0$, Armijo accepts $\alpha$ if
@@ -62,7 +87,7 @@ Cheap and robust default.
 ## Gradient Descent (GD)
 
 $$
-p_k=-g_k,\qquad g_k=\nabla f(u_k).
+g_k=\nabla f(u_k), \qquad p_k=-g_k.
 $$
 
 Pros:
@@ -162,7 +187,7 @@ In reduced PDE OCPs, optimize for fewer expensive gradient evaluations.
 
 ## Lecture Notebook
 
-`codes/lecture03/optimization_toolbox.ipynb`
+`jupyterbook/codes/lecture03/optimization_toolbox.ipynb`
 
 Contains finite-dimensional conceptual experiments for:
 

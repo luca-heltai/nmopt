@@ -31,8 +31,8 @@ project:
         - file: lectures/lecture03.md
     - title: Codes
       children:
-        - file: ../codes/lecture01/finite_dim_analogy.ipynb
-        - file: ../codes/lecture03/optimization_toolbox.ipynb
+        - file: codes/lecture01/finite_dim_analogy.ipynb
+        - file: codes/lecture03/optimization_toolbox.ipynb
     - title: Slides
       children:
         - file: slides/slides01.md

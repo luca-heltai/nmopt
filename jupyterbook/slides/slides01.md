@@ -73,7 +73,7 @@ Key implications:
 - Finite-dimensional LQ reduction + a 1D slice plot.
 - Generates figures used in these slides.
 
-File: `codes/lecture01/finite_dim_analogy.ipynb`
+File: `jupyterbook/codes/lecture01/finite_dim_analogy.ipynb`
 
 ----
 

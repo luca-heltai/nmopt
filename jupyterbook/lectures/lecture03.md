@@ -245,7 +245,7 @@ In reduced PDE-constrained optimization:
 
 ## 8. Finite-Dimensional Conceptual Experiments (Notebook)
 
-In `codes/lecture03/optimization_toolbox.ipynb`:
+In `jupyterbook/codes/lecture03/optimization_toolbox.ipynb`:
 
 1. GD + Armijo on an anisotropic quadratic.
 2. Nonlinear CG (FR and PR+) on Rosenbrock.

@@ -322,6 +322,12 @@ These variants motivate why we need a flexible theoretical framework and multipl
 - A. Manzoni, A. Quarteroni, S. Salsa, *Optimal Control of PDEs*, Chapter 1
 - J. C. De los Reyes, *Numerical PDE-Constrained Optimization*, Section 1
 
+```{admonition} 💻 Code Session
+:class: tip
+
+**[Open the lecture notebook](/finite-dim-analogy)** for the associated code session.
+```
+
 <!-- FOOTER START -->
 <iframe src="/slideshow/slides01.html" width="100%" height="800px" style="border: none;"></iframe>
 

@@ -260,20 +260,13 @@ Each experiment reports:
 
 ---
 
-## 9. Summary and Bridge to Lecture 4
+```{admonition} 💻 Code Session
+:class: tip
 
-Core message:
+**[Open the lecture notebook](/optimization-toolbox)** for the associated code session.
+```
 
-1. all methods share the same iterative skeleton;
-2. they differ in geometry model and globalisation;
-3. Armijo/Wolfe or trust-region acceptance is not optional, it is structural;
-4. this toolbox transfers directly to reduced OCPs with $u$ as control variable.
-
-Next lecture:
-
-- derive reduced gradient via adjoint for linear elliptic OCPs;
-- plug that gradient into the methods introduced today;
-- compare optimize-then-discretize and discretize-then-optimize at algorithm level.
+---
 
 <!-- FOOTER START -->
 <iframe src="/slideshow/slides03.html" width="100%" height="800px" style="border: none;"></iframe>

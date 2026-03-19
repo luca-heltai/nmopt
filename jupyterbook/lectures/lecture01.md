@@ -15,7 +15,7 @@ Logical path of the lecture:
 
 ---
 
-## 1. General Optimal Control Problem
+## General Optimal Control Problem
 
 Choose a control variable $u$ and a state variable $y$ such that
 $$
@@ -35,7 +35,7 @@ Key ingredients:
 
 ---
 
-## 2. Forward Problem vs Control Problem
+## Forward Problem vs Control Problem
 
 Forward problem:
 
@@ -55,7 +55,7 @@ In optimal control, the PDE is a constraint, not the objective.
 
 ---
 
-## 3. Finite-Dimensional Setting (Simultaneous vs Reduced)
+## Finite-Dimensional Setting (Simultaneous vs Reduced)
 
 Consider
 $$
@@ -64,7 +64,7 @@ $$
 $$
 with $A\in\mathbb{R}^{n\times n}$ invertible.
 
-### 3.1 Simultaneous formulation
+### Simultaneous formulation
 
 Optimize in $(y,u)$ and enforce $Ay=Bu$ explicitly.
 
@@ -74,7 +74,7 @@ Interpretation:
 - coupling: $y$ and $u$ are linked by the model equation;
 - computational consequence: every candidate pair must satisfy the constraint.
 
-### 3.2 Reduced formulation
+### Reduced formulation
 
 Since $A$ is invertible,
 $$
@@ -101,7 +101,7 @@ Step-by-step logic:
 
 ---
 
-## 4. Existence in Finite Dimensions
+## Existence in Finite Dimensions
 
 A standard existence result for the reduced problem:
 
@@ -129,7 +129,7 @@ This is one of the main analytical difficulties for PDE-constrained optimization
 
 ---
 
-## 5. Unconstrained First/Second-Order Conditions
+## Unconstrained First/Second-Order Conditions
 
 For convex differentiable $f$ on a convex set $K$:
 $$
@@ -151,7 +151,7 @@ If moreover $D^2 f(\bar u)$ is positive definite, then $\bar u$ is a strict loca
 
 ---
 
-## 6. Constrained minimization (2D Example)
+## Constrained minimization (2D Example)
 
 Let
 $$
@@ -229,7 +229,7 @@ This is the prototype for all later optimality systems:
 
 ---
 
-## 7. From Finite to Infinite Dimensions
+## From Finite to Infinite Dimensions
 
 For PDE-constrained control, state/control live in function spaces (typically Hilbert spaces):
 
@@ -253,9 +253,9 @@ Conceptual continuity with the finite-dimensional case:
 
 ---
 
-## 8. Prototypical PDE-Constrained Models
+## Prototypical PDE-Constrained Models
 
-### 8.1 Elliptic distributed control
+### Elliptic distributed control
 
 $$
 \min_{(y,u)}
@@ -269,7 +269,7 @@ $$
 \qquad u\in U_{\mathrm{ad}}.
 $$
 
-### 8.2 Parabolic control
+### Parabolic control
 
 $$
 \partial_t y-\Delta y=u\text{ in }Q,
@@ -277,14 +277,14 @@ $$
 $$
 with tracking over space-time and Tikhonov regularization.
 
-### 8.3 Flow and inverse problems
+### Flow and inverse problems
 
 - Navier-Stokes control (nonlinear constraints)
 - parameter estimation/data assimilation
 
 ---
 
-## 9. Control Constraints
+## Control Constraints
 
 Common box constraints:
 $$
@@ -295,7 +295,7 @@ They lead to variational inequalities and KKT systems in function spaces.
 
 ---
 
-## 10. Typical Variations of OCP Formulations
+## Typical Variations of OCP Formulations
 
 Many optimal control models keep the same abstract structure but vary in where the control acts, what is observed, and how the objective is measured.
 

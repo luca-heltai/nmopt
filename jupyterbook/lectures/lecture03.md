@@ -18,7 +18,7 @@ Main goals:
 
 ---
 
-## 1. Unified Iterative Template
+## Unified Iterative Template
 
 Most unconstrained methods fit, at a high level, the same iterative template:
 Choose $u_0\in\mathbb{R}^n$ and for $k=0,1,2,\ldots$ compute
@@ -40,7 +40,7 @@ $$
 
 ---
 
-## 2. Line Search and Armijo
+## Line Search and Armijo
 
 Given a descent direction $p_k$ with $\nabla f(u_k)^T p_k<0$, line search picks
 $\alpha_k>0$ to ensure robust decrease.
@@ -110,7 +110,7 @@ Geometric interpretation along the line $\phi(\alpha):=f(u_k+\alpha p_k)$:
 
 ---
 
-## 3. Gradient Descent (GD)
+## Gradient Descent (GD)
 
 Direction:
 $$
@@ -133,7 +133,7 @@ Use case in this course: reference solver for reduced OCP prototypes.
 
 ---
 
-## 4. Nonlinear Conjugate Gradient (CG)
+## Nonlinear Conjugate Gradient (CG)
 
 Replace steepest descent with
 $$
@@ -154,7 +154,7 @@ Key facts:
 
 ---
 
-## 5. BFGS Quasi-Newton
+## BFGS Quasi-Newton
 
 BFGS stands for **Broyden-Fletcher-Goldfarb-Shanno** (the four authors who
 proposed this update family).
@@ -201,7 +201,7 @@ Memory drops from $O(n^2)$ to $O(mn)$ and matrix factorizations are avoided.
 
 ---
 
-## 6. Trust-Region (TR) Methods
+## Trust-Region (TR) Methods
 
 Instead of fixing a direction then line-searching, solve a local model:
 $$
@@ -228,7 +228,7 @@ Typical subproblem solvers: Cauchy step, dogleg, truncated CG.
 
 ---
 
-## 7. Method Selection Cheat Sheet
+## Method Selection Cheat Sheet
 
 - `GD + Armijo`: safest baseline, cheapest iteration, slowest asymptotically.
 - `Nonlinear CG`: cheap memory, often better than GD, more tuning-sensitive.
@@ -243,7 +243,7 @@ In reduced PDE-constrained optimization:
 
 ---
 
-## 8. Finite-Dimensional Conceptual Experiments (Notebook)
+## Finite-Dimensional Conceptual Experiments (Notebook)
 
 In `jupyterbook/codes/lecture03/optimization_toolbox.ipynb`:
 

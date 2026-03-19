@@ -2,11 +2,9 @@
 
 ## Overview
 
-This lecture is the first genuinely PDE-constrained lecture in the course.
-We take the optimization viewpoint of Lecture 3 and apply it to a standard
-linear elliptic optimal control problem.
-
-The main message is simple:
+This is the first genuinely PDE-constrained lecture in the course. We take the
+optimization viewpoint of Lecture 3 and apply it to a standard linear elliptic
+optimal control problem:
 
 1. the PDE defines a control-to-state map $S$;
 2. the cost becomes a reduced functional $f(u)=J(Su,u)$;
@@ -18,7 +16,7 @@ structural ideas we need before constraints, discretization, and more advanced P
 
 ---
 
-## 1. Model Problem
+## Model Problem
 
 Let $\Omega\subset\mathbb R^d$ be a bounded domain.
 We consider the distributed control problem
@@ -31,7 +29,7 @@ $$
 subject to
 $$
 \begin{cases}
--\Delta y = u+f & \text{in }\Omega,\\
+-\Delta y = u & \text{in }\Omega,\\
 y = 0 & \text{on }\partial\Omega,
 \end{cases}
 $$
@@ -48,13 +46,13 @@ This is the PDE analogue of the linear-quadratic finite-dimensional problems see
 
 ---
 
-## 2. Weak Formulation of the State Equation
+## Weak Formulation of the State Equation
 
 This is the first point where the PDE language changes.
 We start from the strong form
 $$
 \begin{cases}
--\Delta y = u+f & \text{in }\Omega,\\
+-\Delta y = u & \text{in }\Omega,\\
 y = 0 & \text{on }\partial\Omega.
 \end{cases}
 $$
@@ -66,7 +64,7 @@ Multiply the PDE by $v$ and integrate over $\Omega$:
 $$
 \int_\Omega (-\Delta y)\,v\,dx
 =
-\int_\Omega (u+f)v\,dx.
+\int_\Omega (u)v\,dx.
 $$
 
 Now integrate by parts:
@@ -84,10 +82,8 @@ So we obtain the identity
 $$
 \int_\Omega \nabla y\cdot \nabla v\,dx
 =
-\int_\Omega (u+f)v\,dx.
+\int_\Omega u v\,dx.
 $$
-
-This is the key structural step:
 
 - the strong form contains second derivatives of $y$;
 - the weak form contains only first derivatives of $y$;
@@ -105,7 +101,7 @@ find $y\in H_0^1(\Omega)$ such that
 $$
 \int_\Omega \nabla y\cdot \nabla v\,dx
 =
-\int_\Omega (u+f)v\,dx
+\int_\Omega u v\,dx
 \qquad \forall v\in H_0^1(\Omega).
 $$
 
@@ -113,7 +109,7 @@ Introduce
 $$
 a(y,v):=\int_\Omega \nabla y\cdot \nabla v\,dx,
 \qquad
-\ell_u(v):=\int_\Omega (u+f)v\,dx.
+\ell_u(v):=\int_\Omega u v\,dx.
 $$
 Then the problem reads
 $$
@@ -132,8 +128,8 @@ Why does this have a unique solution?
 - $\ell_u$ is continuous because
   $$
   |\ell_u(v)|
-  \le \|u+f\|_{L^2(\Omega)}\|v\|_{L^2(\Omega)}
-  \le C\|u+f\|_{L^2(\Omega)}\|v\|_{H_0^1(\Omega)}.
+  \le \|u\|_{L^2(\Omega)}\|v\|_{L^2(\Omega)}
+  \le C\|u\|_{L^2(\Omega)}\|v\|_{H_0^1(\Omega)}.
   $$
 
 Lax-Milgram then gives a unique weak solution $y\in H_0^1(\Omega)$ for every $u\in L^2(\Omega)$.
@@ -156,7 +152,7 @@ the key point is simply:
 
 ---
 
-## 3. Reduced Cost Functional
+## Reduced Cost Functional
 
 Eliminate the state through the PDE:
 $$
@@ -172,6 +168,7 @@ f(u):=J(S(u),u)
 $$
 
 The PDE-constrained problem can now be written as
+
 $$
 \min_{u\in L^2(\Omega)} f(u).
 $$
@@ -183,9 +180,133 @@ Two remarks:
 - the optimization variable is now $u\in L^2(\Omega)$, not a finite vector;
 - evaluating $f(u)$ requires solving the state equation.
 
+It is also useful to introduce the same problem in a fully operatorial form, because
+this makes the infinite-dimensional structure look exactly like a block linear system.
+
+Let
+
+$$
+V:=H_0^1(\Omega), \qquad Q:=L^2(\Omega).
+$$
+
+We define the elliptic operator $A:V\to V'$ by
+
+$$
+\langle Ay,v\rangle_{V',V}:=\int_\Omega \nabla y\cdot \nabla v\,dx
+\qquad \forall y,v\in V.
+$$
+
+The control enters the state equation through the operator $B:Q\to V'$ defined by
+
+$$
+\langle Bu,v\rangle_{V',V}:=(u,v)_{Q}
+\qquad \forall u\in Q,\ \forall v\in V.
+$$
+
+Since the tracking term is measured in $Q=L^2(\Omega)$, we also introduce the observation
+embedding $C:V\to Q$, here simply
+
+$$
+Cy:=y,
+$$
+
+and its associated mass operator $M:=C^*C:V\to V'$:
+
+$$
+\langle My,v\rangle_{V',V}:=(y,v)_Q
+\qquad \forall y,v\in V.
+$$
+
+For the control cost, it is convenient to write the $L^2$ inner product through the
+Riesz map $R_Q:Q\to Q'$,
+
+$$
+\langle R_Q u,w\rangle_{Q',Q}:=(u,w)_Q
+\qquad \forall u,w\in Q.
+$$
+
+With this notation, the state equation is
+
+$$
+Ay-Bu=F \qquad \text{in }V',
+$$
+
+where $F\in V'$ is a given load. In the present model without an additional forcing
+term, one simply has $F=0$.
+
+The cost functional can be written as
+
+$$
+J(y,u)
+=
+\frac12\langle M(y-y_d),y-y_d\rangle_{V',V}
++\frac{\alpha}{2}\langle R_Q u,u\rangle_{Q',Q}.
+$$
+
+So the all-at-once infinite-dimensional problem is
+
+$$
+\min_{(y,u)\in V\times Q} J(y,u)
+\qquad\text{subject to}\qquad
+Ay-Bu=F \text{ in }V'.
+$$
+
+Introduce the Lagrangian with multiplier $p\in V$:
+
+$$
+\mathcal L(y,u,p)
+:=
+J(y,u)-\langle Ay-Bu-F,p\rangle_{V',V}.
+$$
+
+Its first-order conditions are
+
+$$
+\begin{aligned}
+A y - B u &= F &&\text{in }V',\\
+M y - A^* p &= M y_d &&\text{in }V',\\
+\alpha R_Q u + B^* p &= 0 &&\text{in }Q'.
+\end{aligned}
+$$
+
+This is already a saddle-point system: the unknown triple $(y,u,p)$ lives in
+$V\times Q\times V$, while the equations live in the dual product space
+$V'\times Q'\times V'$ after reordering the blocks.
+Indeed, the KKT system can be written as
+
+$$
+\begin{pmatrix}
+M & 0 & -A^*\\
+0 & \alpha R_Q & B^*\\
+A & -B & 0
+\end{pmatrix}
+\begin{pmatrix}
+y\\
+u\\
+p
+\end{pmatrix}
+=
+\begin{pmatrix}
+M y_d\\
+0\\
+F
+\end{pmatrix}
+\qquad \text{in } V'\times Q'\times V'.
+$$
+
+This is the infinite-dimensional analogue of a symmetric indefinite linear system:
+
+- the diagonal block $M$ comes from the tracking term;
+- the diagonal block $\alpha R_Q$ comes from Tikhonov regularization;
+- the off-diagonal blocks $A$, $A^*$, $B$, and $B^*$ express the PDE constraint and its adjoint coupling;
+- the zero block in the $(3,3)$ position is the characteristic signature of a saddle-point problem.
+
+So even before discretization, PDE-constrained optimization already has the same algebraic
+structure as the block KKT systems that appear in finite-dimensional constrained optimization.
+
 ---
 
-## 4. Existence and Uniqueness
+## Existence and Uniqueness
 
 In finite dimensions, existence follows from the Weierstrass principle:
 closed and bounded sets are compact, so minimizing sequences have convergent subsequences.
@@ -262,7 +383,7 @@ This is the first major structural simplification of the linear-quadratic ellipt
 
 ---
 
-## 5. Directional Derivative of the Reduced Cost
+## Directional Derivative of the Reduced Cost
 
 Let $u\in L^2(\Omega)$ and $h\in L^2(\Omega)$.
 We now compute the derivative of $f$ explicitly from the Frechet definition:
@@ -329,7 +450,7 @@ The adjoint equation removes this difficulty.
 
 ---
 
-## 6. Adjoint Equation
+## Adjoint Equation
 
 At this point we know that
 $$
@@ -344,10 +465,7 @@ $$
 (y-y_d,S(h))_{L^2(\Omega)} \qquad \Longrightarrow\qquad (S^*(y-y_d),h)_{L^2(\Omega)},
 $$
 as an expression where $h$ appears explicitly.
-To do that, we introduce a new variable $p = S^*(y-y_d)$ chosen so that the factor $y-y_d$
-is absorbed into a PDE involving the adjoint of the state operator.
-In the present Poisson case the operator is symmetric, so the adjoint happens to coincide
-with the original one.
+This can be done in a two-step process. Given a control $u$, we first solve the control-to-state map to get $y=S(u)$, then we solve the one adjoint PDE to obtain $p=S^*(y-y_d)$, and then we use $p$ to rewrite the inner product with $S(h)$ as an inner product with $h$.
 
 More concretely, we look for $p\in H_0^1(\Omega)$ such that
 for every test function $v\in H_0^1(\Omega)$,
@@ -358,20 +476,22 @@ $$
 \int_\Omega (y-y_d)v\,dx.
 $$
 
-This is the weak formulation of the adjoint equation.
+Notice the change of roles of $v$ and $p$ compared to the state equation. In
+this particular example the bilinear form is symmetric, so the change of roles
+is not visible, but in general the adjoint bilinear form is different from the
+original one, and the test function $v$ is now associated with the adjoint state
+$p$.
+
 Notice the analogy with the state equation:
 
 - the left-hand side is the adjoint bilinear form;
 - only the right-hand side changes;
 - the source term is now the tracking residual $y-y_d$.
 
-In this specific example the bilinear form is symmetric,
-so the adjoint bilinear form is the same as the original one.
-
-So we define the adjoint state $p\in H_0^1(\Omega)$ by
+We define the adjoint state $p\in H_0^1(\Omega)$ by
 
 $$
-\int_\Omega \nabla p\cdot \nabla v\,dx
+\int_\Omega \nabla v \cdot \nabla p\,dx
 =
 \int_\Omega (y-y_d)v\,dx
 \qquad \forall v\in H_0^1(\Omega),
@@ -404,57 +524,13 @@ Conceptually:
 
 ---
 
-## 7. Reduced Gradient Formula
+## Reduced Gradient Formula
 
-Let $z=S(h)$ be the solution of
-
-$$
-\int_\Omega \nabla z\cdot \nabla v\,dx
-=
-\int_\Omega hv\,dx
-\qquad \forall v\in H_0^1(\Omega).
-$$
-
-This is the state variation in the direction $h$.
-Indeed,
-$$
-S(u+th)=S(u)+tS(h)=y+t z,
-$$
-so $z$ is exactly the first-order response of the state when the control is perturbed by $th$.
-
-Then
-
-$$
-f'(u)h=(y-y_d,z)_{L^2(\Omega)}+\alpha(u,h)_{L^2(\Omega)}.
-$$
-
-Using the adjoint equation with test function $z$,
-
-$$
-(y-y_d,z)_{L^2(\Omega)}
-=
-\int_\Omega \nabla p\cdot \nabla z\,dx.
-$$
-
-Using the state sensitivity equation with test function $p$,
-
-$$
-\int_\Omega \nabla z\cdot \nabla p\,dx
-=
-\int_\Omega hp\,dx.
-$$
-
-Since
-
-$$
-\int_\Omega \nabla p\cdot \nabla z\,dx
-=
-\int_\Omega \nabla z\cdot \nabla p\,dx,
-$$
-we conclude
-$$
-f'(u)h=(p+\alpha u,h)_{L^2(\Omega)}.
-$$
+From what we have so far, the directional derivative of the reduced cost is $$
+f'(u)h=(y-y_d,S(h))_{L^2(\Omega)}+\alpha(u,h)_{L^2(\Omega)}. $$ which we rewrite
+moving $S$ to the other side of the inner product, i.e.,
+$(y-y_d,S(h))_{L^2(\Omega)}=(S^*(y-y_d),h)_{L^2(\Omega)}$, and defining the
+adjoint state $p=S^*(y-y_d)$.
 
 Thus the reduced gradient is
 $$
@@ -466,7 +542,7 @@ This is the central formula of the lecture.
 
 ---
 
-## 8. First-Order Optimality System
+## First-Order Optimality System
 
 For the unconstrained problem, the optimal control $\bar u$ satisfies
 $$
@@ -491,7 +567,7 @@ $$
 The optimality system is then
 $$
 \begin{cases}
--\Delta \bar y = \bar u + f & \text{in }\Omega,\\
+-\Delta \bar y = \bar u  & \text{in }\Omega,\\
 \bar y = 0 & \text{on }\partial\Omega,\\[0.3em]
 -\Delta \bar p = \bar y-y_d & \text{in }\Omega,\\
 \bar p = 0 & \text{on }\partial\Omega,\\[0.3em]
@@ -508,7 +584,7 @@ This is the PDE version of the finite-dimensional gradient equation.
 
 ---
 
-## 9. Algorithmic Interpretation
+## Algorithmic Interpretation
 
 To evaluate the reduced gradient at a control $u_k$:
 
@@ -535,7 +611,7 @@ This is the computational meaning of the reduced formulation.
 
 ---
 
-## 10. Reduced Gradient Algorithm
+## Reduced Gradient Algorithm
 
 A basic reduced-gradient method is:
 
@@ -560,26 +636,7 @@ Lecture 3 now has a direct PDE interpretation:
 
 ---
 
-## 11. Remarks on Discretization
-
-At this stage we stay at the continuous level.
-But the next numerical questions are unavoidable:
-
-- do we derive the optimality system first and then discretize?
-- or discretize state and cost first, then optimize?
-- do these two routes commute?
-
-This is the optimize-then-discretize vs discretize-then-optimize issue,
-which will become central in the next lectures.
-
-For now, the main continuous insight is:
-
-- the gradient is not obtained by differentiating the PDE naively;
-- it is obtained efficiently through the adjoint equation.
-
----
-
-## 12. Summary
+## Summary
 
 In the linear elliptic distributed-control setting:
 
@@ -597,8 +654,14 @@ In the linear elliptic distributed-control setting:
 
 This is the basic computational pattern for PDE-constrained optimization.
 
-Next lecture:
+<!-- FOOTER START -->
+<iframe src="/slideshow/slides04.html" width="100%" height="800px" style="border: none;"></iframe>
 
-- box constraints on the control;
-- variational inequalities;
-- projection formula and active/inactive regions.
+---
+
+```{admonition} 🎬 View Slides
+:class: tip
+
+**[Open slides in full screen](/slideshow/slides04.html)** for the best viewing experience.
+```
+<!-- FOOTER END -->

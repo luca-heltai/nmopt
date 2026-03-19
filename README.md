@@ -75,4 +75,4 @@ Additional references are provided within the individual chapters.
 
 ## License
 
-The content of this repository is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+The content of this repository is licensed under the MIT License. See the [LICENSE](https://github.com/luca-heltai/nmopt/blob/main/LICENSE) file for details.

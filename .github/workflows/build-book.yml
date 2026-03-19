@@ -21,7 +21,7 @@ jobs:
         run: |
           ./scripts/generate_slides.sh -v --base-url https://luca-heltai.github.io/nmopt
           make build
-          make copy
+          make copy-slides
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

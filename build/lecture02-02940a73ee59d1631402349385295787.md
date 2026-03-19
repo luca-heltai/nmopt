@@ -22,7 +22,7 @@ The take-home message is simple:
 
 ---
 
-## 1. Problem Setting and Active Constraints
+## Problem Setting and Active Constraints
 
 Define the feasible set
 $$
@@ -42,7 +42,7 @@ Inactive constraints satisfy $\varphi_j(\bar u)>0$ and do not contribute at firs
 
 ---
 
-## 2. Admissible First-Order Directions
+## Admissible First-Order Directions
 
 Near $\bar u$, a direction $d\in\mathbb R^n$ is first-order admissible if it does not decrease active constraints.
 Linearizing active constraints gives
@@ -60,7 +60,7 @@ Interpretation:
 
 ---
 
-## 3. First-Order Necessary Condition
+## First-Order Necessary Condition
 
 At a local minimizer, every admissible first-order direction must be non-descent:
 $$
@@ -79,7 +79,7 @@ This is the true origin of KKT.
 
 ---
 
-## 4. From First-Order Geometry to KKT
+## From First-Order Geometry to KKT
 
 For regular active constraints (the standard finite-dimensional nondegenerate case),
 there exist multipliers $\lambda_j\ge 0$ such that
@@ -116,7 +116,7 @@ For box constraints, this regularity is automatic in the usual formulation.
 
 ---
 
-## 5. Box Constraints: The Prototype Case
+## Box Constraints: The Prototype Case
 
 Consider
 $$
@@ -145,7 +145,7 @@ This is the exact finite-dimensional model behind bound-constrained control vari
 
 ---
 
-## 6. Second-Order Conditions
+## Second-Order Conditions
 
 Define the Lagrangian
 $$
@@ -177,7 +177,7 @@ Interpretation:
 
 ---
 
-## 7. Summary
+## Summary
 
 At a constrained local minimizer:
 

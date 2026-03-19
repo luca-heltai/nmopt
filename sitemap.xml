@@ -14,6 +14,12 @@
     <loc>http://localhost:3000/lectures/lecture03</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/lectures/lecture04</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/lectures/lecture05</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/codes/lecture01/finite-dim-analogy</loc>
   </url>
   <url>
@@ -27,5 +33,11 @@
   </url>
   <url>
     <loc>http://localhost:3000/slides/slides03</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/slides/slides04</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/slides/slides05</loc>
   </url>
 </urlset>

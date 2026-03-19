@@ -34,7 +34,7 @@ link:
 
 copy: 
 	echo Copying slides
-	rm -f `pwd`/$(SITE_DIR)/slideshow
+	rm -rf `pwd`/$(SITE_DIR)/slideshow
 	cp -r `pwd`/jupyterbook/slides `pwd`/$(SITE_DIR)/slideshow
 
 slides:

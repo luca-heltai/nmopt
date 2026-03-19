@@ -654,6 +654,17 @@ In the linear elliptic distributed-control setting:
 
 This is the basic computational pattern for PDE-constrained optimization.
 
+For a first concrete discrete example, the repository now includes
+`jupyterbook/codes/lecture04/poisson_1d_fd.py`.
+It solves a trivial one-dimensional Poisson control problem by finite differences,
+checks the reduced gradient by finite differences, and performs a few reduced-gradient
+iterations.
+The reusable one-dimensional finite-difference utilities used there live in
+`jupyterbook/codes/common/fd1d.py`.
+For a richer JupyterBook example, see also
+`jupyterbook/codes/lecture04/step_target_fd.ipynb`, where the target state is a rectangular
+step function in $L^2(0,1)$ and the notebook generates both plots and a GIF animation
+of the state approaching the target.
 <!-- FOOTER START -->
 <iframe src="/slideshow/slides04.html" width="100%" height="800px" style="border: none;"></iframe>
 

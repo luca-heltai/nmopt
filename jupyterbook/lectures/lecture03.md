@@ -258,6 +258,12 @@ Each experiment reports:
 - gradient norm decay;
 - trajectory in 2D (when applicable).
 
+To start separating reusable code from lecture-specific examples, the repository now also includes
+`jupyterbook/codes/common/optim.py` and the small script
+`jupyterbook/codes/lecture03/gradient_descent_demo.py`.
+The notebook remains the main teaching artifact; the Python script is a lighter-weight
+example that reuses code meant to be shared by later lectures.
+
 ---
 
 ```{admonition} 💻 Code Session

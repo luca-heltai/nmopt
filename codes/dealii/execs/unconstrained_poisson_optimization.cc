@@ -19,10 +19,12 @@
 
 #include <deal.II/base/parameter_acceptor.h>
 #include <deal.II/base/parsed_function.h>
+#include <deal.II/base/utilities.h>
 
 #include <deal.II/lac/linear_operator_tools.h>
 #include <deal.II/lac/vector.h>
 
+#include <deal.II/base/data_out_base.h>
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
 
@@ -54,11 +56,24 @@ private:
                             Vector<double>      &vector) const;
 
   void
-  output_results(const Vector<double> &optimized_state,
+  solve_state(const Vector<double> &control, Vector<double> &state) const;
+
+  void
+  solve_adjoint(const Vector<double> &state,
+                const Vector<double> &target_state,
+                Vector<double>       &adjoint) const;
+
+  void
+  output_results(const Vector<double> &optimized_control,
                  const Vector<double> &target_state) const;
 
+  std::string
+  output_iteration(const unsigned int   iteration,
+                   const Vector<double> &control,
+                   const Vector<double> &target_state) const;
+
   Laplacian<dim>               poisson_problem;
-  Functions::ParsedFunction<dim> initial_state_function;
+  Functions::ParsedFunction<dim> initial_control_function;
   Functions::ParsedFunction<dim> target_state_function;
 
   std::string                                            optimization_method;
@@ -75,7 +90,7 @@ template <int dim>
 UnconstrainedPoissonOptimization<dim>::UnconstrainedPoissonOptimization()
   : ParameterAcceptor("Unconstrained Poisson optimization")
   , poisson_problem("Poisson problem")
-  , initial_state_function(1)
+  , initial_control_function(1)
   , target_state_function(1)
   , optimization_method("nlcg")
   , regularization(1e-4)
@@ -108,7 +123,7 @@ UnconstrainedPoissonOptimization<dim>::declare_parameters(ParameterHandler &prm)
   lbfgs_parameters.add_parameters(prm);
   prm.leave_subsection();
 
-  prm.enter_subsection("Initial state");
+  prm.enter_subsection("Initial control");
   Functions::ParsedFunction<dim>::declare_parameters(prm, 1, "0.0");
   prm.leave_subsection();
 
@@ -123,8 +138,8 @@ template <int dim>
 void
 UnconstrainedPoissonOptimization<dim>::parse_parameters(ParameterHandler &prm)
 {
-  prm.enter_subsection("Initial state");
-  initial_state_function.parse_parameters(prm);
+  prm.enter_subsection("Initial control");
+  initial_control_function.parse_parameters(prm);
   prm.leave_subsection();
 
   prm.enter_subsection("Target state");
@@ -149,13 +164,52 @@ UnconstrainedPoissonOptimization<dim>::interpolate_configuration(
 
 template <int dim>
 void
+UnconstrainedPoissonOptimization<dim>::solve_state(
+  const Vector<double> &control,
+  Vector<double>       &state) const
+{
+  const auto M = linear_operator<Vector<double>>(poisson_problem.get_mass_matrix());
+  const Vector<double> rhs = poisson_problem.get_system_rhs();
+  const Vector<double> state_rhs = rhs + M * control;
+
+  poisson_problem.solve(state_rhs, state);
+}
+
+
+
+template <int dim>
+void
+UnconstrainedPoissonOptimization<dim>::solve_adjoint(
+  const Vector<double> &state,
+  const Vector<double> &target_state,
+  Vector<double>       &adjoint) const
+{
+  const auto M = linear_operator<Vector<double>>(poisson_problem.get_mass_matrix());
+  const Vector<double> mismatch = state - target_state;
+  const Vector<double> adjoint_rhs = M * mismatch;
+
+  poisson_problem.solve(adjoint_rhs, adjoint);
+}
+
+
+
+template <int dim>
+void
 UnconstrainedPoissonOptimization<dim>::output_results(
-  const Vector<double> &optimized_state,
+  const Vector<double> &optimized_control,
   const Vector<double> &target_state) const
 {
+  Vector<double> state;
+  Vector<double> adjoint;
+
+  solve_state(optimized_control, state);
+  solve_adjoint(state, target_state, adjoint);
+
   DataOut<dim> data_out;
   data_out.attach_dof_handler(poisson_problem.get_dof_handler());
-  data_out.add_data_vector(optimized_state, "optimized_state");
+  data_out.add_data_vector(optimized_control, "optimized_control");
+  data_out.add_data_vector(state, "state");
+  data_out.add_data_vector(adjoint, "adjoint");
   data_out.add_data_vector(target_state, "target_state");
   data_out.add_data_vector(poisson_problem.get_system_rhs(), "poisson_rhs");
   data_out.build_patches();
@@ -167,75 +221,131 @@ UnconstrainedPoissonOptimization<dim>::output_results(
 
 
 template <int dim>
+std::string
+UnconstrainedPoissonOptimization<dim>::output_iteration(
+  const unsigned int   iteration,
+  const Vector<double> &control,
+  const Vector<double> &target_state) const
+{
+  Vector<double> state;
+  Vector<double> adjoint;
+
+  solve_state(control, state);
+  solve_adjoint(state, target_state, adjoint);
+
+  DataOut<dim> data_out;
+  data_out.attach_dof_handler(poisson_problem.get_dof_handler());
+  data_out.add_data_vector(control, "control");
+  data_out.add_data_vector(state, "state");
+  data_out.add_data_vector(adjoint, "adjoint");
+  data_out.add_data_vector(target_state, "target_state");
+  data_out.add_data_vector(poisson_problem.get_system_rhs(), "poisson_rhs");
+  data_out.build_patches();
+
+  const std::string filename =
+    output_name + "-" + Utilities::int_to_string(iteration, 4) + ".vtu";
+  std::ofstream output(filename);
+  data_out.write_vtu(output);
+
+  return filename;
+}
+
+
+
+template <int dim>
 void
 UnconstrainedPoissonOptimization<dim>::run()
 {
   poisson_problem.initialize();
 
-  Vector<double> initial_state;
+  Vector<double> initial_control;
   Vector<double> target_state;
 
-  interpolate_configuration(initial_state_function, initial_state);
+  interpolate_configuration(initial_control_function, initial_control);
   interpolate_configuration(target_state_function, target_state);
 
-  const auto A = linear_operator<Vector<double>>(poisson_problem.get_system_matrix());
   const auto M = linear_operator<Vector<double>>(poisson_problem.get_mass_matrix());
-  const Vector<double> rhs = poisson_problem.get_system_rhs();
 
-  const auto value = [&](const Vector<double> &state) {
-    const Vector<double> residual = A * state - rhs;
+  const auto value = [&](const Vector<double> &control) {
+    Vector<double> state;
+    solve_state(control, state);
+
     const Vector<double> mismatch = state - target_state;
     const Vector<double> weighted_mismatch = M * mismatch;
+    const Vector<double> weighted_control = M * control;
 
-    return 0.5 * (residual * residual) +
-           0.5 * regularization * (mismatch * weighted_mismatch);
+    return 0.5 * (mismatch * weighted_mismatch) +
+           0.5 * regularization * (control * weighted_control);
   };
 
-  const auto gradient = [&](const Vector<double> &state) {
-    const Vector<double> residual = A * state - rhs;
-    const Vector<double> result =
-      A * residual + regularization * (M * (state - target_state));
+  const auto gradient = [&](const Vector<double> &control) {
+    Vector<double> state;
+    Vector<double> adjoint;
+
+    solve_state(control, state);
+    solve_adjoint(state, target_state, adjoint);
+
+    const Vector<double> result = M * (regularization * control + adjoint);
     return result;
   };
 
-  Vector<double> optimized_state;
+  std::vector<std::pair<double, std::string>> times_and_names;
+  const OptimizationTools::IterationCallback<Vector<double>> callback =
+    [&](const unsigned int iteration,
+        const Vector<double> &control,
+        const double /*fx*/,
+        const double /*gnorm*/) {
+      const std::string filename =
+        output_iteration(iteration, control, target_state);
+      times_and_names.emplace_back(static_cast<double>(iteration), filename);
+    };
+
+  Vector<double> optimized_control;
 
   if (optimization_method == "gd")
     {
       const auto result =
         OptimizationTools::optimize_gd(value,
                                        gradient,
-                                       initial_state,
-                                       optimization_parameters);
-      optimized_state = result.x;
+                                       initial_control,
+                                       optimization_parameters,
+                                       callback);
+      optimized_control = result.x;
     }
   else if (optimization_method == "nlcg")
     {
       const auto result = OptimizationTools::optimize_nlcg(
-        value, gradient, initial_state, nlcg_parameters);
-      optimized_state = result.x;
+        value, gradient, initial_control, nlcg_parameters, callback);
+      optimized_control = result.x;
     }
   else if (optimization_method == "bfgs")
     {
       const auto result = OptimizationTools::optimize_bfgs(
-        value, gradient, initial_state, lbfgs_parameters);
-      optimized_state = result.x;
+        value, gradient, initial_control, lbfgs_parameters, callback);
+      optimized_control = result.x;
     }
   else
     AssertThrow(false, ExcMessage("Unknown optimization method."));
 
-  const Vector<double> final_gradient = gradient(optimized_state);
+  Vector<double>       optimized_state;
+  Vector<double>       optimized_adjoint;
+  solve_state(optimized_control, optimized_state);
+  solve_adjoint(optimized_state, target_state, optimized_adjoint);
+
+  const Vector<double> final_gradient = gradient(optimized_control);
   const Vector<double> final_mismatch = optimized_state - target_state;
   const Vector<double> weighted_final_mismatch = M * final_mismatch;
   const double         final_l2_error =
     std::sqrt(final_mismatch * weighted_final_mismatch);
 
-  std::cout << "Final objective value: " << value(optimized_state) << std::endl;
+  std::cout << "Final objective value: " << value(optimized_control) << std::endl;
   std::cout << "Final gradient norm:   " << final_gradient.l2_norm()
             << std::endl;
   std::cout << "Final L2 error:        " << final_l2_error << std::endl;
 
-  output_results(optimized_state, target_state);
+  std::ofstream pvd_output(output_name + ".pvd");
+  DataOutBase::write_pvd_record(pvd_output, times_and_names);
+  output_results(optimized_control, target_state);
 }
 
 

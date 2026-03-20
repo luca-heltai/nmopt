@@ -18,6 +18,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <functional>
 #include <iostream>
 #include <limits>
 #include <memory>
@@ -170,6 +171,14 @@ namespace OptimizationTools
   };
 
 
+  template <typename VectorType>
+  using IterationCallback = std::function<void(
+    const unsigned int,
+    const VectorType &,
+    const typename VectorType::value_type,
+    const typename VectorType::value_type)>;
+
+
   namespace internal
   {
     template <typename VectorType>
@@ -250,6 +259,20 @@ namespace OptimizationTools
       if (enabled)
         std::cout << std::endl;
     }
+
+
+    template <typename VectorType>
+    void
+    maybe_invoke_callback(
+      const IterationCallback<VectorType>       &callback,
+      const unsigned int                         iteration,
+      const VectorType                          &x,
+      const typename VectorType::value_type      fx,
+      const typename VectorType::value_type      gnorm)
+    {
+      if (callback)
+        callback(iteration, x, fx, gnorm);
+    }
   } // namespace internal
 
 
@@ -299,7 +322,8 @@ namespace OptimizationTools
     const ValueFunction                                             &value,
     const GradientFunction                                          &gradient,
     const VectorType                                                &x0,
-    const OptimizationParameters<typename VectorType::value_type> &parameters =
+    const OptimizationParameters<typename VectorType::value_type> &parameters = {},
+    const IterationCallback<VectorType>                           &callback   =
       {})
   {
     using Number = typename VectorType::value_type;
@@ -318,6 +342,7 @@ namespace OptimizationTools
         result.function_values.push_back(fx);
         result.gradient_norms.push_back(gnorm);
         result.iterations = k;
+        internal::maybe_invoke_callback(callback, k, x, fx, gnorm);
 
         internal::log_iteration(
           parameters.log_iterations, "GD", k, fx, gnorm);
@@ -353,7 +378,8 @@ namespace OptimizationTools
   optimize_nlcg(const ValueFunction                                  &value,
                 const GradientFunction                               &gradient,
                 const VectorType                                     &x0,
-                const NLCGParameters<typename VectorType::value_type> &parameters =
+                const NLCGParameters<typename VectorType::value_type> &parameters = {},
+                const IterationCallback<VectorType>                   &callback   =
                   {})
   {
     using Number = typename VectorType::value_type;
@@ -373,6 +399,7 @@ namespace OptimizationTools
         result.function_values.push_back(fx);
         result.gradient_norms.push_back(gnorm);
         result.iterations = k;
+        internal::maybe_invoke_callback(callback, k, x, fx, gnorm);
 
         internal::log_iteration(
           parameters.log_iterations, "NLCG", k, fx, gnorm);
@@ -439,7 +466,8 @@ namespace OptimizationTools
     const ValueFunction                                             &value,
     const GradientFunction                                          &gradient,
     const VectorType                                                &x0,
-    const LBFGSParameters<typename VectorType::value_type>         &parameters =
+    const LBFGSParameters<typename VectorType::value_type>         &parameters = {},
+    const IterationCallback<VectorType>                            &callback   =
       {})
   {
     using Number = typename VectorType::value_type;
@@ -461,6 +489,7 @@ namespace OptimizationTools
         result.function_values.push_back(fx);
         result.gradient_norms.push_back(gnorm);
         result.iterations = k;
+        internal::maybe_invoke_callback(callback, k, x, fx, gnorm);
 
         internal::log_iteration(
           parameters.log_iterations, "LBFGS", k, fx, gnorm);
@@ -565,7 +594,8 @@ namespace OptimizationTools
     const GradientFunction                                     &gradient,
     const HessianFunction                                      &hessian,
     const VectorType                                           &x0,
-    const TrustRegionParameters<typename VectorType::value_type> &parameters =
+    const TrustRegionParameters<typename VectorType::value_type> &parameters = {},
+    const IterationCallback<VectorType>                         &callback   =
       {})
   {
     using Number = typename VectorType::value_type;
@@ -587,6 +617,7 @@ namespace OptimizationTools
         result.gradient_norms.push_back(gnorm);
         result.trust_region_radii.push_back(delta);
         result.iterations = k;
+        internal::maybe_invoke_callback(callback, k, x, fx, gnorm);
 
         internal::log_iteration(
           parameters.log_iterations, "TR", k, fx, gnorm);

@@ -76,7 +76,7 @@ subsection Unconstrained Poisson optimization
     end
   end
 
-  subsection Initial state
+  subsection Initial control
     set Function constants  =
     set Function expression = 0.0
     set Variable names      = x,y,t

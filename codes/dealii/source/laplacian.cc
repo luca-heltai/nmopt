@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------
 //
-// Copyright (C) 2024 by Luca Heltai
+// Copyright (C) 2026 by Luca Heltai
 //
 // This file is part of the deal.II Testbench for NMOPT Laboratories,
 // deal.II library.
@@ -226,7 +226,10 @@ Laplacian<dim>::run()
 
       if (cycle == 0)
         {
-          GridGenerator::hyper_ball(triangulation);
+          if constexpr (dim == 1)
+            GridGenerator::hyper_cube(triangulation);
+          else
+            GridGenerator::hyper_ball(triangulation);
           triangulation.refine_global(1);
         }
       else

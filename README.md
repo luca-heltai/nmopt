@@ -57,9 +57,24 @@ The laboratories are an integral part of the course and include:
 The codes:
 
 - are written in **C++** and **Python**;
-- are based on **deal.II**
-- are designed as starting points for extensions and final projects
+- are based on **deal.II** and lightweight Python prototypes;
+- are designed as starting points for extensions and final projects;
 - will be provided with detailed documentation and comments for you to understand and modify.
+
+The repository contains two complementary laboratory tracks:
+
+- Python notebooks in [`jupyterbook/codes`](/Users/heltai/latex/courses/2025/02_nmopt/jupyterbook/codes), used for rapid prototyping, visualization, and reduced models;
+- a C++/**deal.II** testbench in [`codes/dealii`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii), used for finite element implementations of PDE-constrained optimal control problems.
+
+The deal.II testbench is organized as a teaching-oriented environment for laboratories on:
+
+- state equations, adjoints, and optimality systems;
+- distributed and boundary control for elliptic problems;
+- reduced formulations and all-at-once formulations;
+- constrained optimization algorithms and solver experiments;
+- verification, testing, and reproducible computational experiments.
+
+The corresponding documentation is collected in the Jupyter Book under the section **deal.II laboratories**.
 
 ---
 

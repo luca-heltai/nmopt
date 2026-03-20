@@ -124,11 +124,11 @@ UnconstrainedPoissonOptimization<dim>::declare_parameters(ParameterHandler &prm)
   prm.leave_subsection();
 
   prm.enter_subsection("Initial control");
-  Functions::ParsedFunction<dim>::declare_parameters(prm, 1, "0.0");
+  Functions::ParsedFunction<dim>::declare_parameters(prm, 1);
   prm.leave_subsection();
 
   prm.enter_subsection("Target state");
-  Functions::ParsedFunction<dim>::declare_parameters(prm, 1, "sin(pi*x)");
+  Functions::ParsedFunction<dim>::declare_parameters(prm, 1);
   prm.leave_subsection();
 }
 

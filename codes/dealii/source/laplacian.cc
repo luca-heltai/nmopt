@@ -68,15 +68,15 @@ Laplacian<dim>::declare_parameters(ParameterHandler &prm)
   prm.add_parameter("Grid generator arguments", grid_generator_arguments);
 
   prm.enter_subsection("Diffusion coefficient");
-  Functions::ParsedFunction<dim>::declare_parameters(prm, 1, "1.0");
+  Functions::ParsedFunction<dim>::declare_parameters(prm, 1);
   prm.leave_subsection();
 
   prm.enter_subsection("Forcing term");
-  Functions::ParsedFunction<dim>::declare_parameters(prm, 1, "1.0");
+  Functions::ParsedFunction<dim>::declare_parameters(prm, 1);
   prm.leave_subsection();
 
   prm.enter_subsection("Boundary values");
-  Functions::ParsedFunction<dim>::declare_parameters(prm, 1, "0.0");
+  Functions::ParsedFunction<dim>::declare_parameters(prm, 1);
   prm.leave_subsection();
 }
 

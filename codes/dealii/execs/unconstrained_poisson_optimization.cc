@@ -61,12 +61,12 @@ private:
   Functions::ParsedFunction<dim> initial_state_function;
   Functions::ParsedFunction<dim> target_state_function;
 
-  std::string optimization_method;
-  unsigned int max_iterations;
-  unsigned int restart_every;
-  double       gradient_tolerance;
-  double       regularization;
-  std::string  output_name;
+  std::string                                            optimization_method;
+  OptimizationTools::OptimizationParameters<double>      optimization_parameters;
+  OptimizationTools::NLCGParameters<double>              nlcg_parameters;
+  OptimizationTools::LBFGSParameters<double>             lbfgs_parameters;
+  double                                                 regularization;
+  std::string                                            output_name;
 };
 
 
@@ -77,13 +77,14 @@ UnconstrainedPoissonOptimization<dim>::UnconstrainedPoissonOptimization()
   , poisson_problem("Poisson problem")
   , initial_state_function(1)
   , target_state_function(1)
-  , optimization_method("bfgs")
-  , max_iterations(200)
-  , restart_every(50)
-  , gradient_tolerance(1e-8)
+  , optimization_method("nlcg")
   , regularization(1e-4)
   , output_name("optimized_poisson_state")
-{}
+{
+  optimization_parameters.store_iterates = false;
+  nlcg_parameters.store_iterates         = false;
+  lbfgs_parameters.store_iterates        = false;
+}
 
 
 
@@ -92,11 +93,20 @@ void
 UnconstrainedPoissonOptimization<dim>::declare_parameters(ParameterHandler &prm)
 {
   prm.add_parameter("Optimization method", optimization_method);
-  prm.add_parameter("Max iterations", max_iterations);
-  prm.add_parameter("Restart every", restart_every);
-  prm.add_parameter("Gradient tolerance", gradient_tolerance);
   prm.add_parameter("Regularization", regularization);
   prm.add_parameter("Output name", output_name);
+
+  prm.enter_subsection("Optimization parameters");
+  optimization_parameters.add_parameters(prm);
+  prm.leave_subsection();
+
+  prm.enter_subsection("NLCG parameters");
+  nlcg_parameters.add_parameters(prm);
+  prm.leave_subsection();
+
+  prm.enter_subsection("LBFGS parameters");
+  lbfgs_parameters.add_parameters(prm);
+  prm.leave_subsection();
 
   prm.enter_subsection("Initial state");
   Functions::ParsedFunction<dim>::declare_parameters(prm, 1, "0.0");
@@ -192,33 +202,23 @@ UnconstrainedPoissonOptimization<dim>::run()
 
   if (optimization_method == "gd")
     {
-      OptimizationTools::OptimizationParameters<double> parameters;
-      parameters.max_iterations     = max_iterations;
-      parameters.gradient_tolerance = gradient_tolerance;
-
       const auto result =
-        OptimizationTools::optimize_gd(value, gradient, initial_state, parameters);
+        OptimizationTools::optimize_gd(value,
+                                       gradient,
+                                       initial_state,
+                                       optimization_parameters);
       optimized_state = result.x;
     }
   else if (optimization_method == "nlcg")
     {
-      OptimizationTools::NLCGParameters<double> parameters;
-      parameters.max_iterations     = max_iterations;
-      parameters.gradient_tolerance = gradient_tolerance;
-      parameters.restart_every      = restart_every;
-
       const auto result = OptimizationTools::optimize_nlcg(
-        value, gradient, initial_state, parameters);
+        value, gradient, initial_state, nlcg_parameters);
       optimized_state = result.x;
     }
   else if (optimization_method == "bfgs")
     {
-      OptimizationTools::OptimizationParameters<double> parameters;
-      parameters.max_iterations     = max_iterations;
-      parameters.gradient_tolerance = gradient_tolerance;
-
       const auto result = OptimizationTools::optimize_bfgs(
-        value, gradient, initial_state, parameters);
+        value, gradient, initial_state, lbfgs_parameters);
       optimized_state = result.x;
     }
   else

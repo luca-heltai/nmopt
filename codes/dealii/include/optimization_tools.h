@@ -12,13 +12,16 @@
 
 
 #include <deal.II/base/config.h>
+#include <deal.II/base/parameter_handler.h>
 
 #include <deal.II/lac/linear_operator_tools.h>
 
 #include <algorithm>
 #include <cmath>
+#include <iostream>
 #include <limits>
 #include <memory>
+#include <string>
 #include <vector>
 
 
@@ -51,6 +54,16 @@ namespace OptimizationTools
     Number       beta           = Number(0.5);
     unsigned int max_backtracks = 30;
     Number       minimum_alpha  = Number(1.e-16);
+
+    void
+    add_parameters(ParameterHandler &prm)
+    {
+      prm.add_parameter("Initial step length", alpha0);
+      prm.add_parameter("Armijo coefficient", c1);
+      prm.add_parameter("Backtracking reduction", beta);
+      prm.add_parameter("Max backtracks", max_backtracks);
+      prm.add_parameter("Minimum step length", minimum_alpha);
+    }
   };
 
 
@@ -64,7 +77,21 @@ namespace OptimizationTools
     unsigned int             max_iterations      = 200;
     Number                   gradient_tolerance  = Number(1.e-8);
     bool                     store_iterates      = true;
+    bool                     log_iterations      = true;
     ArmijoParameters<Number> armijo;
+
+    void
+    add_parameters(ParameterHandler &prm)
+    {
+      prm.add_parameter("Max iterations", max_iterations);
+      prm.add_parameter("Gradient tolerance", gradient_tolerance);
+      prm.add_parameter("Store iterates", store_iterates);
+      prm.add_parameter("Log iterations", log_iterations);
+
+      prm.enter_subsection("Armijo");
+      armijo.add_parameters(prm);
+      prm.leave_subsection();
+    }
   };
 
 
@@ -76,6 +103,31 @@ namespace OptimizationTools
   {
     NLCGBetaType beta_type     = NLCGBetaType::polak_ribiere_plus;
     unsigned int restart_every = 50;
+
+    void
+    add_parameters(ParameterHandler &prm)
+    {
+      OptimizationParameters<Number>::add_parameters(prm);
+      prm.add_parameter("Beta type", beta_type);
+      prm.add_parameter("Restart every", restart_every);
+    }
+  };
+
+
+  /**
+   * Parameters for limited-memory BFGS.
+   */
+  template <typename Number>
+  struct LBFGSParameters : public OptimizationParameters<Number>
+  {
+    unsigned int history_size = 10;
+
+    void
+    add_parameters(ParameterHandler &prm)
+    {
+      OptimizationParameters<Number>::add_parameters(prm);
+      prm.add_parameter("History size", history_size);
+    }
   };
 
 
@@ -88,6 +140,15 @@ namespace OptimizationTools
     Number delta0    = Number(1.);
     Number delta_max = Number(10.);
     Number eta       = Number(0.1);
+
+    void
+    add_parameters(ParameterHandler &prm)
+    {
+      OptimizationParameters<Number>::add_parameters(prm);
+      prm.add_parameter("Initial trust-region radius", delta0);
+      prm.add_parameter("Maximum trust-region radius", delta_max);
+      prm.add_parameter("Acceptance threshold", eta);
+    }
   };
 
 
@@ -156,6 +217,39 @@ namespace OptimizationTools
       if (store_iterates)
         result.iterates.push_back(x);
     }
+
+
+    template <typename Number>
+    void
+    log_iteration(const bool         enabled,
+                  const std::string &method,
+                  const unsigned int iteration,
+                  const Number       fx,
+                  const Number       gnorm)
+    {
+      if (!enabled)
+        return;
+
+      std::cout << method << " iteration " << iteration << ": f=" << fx
+                << ", ||g||=" << gnorm;
+    }
+
+
+    template <typename Number>
+    void
+    log_scalar(const bool enabled, const std::string &label, const Number value)
+    {
+      if (enabled)
+        std::cout << ", " << label << "=" << value;
+    }
+
+
+    inline void
+    log_endline(const bool enabled)
+    {
+      if (enabled)
+        std::cout << std::endl;
+    }
   } // namespace internal
 
 
@@ -220,12 +314,19 @@ namespace OptimizationTools
         const VectorType g     = gradient(x);
         const Number     gnorm = g.l2_norm();
 
-        result.function_values.push_back(value(x));
+        const Number fx = value(x);
+        result.function_values.push_back(fx);
         result.gradient_norms.push_back(gnorm);
         result.iterations = k;
 
+        internal::log_iteration(
+          parameters.log_iterations, "GD", k, fx, gnorm);
+
         if (gnorm < parameters.gradient_tolerance)
-          break;
+          {
+            internal::log_endline(parameters.log_iterations);
+            break;
+          }
 
         const VectorType p     = Number(-1.) * g;
         const Number     alpha =
@@ -234,6 +335,8 @@ namespace OptimizationTools
         x = x + alpha * p;
 
         result.step_lengths.push_back(alpha);
+        internal::log_scalar(parameters.log_iterations, "alpha", alpha);
+        internal::log_endline(parameters.log_iterations);
         internal::maybe_store_iterate(result, x, parameters.store_iterates);
       }
 
@@ -266,12 +369,19 @@ namespace OptimizationTools
       {
         const Number gnorm = g.l2_norm();
 
-        result.function_values.push_back(value(x));
+        const Number fx = value(x);
+        result.function_values.push_back(fx);
         result.gradient_norms.push_back(gnorm);
         result.iterations = k;
 
+        internal::log_iteration(
+          parameters.log_iterations, "NLCG", k, fx, gnorm);
+
         if (gnorm < parameters.gradient_tolerance)
-          break;
+          {
+            internal::log_endline(parameters.log_iterations);
+            break;
+          }
 
         const Number alpha =
           armijo_backtracking(value, gradient, x, p, parameters.armijo);
@@ -309,6 +419,9 @@ namespace OptimizationTools
         g = g_new;
 
         result.step_lengths.push_back(alpha);
+        internal::log_scalar(parameters.log_iterations, "alpha", alpha);
+        internal::log_scalar(parameters.log_iterations, "beta", beta);
+        internal::log_endline(parameters.log_iterations);
         internal::maybe_store_iterate(result, x, parameters.store_iterates);
       }
 
@@ -318,8 +431,7 @@ namespace OptimizationTools
 
 
   /**
-   * BFGS with Armijo backtracking and inverse-Hessian approximation stored as
-   * a LinearOperator.
+   * Limited-memory BFGS with Armijo backtracking.
    */
   template <typename VectorType, typename ValueFunction, typename GradientFunction>
   OptimizationResult<VectorType>
@@ -327,22 +439,16 @@ namespace OptimizationTools
     const ValueFunction                                             &value,
     const GradientFunction                                          &gradient,
     const VectorType                                                &x0,
-    const OptimizationParameters<typename VectorType::value_type> &parameters =
+    const LBFGSParameters<typename VectorType::value_type>         &parameters =
       {})
   {
     using Number = typename VectorType::value_type;
 
     OptimizationResult<VectorType> result;
     VectorType                     x = x0;
-
-    auto H = dealii::identity_operator<VectorType>(
-      [&x0](VectorType &v, const bool omit_zeroing_entries) {
-        v.reinit(x0, omit_zeroing_entries);
-      });
-    const auto I = dealii::identity_operator<VectorType>(
-      [&x0](VectorType &v, const bool omit_zeroing_entries) {
-        v.reinit(x0, omit_zeroing_entries);
-      });
+    std::vector<VectorType>        s_history;
+    std::vector<VectorType>        y_history;
+    std::vector<Number>            rho_history;
 
     internal::maybe_store_iterate(result, x, parameters.store_iterates);
 
@@ -351,19 +457,54 @@ namespace OptimizationTools
         const VectorType g     = gradient(x);
         const Number     gnorm = g.l2_norm();
 
-        result.function_values.push_back(value(x));
+        const Number fx = value(x);
+        result.function_values.push_back(fx);
         result.gradient_norms.push_back(gnorm);
         result.iterations = k;
 
-        if (gnorm < parameters.gradient_tolerance)
-          break;
+        internal::log_iteration(
+          parameters.log_iterations, "LBFGS", k, fx, gnorm);
 
-        VectorType p = Number(-1.) * (H * g);
+        if (gnorm < parameters.gradient_tolerance)
+          {
+            internal::log_endline(parameters.log_iterations);
+            break;
+          }
+
+        VectorType           q = g;
+        const unsigned int   m = s_history.size();
+        std::vector<Number>  alphas(m);
+
+        for (int i = static_cast<int>(m) - 1; i >= 0; --i)
+          {
+            alphas[i] = rho_history[i] * (s_history[i] * q);
+            q -= alphas[i] * y_history[i];
+          }
+
+        Number gamma = Number(1.);
+        if (m > 0)
+          {
+            const Number yy = y_history.back() * y_history.back();
+            if (yy > Number(0.))
+              gamma = (s_history.back() * y_history.back()) / yy;
+          }
+
+        VectorType r = gamma * q;
+
+        for (unsigned int i = 0; i < m; ++i)
+          {
+            const Number beta = rho_history[i] * (y_history[i] * r);
+            r += (alphas[i] - beta) * s_history[i];
+          }
+
+        VectorType p = Number(-1.) * r;
 
         if ((p * g) >= Number())
           {
             p = Number(-1.) * g;
-            H = I;
+            s_history.clear();
+            y_history.clear();
+            rho_history.clear();
           }
 
         const Number alpha =
@@ -376,19 +517,31 @@ namespace OptimizationTools
 
         if (ys > Number(1.e-12))
           {
-            const Number rho   = Number(1.) / ys;
-            const auto   sy    = internal::outer_product_operator(s, y);
-            const auto   ys_op = internal::outer_product_operator(y, s);
-            const auto   ss    = internal::outer_product_operator(s, s);
+            if (s_history.size() == parameters.history_size)
+              {
+                s_history.erase(s_history.begin());
+                y_history.erase(y_history.begin());
+                rho_history.erase(rho_history.begin());
+              }
 
-            H = (I - rho * sy) * H * (I - rho * ys_op) + rho * ss;
+            s_history.push_back(s);
+            y_history.push_back(y);
+            rho_history.push_back(Number(1.) / ys);
           }
         else
-          H = I;
+          {
+            s_history.clear();
+            y_history.clear();
+            rho_history.clear();
+          }
 
         x = x_new;
 
         result.step_lengths.push_back(alpha);
+        internal::log_scalar(parameters.log_iterations, "alpha", alpha);
+        internal::log_scalar(
+          parameters.log_iterations, "history", s_history.size());
+        internal::log_endline(parameters.log_iterations);
         internal::maybe_store_iterate(result, x, parameters.store_iterates);
       }
 
@@ -429,13 +582,21 @@ namespace OptimizationTools
         const Number     gnorm = g.l2_norm();
         const auto       B     = hessian(x);
 
-        result.function_values.push_back(value(x));
+        const Number fx = value(x);
+        result.function_values.push_back(fx);
         result.gradient_norms.push_back(gnorm);
         result.trust_region_radii.push_back(delta);
         result.iterations = k;
 
+        internal::log_iteration(
+          parameters.log_iterations, "TR", k, fx, gnorm);
+        internal::log_scalar(parameters.log_iterations, "delta", delta);
+
         if (gnorm < parameters.gradient_tolerance)
-          break;
+          {
+            internal::log_endline(parameters.log_iterations);
+            break;
+          }
 
         const VectorType Bg  = B * g;
         const Number     gBg = g * Bg;
@@ -464,6 +625,9 @@ namespace OptimizationTools
             result.step_lengths.push_back(p.l2_norm());
             internal::maybe_store_iterate(result, x, parameters.store_iterates);
           }
+
+        internal::log_scalar(parameters.log_iterations, "rho", rho);
+        internal::log_endline(parameters.log_iterations);
       }
 
     result.x = x;

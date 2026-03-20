@@ -27,12 +27,54 @@ subsection Poisson problem
 end
 
 subsection Unconstrained Poisson optimization
-  set Optimization method = bfgs
-  set Max iterations      = 100
-  set Restart every       = 25
-  set Gradient tolerance  = 1e-8
+  set Optimization method = nlcg
   set Regularization      = 1e-4
   set Output name         = optimized_poisson_state
+
+  subsection Optimization parameters
+    set Max iterations      = 100
+    set Gradient tolerance  = 1e-8
+    set Store iterates      = false
+
+    subsection Armijo
+      set Initial step length    = 1.0
+      set Armijo coefficient     = 1e-4
+      set Backtracking reduction = 0.5
+      set Max backtracks         = 30
+      set Minimum step length    = 1e-16
+    end
+  end
+
+  subsection NLCG parameters
+    set Max iterations      = 100
+    set Gradient tolerance  = 1e-8
+    set Store iterates      = false
+    set Beta type           = polak_ribiere_plus
+    set Restart every       = 25
+
+    subsection Armijo
+      set Initial step length    = 1.0
+      set Armijo coefficient     = 1e-4
+      set Backtracking reduction = 0.5
+      set Max backtracks         = 30
+      set Minimum step length    = 1e-16
+    end
+  end
+
+  subsection LBFGS parameters
+    set Max iterations      = 100
+    set Gradient tolerance  = 1e-8
+    set Store iterates      = false
+    set History size        = 10
+
+    subsection Armijo
+      set Initial step length    = 1.0
+      set Armijo coefficient     = 1e-4
+      set Backtracking reduction = 0.5
+      set Max backtracks         = 30
+      set Minimum step length    = 1e-16
+    end
+  end
 
   subsection Initial state
     set Function constants  =

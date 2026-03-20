@@ -35,16 +35,6 @@ DEAL_II_NAMESPACE_OPEN
 namespace OptimizationTools
 {
   /**
-   * Choice of nonlinear conjugate-gradient update.
-   */
-  enum class NLCGBetaType
-  {
-    fletcher_reeves,
-    polak_ribiere_plus
-  };
-
-
-  /**
    * Common parameters for Armijo backtracking.
    */
   template <typename Number>
@@ -102,7 +92,7 @@ namespace OptimizationTools
   template <typename Number>
   struct NLCGParameters : public OptimizationParameters<Number>
   {
-    NLCGBetaType beta_type     = NLCGBetaType::polak_ribiere_plus;
+    std::string  beta_type     = "polak_ribiere_plus";
     unsigned int restart_every = 50;
 
     void
@@ -420,19 +410,17 @@ namespace OptimizationTools
 
         const Number gg = std::max(g * g, std::numeric_limits<Number>::epsilon());
 
-        switch (parameters.beta_type)
+        if (parameters.beta_type == "fletcher_reeves")
+          beta = (g_new * g_new) / gg;
+        else if (parameters.beta_type == "polak_ribiere_plus")
           {
-            case NLCGBetaType::fletcher_reeves:
-              beta = (g_new * g_new) / gg;
-              break;
-
-            case NLCGBetaType::polak_ribiere_plus:
-              {
-                const VectorType y = g_new - g;
-                beta               = std::max(Number(), (g_new * y) / gg);
-                break;
-              }
+            const VectorType y = g_new - g;
+            beta               = std::max(Number(), (g_new * y) / gg);
           }
+        else
+          AssertThrow(false,
+                      ExcMessage("Unknown NLCG beta type: " +
+                                 parameters.beta_type));
 
         if ((k + 1) % parameters.restart_every == 0)
           beta = Number();

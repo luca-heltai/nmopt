@@ -18,6 +18,7 @@
 #include <algorithm>
 #include <cmath>
 #include <limits>
+#include <memory>
 #include <vector>
 
 
@@ -114,27 +115,32 @@ namespace OptimizationTools
     LinearOperator<VectorType>
     outer_product_operator(const VectorType &left, const VectorType &right)
     {
+      const auto left_ptr  = std::make_shared<VectorType>(left);
+      const auto right_ptr = std::make_shared<VectorType>(right);
+
       auto op = dealii::identity_operator<VectorType>(
-        [&left](VectorType &v, const bool omit_zeroing_entries) {
-          v.reinit(left, omit_zeroing_entries);
+        [left_ptr](VectorType &v, const bool omit_zeroing_entries) {
+          v.reinit(*left_ptr, omit_zeroing_entries);
         });
 
-      op.vmult = [&left, &right](VectorType &dst, const VectorType &src) {
-        dst = left;
-        dst *= (right * src);
+      op.vmult = [left_ptr, right_ptr](VectorType &dst, const VectorType &src) {
+        dst = *left_ptr;
+        dst *= ((*right_ptr) * src);
       };
 
-      op.vmult_add = [&left, &right](VectorType &dst, const VectorType &src) {
-        dst.add(right * src, left);
+      op.vmult_add = [left_ptr, right_ptr](VectorType &dst,
+                                           const VectorType &src) {
+        dst.add((*right_ptr) * src, *left_ptr);
       };
 
-      op.Tvmult = [&left, &right](VectorType &dst, const VectorType &src) {
-        dst = right;
-        dst *= (left * src);
+      op.Tvmult = [left_ptr, right_ptr](VectorType &dst, const VectorType &src) {
+        dst = *right_ptr;
+        dst *= ((*left_ptr) * src);
       };
 
-      op.Tvmult_add = [&left, &right](VectorType &dst, const VectorType &src) {
-        dst.add(left * src, right);
+      op.Tvmult_add = [left_ptr, right_ptr](VectorType &dst,
+                                            const VectorType &src) {
+        dst.add((*left_ptr) * src, *right_ptr);
       };
 
       return op;

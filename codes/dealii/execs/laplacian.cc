@@ -15,22 +15,22 @@
 // ---------------------------------------------------------------------
 #include "laplacian.h"
 
-#include <chrono>
+#include <deal.II/base/parameter_acceptor.h>
+
 #include <iostream>
 
 int
-main()
+main(int argc, char **argv)
 {
   try
     {
       Laplacian<DEAL_DIMENSION> laplace_problem;
 
-      auto start = std::chrono::high_resolution_clock::now();
+      const std::string parameter_file =
+        (argc > 1 ? argv[1] : "laplacian.prm");
+
+      ParameterAcceptor::initialize(parameter_file);
       laplace_problem.run();
-      auto end = std::chrono::high_resolution_clock::now();
-      std::chrono::duration<double> elapsed = end - start;
-      std::cout << "Elapsed time: " << elapsed.count() << " seconds"
-                << std::endl;
     }
   catch (std::exception &exc)
     {

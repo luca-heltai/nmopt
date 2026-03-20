@@ -1,0 +1,27 @@
+subsection Poisson problem
+  set FE degree                 = 1
+  set Global refinements        = 5
+  set Solver max iterations     = 1000
+  set Solver tolerance          = 1e-12
+  set Preconditioner relaxation = 1.2
+  set Grid generator function   = hyper_cube
+  set Grid generator arguments  = 0.0 : 1.0 : false
+
+  subsection Diffusion coefficient
+    set Function constants  =
+    set Function expression = 1.0
+    set Variable names      = x,y,t
+  end
+
+  subsection Forcing term
+    set Function constants  =
+    set Function expression = 1.0
+    set Variable names      = x,y,t
+  end
+
+  subsection Boundary values
+    set Function constants  =
+    set Function expression = 0.0
+    set Variable names      = x,y,t
+  end
+end

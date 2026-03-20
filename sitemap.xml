@@ -29,18 +29,9 @@
     <loc>http://localhost:3000/codes/lecture04/step-target-fd</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/slides/slides01</loc>
+    <loc>http://localhost:3000/laboratories/dealii</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/slides/slides02</loc>
-  </url>
-  <url>
-    <loc>http://localhost:3000/slides/slides03</loc>
-  </url>
-  <url>
-    <loc>http://localhost:3000/slides/slides04</loc>
-  </url>
-  <url>
-    <loc>http://localhost:3000/slides/slides05</loc>
+    <loc>http://localhost:3000/laboratories/dealii-api</loc>
   </url>
 </urlset>

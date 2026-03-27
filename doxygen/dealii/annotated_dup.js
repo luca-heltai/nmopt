@@ -8,5 +8,6 @@ var annotated_dup =
       [ "OptimizationResult", "struct_optimization_tools_1_1_optimization_result.html", "struct_optimization_tools_1_1_optimization_result" ],
       [ "TrustRegionParameters", "struct_optimization_tools_1_1_trust_region_parameters.html", "struct_optimization_tools_1_1_trust_region_parameters" ]
     ] ],
+    [ "KKT", "class_k_k_t.html", "class_k_k_t" ],
     [ "Laplacian", "class_laplacian.html", "class_laplacian" ]
 ];

@@ -6,7 +6,7 @@ var optimization__tools_8h =
     [ "OptimizationTools::LBFGSParameters< Number >", "struct_optimization_tools_1_1_l_b_f_g_s_parameters.html", "struct_optimization_tools_1_1_l_b_f_g_s_parameters" ],
     [ "OptimizationTools::TrustRegionParameters< Number >", "struct_optimization_tools_1_1_trust_region_parameters.html", "struct_optimization_tools_1_1_trust_region_parameters" ],
     [ "OptimizationTools::OptimizationResult< VectorType >", "struct_optimization_tools_1_1_optimization_result.html", "struct_optimization_tools_1_1_optimization_result" ],
-    [ "IterationCallback", "optimization__tools_8h.html#a971496d21ece9486ea59e53621cd2ccd", null ],
+    [ "IterationCallback", "optimization__tools_8h.html#af006cc1a622015844b665722042cb8ab", null ],
     [ "armijo_backtracking", "optimization__tools_8h.html#a36ffa2c0a6b829fcadb1fb97c135c336", null ],
     [ "log_endline", "optimization__tools_8h.html#ab61475abc56b6ba542dbf0ab594fc308", null ],
     [ "log_iteration", "optimization__tools_8h.html#a3d63116ceaf81eef7418c5237e068b83", null ],

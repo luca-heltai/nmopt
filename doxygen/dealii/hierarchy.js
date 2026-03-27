@@ -3,6 +3,7 @@ var hierarchy =
     [ "OptimizationTools::ArmijoParameters< Number >", "struct_optimization_tools_1_1_armijo_parameters.html", null ],
     [ "EnableObserverPointer", "http://www.dealii.org/developer/doxygen/deal.II/classEnableObserverPointer.html", [
       [ "ParameterAcceptor", "http://www.dealii.org/developer/doxygen/deal.II/classParameterAcceptor.html", [
+        [ "KKT< dim >", "class_k_k_t.html", null ],
         [ "Laplacian< dim >", "class_laplacian.html", null ]
       ] ]
     ] ],

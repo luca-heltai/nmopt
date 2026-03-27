@@ -14,7 +14,7 @@ var namespace_optimization_tools =
     [ "OptimizationParameters", "struct_optimization_tools_1_1_optimization_parameters.html", "struct_optimization_tools_1_1_optimization_parameters" ],
     [ "OptimizationResult", "struct_optimization_tools_1_1_optimization_result.html", "struct_optimization_tools_1_1_optimization_result" ],
     [ "TrustRegionParameters", "struct_optimization_tools_1_1_trust_region_parameters.html", "struct_optimization_tools_1_1_trust_region_parameters" ],
-    [ "IterationCallback", "namespace_optimization_tools.html#a971496d21ece9486ea59e53621cd2ccd", null ],
+    [ "IterationCallback", "namespace_optimization_tools.html#af006cc1a622015844b665722042cb8ab", null ],
     [ "armijo_backtracking", "namespace_optimization_tools.html#a36ffa2c0a6b829fcadb1fb97c135c336", null ],
     [ "optimize_bfgs", "namespace_optimization_tools.html#a0ecc93b6de752c9849dd2fddd940e117", null ],
     [ "optimize_gd", "namespace_optimization_tools.html#a25f6899fdb5679c043e7cf7428141451", null ],

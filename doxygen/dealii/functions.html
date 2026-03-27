@@ -106,9 +106,11 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 
 <h3><a id="index_a" name="index_a"></a>- a -</h3><ul>
 <li>add_parameters()&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_armijo_parameters.html#a9e161bb54888f369a08337183294edc8">OptimizationTools::ArmijoParameters&lt; Number &gt;</a>, <a class="el" href="struct_optimization_tools_1_1_l_b_f_g_s_parameters.html#a9f48b8d763c3fd01f6953187a92e7278">OptimizationTools::LBFGSParameters&lt; Number &gt;</a>, <a class="el" href="struct_optimization_tools_1_1_n_l_c_g_parameters.html#a0c14c1478a0185e8c6bd461da7767471">OptimizationTools::NLCGParameters&lt; Number &gt;</a>, <a class="el" href="struct_optimization_tools_1_1_optimization_parameters.html#a6706e1fea03ea29c95f7e3453f5dd9b2">OptimizationTools::OptimizationParameters&lt; Number &gt;</a>, <a class="el" href="struct_optimization_tools_1_1_trust_region_parameters.html#a1ac7319f9aa1e618c64ffce265c3ffcb">OptimizationTools::TrustRegionParameters&lt; Number &gt;</a></li>
+<li>adjoint_block&#160;:&#160;<a class="el" href="class_k_k_t.html#ad05122ab78587dded1d3ccec6c898271">KKT&lt; dim &gt;</a></li>
+<li>adjoint_boundary_values&#160;:&#160;<a class="el" href="class_k_k_t.html#ae48d56757a061e2cb6f5b51d22aab5e8">KKT&lt; dim &gt;</a></li>
 <li>alpha0&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_armijo_parameters.html#a3f2e19c24b4f5add5621511248eb3e4e">OptimizationTools::ArmijoParameters&lt; Number &gt;</a></li>
 <li>armijo&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_optimization_parameters.html#ad1bf10116288e2eefc1b8424106a3620">OptimizationTools::OptimizationParameters&lt; Number &gt;</a></li>
-<li>assemble_system()&#160;:&#160;<a class="el" href="class_laplacian.html#a711968be3da6b2b3c8dd126be3e9536b">Laplacian&lt; dim &gt;</a></li>
+<li>assemble_system()&#160;:&#160;<a class="el" href="class_k_k_t.html#a9b273018fed1c8bd3765329606203fe5">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a711968be3da6b2b3c8dd126be3e9536b">Laplacian&lt; dim &gt;</a></li>
 </ul>
 
 
@@ -121,16 +123,22 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 
 <h3><a id="index_c" name="index_c"></a>- c -</h3><ul>
 <li>c1&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_armijo_parameters.html#a1bbc0199b2e4bf6482e17c8b7895c810">OptimizationTools::ArmijoParameters&lt; Number &gt;</a></li>
-<li>constraints&#160;:&#160;<a class="el" href="class_laplacian.html#ae46cb4c72dd344a5349c319db4b6a479">Laplacian&lt; dim &gt;</a></li>
+<li>constraints&#160;:&#160;<a class="el" href="class_k_k_t.html#a851a239c446952c84e5e05798a78dea7">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#ae46cb4c72dd344a5349c319db4b6a479">Laplacian&lt; dim &gt;</a></li>
+<li>continuous_control&#160;:&#160;<a class="el" href="class_k_k_t.html#aa7745aea8eb970120a3f3fd9abf4e570">KKT&lt; dim &gt;</a></li>
+<li>control_block&#160;:&#160;<a class="el" href="class_k_k_t.html#accbc817ff4131818684b0828a4eaaf8b">KKT&lt; dim &gt;</a></li>
+<li>control_degree&#160;:&#160;<a class="el" href="class_k_k_t.html#a2a9a7059a0abd01d414bfc680001e30c">KKT&lt; dim &gt;</a></li>
+<li>create_fe_system()&#160;:&#160;<a class="el" href="class_k_k_t.html#acc1476f7fedb05c92263a387e31ec656">KKT&lt; dim &gt;</a></li>
 </ul>
 
 
 <h3><a id="index_d" name="index_d"></a>- d -</h3><ul>
-<li>declare_parameters()&#160;:&#160;<a class="el" href="class_laplacian.html#a05a3c06f65fb978759211551a2504227">Laplacian&lt; dim &gt;</a></li>
+<li>declare_parameters()&#160;:&#160;<a class="el" href="class_k_k_t.html#a57ec66b95ca7e0e1b2c02ce24f196974">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a05a3c06f65fb978759211551a2504227">Laplacian&lt; dim &gt;</a></li>
 <li>delta0&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_trust_region_parameters.html#a10aeaf7ac69a27842f891281a9499a26">OptimizationTools::TrustRegionParameters&lt; Number &gt;</a></li>
 <li>delta_max&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_trust_region_parameters.html#a7e2bcbc4eb2c1d7e58e7df068e66102a">OptimizationTools::TrustRegionParameters&lt; Number &gt;</a></li>
-<li>diffusion_coefficient&#160;:&#160;<a class="el" href="class_laplacian.html#a738a653b5d0f4bd13bba7f55443fc1b3">Laplacian&lt; dim &gt;</a></li>
-<li>dof_handler&#160;:&#160;<a class="el" href="class_laplacian.html#af34dff796995afe7be45fa645d664ca6">Laplacian&lt; dim &gt;</a></li>
+<li>desired_state&#160;:&#160;<a class="el" href="class_k_k_t.html#a031090138ac892fc048b1c4262c9ad2e">KKT&lt; dim &gt;</a></li>
+<li>diffusion_coefficient&#160;:&#160;<a class="el" href="class_k_k_t.html#a660429bc67a1c42c2b8fee62167d127a">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a738a653b5d0f4bd13bba7f55443fc1b3">Laplacian&lt; dim &gt;</a></li>
+<li>dof_handler&#160;:&#160;<a class="el" href="class_k_k_t.html#a3c3f17c6e83e25e58c180c1c99b72cf3">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#af34dff796995afe7be45fa645d664ca6">Laplacian&lt; dim &gt;</a></li>
+<li>dofs_per_block&#160;:&#160;<a class="el" href="class_k_k_t.html#a609ea42b67938d07a4b75787a65ae8bc">KKT&lt; dim &gt;</a></li>
 </ul>
 
 
@@ -140,25 +148,27 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 
 
 <h3><a id="index_f" name="index_f"></a>- f -</h3><ul>
-<li>fe&#160;:&#160;<a class="el" href="class_laplacian.html#adfb19eddb45728e751ebddf49a739df2">Laplacian&lt; dim &gt;</a></li>
+<li>fe&#160;:&#160;<a class="el" href="class_k_k_t.html#a6fb0bdcc8e6fe7b67cb482fac39c49dd">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#adfb19eddb45728e751ebddf49a739df2">Laplacian&lt; dim &gt;</a></li>
 <li>fe_degree&#160;:&#160;<a class="el" href="class_laplacian.html#ab3e7fc634398149bd0e12713fd2f38ef">Laplacian&lt; dim &gt;</a></li>
-<li>forcing_term&#160;:&#160;<a class="el" href="class_laplacian.html#afabf5452b117263f64e10bc58c481079">Laplacian&lt; dim &gt;</a></li>
+<li>forcing_term&#160;:&#160;<a class="el" href="class_k_k_t.html#ad1b81c40f14bc29fcb17ce03f87920d8">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#afabf5452b117263f64e10bc58c481079">Laplacian&lt; dim &gt;</a></li>
 <li>function_values&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_optimization_result.html#af1c3dc2bb2a2591579644674a7aa6239">OptimizationTools::OptimizationResult&lt; VectorType &gt;</a></li>
 </ul>
 
 
 <h3><a id="index_g" name="index_g"></a>- g -</h3><ul>
-<li>get_constraints()&#160;:&#160;<a class="el" href="class_laplacian.html#a6828cdad05be730109ee26552c030572">Laplacian&lt; dim &gt;</a></li>
-<li>get_dof_handler()&#160;:&#160;<a class="el" href="class_laplacian.html#ac71e223780fc72768008217f25f89c6a">Laplacian&lt; dim &gt;</a></li>
+<li>get_constraints()&#160;:&#160;<a class="el" href="class_k_k_t.html#aa44693828aab1c5d4fb52806a1ebb45e">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a6828cdad05be730109ee26552c030572">Laplacian&lt; dim &gt;</a></li>
+<li>get_dof_handler()&#160;:&#160;<a class="el" href="class_k_k_t.html#a4610a6676287032e684a8a8547d805c0">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#ac71e223780fc72768008217f25f89c6a">Laplacian&lt; dim &gt;</a></li>
+<li>get_dofs_per_block()&#160;:&#160;<a class="el" href="class_k_k_t.html#a286689a9aa4c267e71189f95569699e7">KKT&lt; dim &gt;</a></li>
 <li>get_mass_matrix()&#160;:&#160;<a class="el" href="class_laplacian.html#aaff5627aa16c17f129b399eec14513c4">Laplacian&lt; dim &gt;</a></li>
-<li>get_solution()&#160;:&#160;<a class="el" href="class_laplacian.html#a84d42d74e969ff1c9ad95f3a5f6c5519">Laplacian&lt; dim &gt;</a></li>
-<li>get_system_matrix()&#160;:&#160;<a class="el" href="class_laplacian.html#aa9400ada5fbc136262c615103683c142">Laplacian&lt; dim &gt;</a></li>
-<li>get_system_rhs()&#160;:&#160;<a class="el" href="class_laplacian.html#ae67dd326628f6e6f60bc3b110df5c160">Laplacian&lt; dim &gt;</a></li>
-<li>global_refinements&#160;:&#160;<a class="el" href="class_laplacian.html#a13994852663da1eab411e99cff1245cc">Laplacian&lt; dim &gt;</a></li>
+<li>get_solution()&#160;:&#160;<a class="el" href="class_k_k_t.html#a9ae4cd5a96ce5b460eada206e799f70e">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a84d42d74e969ff1c9ad95f3a5f6c5519">Laplacian&lt; dim &gt;</a></li>
+<li>get_system_block()&#160;:&#160;<a class="el" href="class_k_k_t.html#a2c0bb4a0d82ebe9e3b0b4150b39e5687">KKT&lt; dim &gt;</a></li>
+<li>get_system_matrix()&#160;:&#160;<a class="el" href="class_k_k_t.html#ab82d491955b735d36b879e74050fdad4">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#aa9400ada5fbc136262c615103683c142">Laplacian&lt; dim &gt;</a></li>
+<li>get_system_rhs()&#160;:&#160;<a class="el" href="class_k_k_t.html#ac256ac8e35ffe40a2b21f9f37d3ca134">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#ae67dd326628f6e6f60bc3b110df5c160">Laplacian&lt; dim &gt;</a></li>
+<li>global_refinements&#160;:&#160;<a class="el" href="class_k_k_t.html#af32a656e1196d9f9bb2e33bc03d1c974">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a13994852663da1eab411e99cff1245cc">Laplacian&lt; dim &gt;</a></li>
 <li>gradient_norms&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_optimization_result.html#a297e56df93b58a391fa5442ca4a5847c">OptimizationTools::OptimizationResult&lt; VectorType &gt;</a></li>
 <li>gradient_tolerance&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_optimization_parameters.html#a39174d6d5fb5404f0705128354323fab">OptimizationTools::OptimizationParameters&lt; Number &gt;</a></li>
-<li>grid_generator_arguments&#160;:&#160;<a class="el" href="class_laplacian.html#aa03b4fff028a14f877aeffd42bd4857f">Laplacian&lt; dim &gt;</a></li>
-<li>grid_generator_function&#160;:&#160;<a class="el" href="class_laplacian.html#a1a6795f927465300965966c6e909a703">Laplacian&lt; dim &gt;</a></li>
+<li>grid_generator_arguments&#160;:&#160;<a class="el" href="class_k_k_t.html#afb9d707ca256c940c765b87170a7071e">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#aa03b4fff028a14f877aeffd42bd4857f">Laplacian&lt; dim &gt;</a></li>
+<li>grid_generator_function&#160;:&#160;<a class="el" href="class_k_k_t.html#a53fb04a1e50b82f2f99106a5eb299fa6">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a1a6795f927465300965966c6e909a703">Laplacian&lt; dim &gt;</a></li>
 </ul>
 
 
@@ -168,9 +178,14 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 
 
 <h3><a id="index_i" name="index_i"></a>- i -</h3><ul>
-<li>initialize()&#160;:&#160;<a class="el" href="class_laplacian.html#a892e4f06d0a66991c861f33361031432">Laplacian&lt; dim &gt;</a></li>
+<li>initialize()&#160;:&#160;<a class="el" href="class_k_k_t.html#a64c60f7d45feb3daa190f945e1797726">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a892e4f06d0a66991c861f33361031432">Laplacian&lt; dim &gt;</a></li>
 <li>iterates&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_optimization_result.html#a9c5dd099abcbfb853d63299f99faeb33">OptimizationTools::OptimizationResult&lt; VectorType &gt;</a></li>
 <li>iterations&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_optimization_result.html#ad849db47f268852749d43f0070a396e5">OptimizationTools::OptimizationResult&lt; VectorType &gt;</a></li>
+</ul>
+
+
+<h3><a id="index_k" name="index_k"></a>- k -</h3><ul>
+<li>KKT()&#160;:&#160;<a class="el" href="class_k_k_t.html#a00a39eccb87ef44a8a64e5b620a96d24">KKT&lt; dim &gt;</a></li>
 </ul>
 
 
@@ -181,7 +196,7 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 
 
 <h3><a id="index_m" name="index_m"></a>- m -</h3><ul>
-<li>make_grid()&#160;:&#160;<a class="el" href="class_laplacian.html#a37310548144fc611b6be9cae687f8d84">Laplacian&lt; dim &gt;</a></li>
+<li>make_grid()&#160;:&#160;<a class="el" href="class_k_k_t.html#a44742c9cb6caac4bd991a77ab55461c1">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a37310548144fc611b6be9cae687f8d84">Laplacian&lt; dim &gt;</a></li>
 <li>mass_matrix&#160;:&#160;<a class="el" href="class_laplacian.html#a7fa21b0736627840b7e50345f5059b2d">Laplacian&lt; dim &gt;</a></li>
 <li>max_backtracks&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_armijo_parameters.html#abd24af76a9ad5f82ff67c2035b585449">OptimizationTools::ArmijoParameters&lt; Number &gt;</a></li>
 <li>max_iterations&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_optimization_parameters.html#a63b0592ecd90557d8fc72aba0098d7d9">OptimizationTools::OptimizationParameters&lt; Number &gt;</a></li>
@@ -189,39 +204,50 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 </ul>
 
 
+<h3><a id="index_n" name="index_n"></a>- n -</h3><ul>
+<li>n_blocks&#160;:&#160;<a class="el" href="class_k_k_t.html#afa7e76062ac3d27a3c5363db67ea4081">KKT&lt; dim &gt;</a></li>
+</ul>
+
+
 <h3><a id="index_o" name="index_o"></a>- o -</h3><ul>
-<li>output_results()&#160;:&#160;<a class="el" href="class_laplacian.html#a06e438be28b441ed50d213d504ed743c">Laplacian&lt; dim &gt;</a></li>
+<li>output_results()&#160;:&#160;<a class="el" href="class_k_k_t.html#a0d9602b874051d318aa60eb890e2335d">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a06e438be28b441ed50d213d504ed743c">Laplacian&lt; dim &gt;</a></li>
 </ul>
 
 
 <h3><a id="index_p" name="index_p"></a>- p -</h3><ul>
-<li>parse_parameters()&#160;:&#160;<a class="el" href="class_laplacian.html#ad5d0d6cda15114e1341833ce2a7b4602">Laplacian&lt; dim &gt;</a></li>
+<li>parse_parameters()&#160;:&#160;<a class="el" href="class_k_k_t.html#add148a2c5413d5ca3da934264736b62b">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#ad5d0d6cda15114e1341833ce2a7b4602">Laplacian&lt; dim &gt;</a></li>
 <li>preconditioner_relaxation&#160;:&#160;<a class="el" href="class_laplacian.html#a798248db450d65a6c129404164e18638">Laplacian&lt; dim &gt;</a></li>
 </ul>
 
 
 <h3><a id="index_r" name="index_r"></a>- r -</h3><ul>
+<li>reaction_coefficient&#160;:&#160;<a class="el" href="class_k_k_t.html#a06bc0a29c883f62d129a88a46f6aa1c2">KKT&lt; dim &gt;</a></li>
+<li>regularization&#160;:&#160;<a class="el" href="class_k_k_t.html#a4fbfe26676775bac296394b39c5244b0">KKT&lt; dim &gt;</a></li>
 <li>restart_every&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_n_l_c_g_parameters.html#af7b7ace1f0e404b18d9617bf80deb309">OptimizationTools::NLCGParameters&lt; Number &gt;</a></li>
-<li>run()&#160;:&#160;<a class="el" href="class_laplacian.html#a4f042bfd5921b67fd362e841b6963509">Laplacian&lt; dim &gt;</a></li>
+<li>run()&#160;:&#160;<a class="el" href="class_k_k_t.html#ac76ef28d27f7cd21d5d3e96666d5729f">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a4f042bfd5921b67fd362e841b6963509">Laplacian&lt; dim &gt;</a></li>
 </ul>
 
 
 <h3><a id="index_s" name="index_s"></a>- s -</h3><ul>
-<li>setup_system()&#160;:&#160;<a class="el" href="class_laplacian.html#a8e79a428286cb5439b943eaea49e6af2">Laplacian&lt; dim &gt;</a></li>
-<li>solution&#160;:&#160;<a class="el" href="class_laplacian.html#a6696400f20f3af9a798ce227d475d847">Laplacian&lt; dim &gt;</a></li>
-<li>solve()&#160;:&#160;<a class="el" href="class_laplacian.html#afb5e3bc7ea47f6b81332e13932aa8a21">Laplacian&lt; dim &gt;</a></li>
+<li>setup_system()&#160;:&#160;<a class="el" href="class_k_k_t.html#a390f48497adcef581274ab2c43b40183">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a8e79a428286cb5439b943eaea49e6af2">Laplacian&lt; dim &gt;</a></li>
+<li>solution&#160;:&#160;<a class="el" href="class_k_k_t.html#adc456ffb78bee7203610e3b8f4a2fe85">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a6696400f20f3af9a798ce227d475d847">Laplacian&lt; dim &gt;</a></li>
+<li>solve()&#160;:&#160;<a class="el" href="class_k_k_t.html#a77b2738659e71b8e381210da0a5e4a2d">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#afb5e3bc7ea47f6b81332e13932aa8a21">Laplacian&lt; dim &gt;</a></li>
 <li>solver_max_iterations&#160;:&#160;<a class="el" href="class_laplacian.html#a185d945aa91ad68b07c0651080804ab4">Laplacian&lt; dim &gt;</a></li>
 <li>solver_tolerance&#160;:&#160;<a class="el" href="class_laplacian.html#af7a3faa60fab44d20e82c70075960914">Laplacian&lt; dim &gt;</a></li>
-<li>sparsity_pattern&#160;:&#160;<a class="el" href="class_laplacian.html#a6bef3f6ec8592cb97c1fb9dc67c5d57d">Laplacian&lt; dim &gt;</a></li>
+<li>sparsity_pattern&#160;:&#160;<a class="el" href="class_k_k_t.html#a196f94c5b2f05dcdd0bbcd7b30c264b9">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a6bef3f6ec8592cb97c1fb9dc67c5d57d">Laplacian&lt; dim &gt;</a></li>
+<li>state_block&#160;:&#160;<a class="el" href="class_k_k_t.html#ae3bfd308ca82bbee8de5eee95191e39a">KKT&lt; dim &gt;</a></li>
+<li>state_boundary_values&#160;:&#160;<a class="el" href="class_k_k_t.html#a024734d97a3842757317bef27ff1da3f">KKT&lt; dim &gt;</a></li>
+<li>state_degree&#160;:&#160;<a class="el" href="class_k_k_t.html#ad3231fcb381dffc68e5379bb4e79fedb">KKT&lt; dim &gt;</a></li>
 <li>step_lengths&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_optimization_result.html#a2c6b8ad198bdedd170bf0d7aa0972a40">OptimizationTools::OptimizationResult&lt; VectorType &gt;</a></li>
 <li>store_iterates&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_optimization_parameters.html#ad32c283811efe2b42306e28781ebbf34">OptimizationTools::OptimizationParameters&lt; Number &gt;</a></li>
-<li>system_matrix&#160;:&#160;<a class="el" href="class_laplacian.html#a48b5684ad4f0d1d972b927ba001528a4">Laplacian&lt; dim &gt;</a></li>
-<li>system_rhs&#160;:&#160;<a class="el" href="class_laplacian.html#ae0f09e362e89c8f2caf9745b5c095aa2">Laplacian&lt; dim &gt;</a></li>
+<li>system_matrix&#160;:&#160;<a class="el" href="class_k_k_t.html#a99cec6c2fb95e08b862df859b0511f75">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a48b5684ad4f0d1d972b927ba001528a4">Laplacian&lt; dim &gt;</a></li>
+<li>system_rhs&#160;:&#160;<a class="el" href="class_k_k_t.html#aae6d8ac6d9e6e30383e1bff4222fd1d3">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#ae0f09e362e89c8f2caf9745b5c095aa2">Laplacian&lt; dim &gt;</a></li>
 </ul>
 
 
 <h3><a id="index_t" name="index_t"></a>- t -</h3><ul>
-<li>triangulation&#160;:&#160;<a class="el" href="class_laplacian.html#afa732c8677160788dad92031cfedfb22">Laplacian&lt; dim &gt;</a></li>
+<li>transport_field&#160;:&#160;<a class="el" href="class_k_k_t.html#ae26008535004dbb8bbdc0e582fa67f40">KKT&lt; dim &gt;</a></li>
+<li>triangulation&#160;:&#160;<a class="el" href="class_k_k_t.html#a8e162fa9d503399baee919c49fa53fad">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#afa732c8677160788dad92031cfedfb22">Laplacian&lt; dim &gt;</a></li>
 <li>trust_region_radii&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_optimization_result.html#a19085bbe34171eb8d67aa7c6f42add13">OptimizationTools::OptimizationResult&lt; VectorType &gt;</a></li>
 </ul>
 
@@ -239,7 +265,7 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 27 2026 08:12:33 for deal.II Testbench for NMOPT Laboratories by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Fri Mar 27 2026 10:14:33 for deal.II Testbench for NMOPT Laboratories by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

@@ -133,9 +133,9 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a971496d21ece9486ea59e53621cd2ccd" id="r_a971496d21ece9486ea59e53621cd2ccd"><td class="memTemplParams" colspan="2">template&lt;typename VectorType &gt; </td></tr>
-<tr class="memitem:a971496d21ece9486ea59e53621cd2ccd"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_optimization_tools.html#a971496d21ece9486ea59e53621cd2ccd">IterationCallback</a> = std::function&lt; void(const unsigned int, const VectorType &amp;, const typename VectorType::value_type, const typename VectorType::value_type)&gt;</td></tr>
-<tr class="separator:a971496d21ece9486ea59e53621cd2ccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af006cc1a622015844b665722042cb8ab" id="r_af006cc1a622015844b665722042cb8ab"><td class="memTemplParams" colspan="2">template&lt;typename VectorType &gt; </td></tr>
+<tr class="memitem:af006cc1a622015844b665722042cb8ab"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_optimization_tools.html#af006cc1a622015844b665722042cb8ab">IterationCallback</a> = std::function&lt; void(const unsigned int, const VectorType &amp;, const typename VectorType::value_type, const typename VectorType::value_type)&gt;</td></tr>
+<tr class="separator:af006cc1a622015844b665722042cb8ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -143,23 +143,23 @@ Functions</h2></td></tr>
 <tr class="memitem:a36ffa2c0a6b829fcadb1fb97c135c336"><td class="memTemplItemLeft" align="right" valign="top">VectorType::value_type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_optimization_tools.html#a36ffa2c0a6b829fcadb1fb97c135c336">armijo_backtracking</a> (const ValueFunction &amp;value, const GradientFunction &amp;gradient, const VectorType &amp;x, const VectorType &amp;p, const <a class="el" href="struct_optimization_tools_1_1_armijo_parameters.html">ArmijoParameters</a>&lt; typename VectorType::value_type &gt; &amp;parameters={})</td></tr>
 <tr class="separator:a36ffa2c0a6b829fcadb1fb97c135c336"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25f6899fdb5679c043e7cf7428141451" id="r_a25f6899fdb5679c043e7cf7428141451"><td class="memTemplParams" colspan="2">template&lt;typename VectorType , typename ValueFunction , typename GradientFunction &gt; </td></tr>
-<tr class="memitem:a25f6899fdb5679c043e7cf7428141451"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_optimization_tools_1_1_optimization_result.html">OptimizationResult</a>&lt; VectorType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_optimization_tools.html#a25f6899fdb5679c043e7cf7428141451">optimize_gd</a> (const ValueFunction &amp;value, const GradientFunction &amp;gradient, const VectorType &amp;x0, const <a class="el" href="struct_optimization_tools_1_1_optimization_parameters.html">OptimizationParameters</a>&lt; typename VectorType::value_type &gt; &amp;parameters={}, const <a class="el" href="namespace_optimization_tools.html#a971496d21ece9486ea59e53621cd2ccd">IterationCallback</a>&lt; VectorType &gt; &amp;callback={})</td></tr>
+<tr class="memitem:a25f6899fdb5679c043e7cf7428141451"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_optimization_tools_1_1_optimization_result.html">OptimizationResult</a>&lt; VectorType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_optimization_tools.html#a25f6899fdb5679c043e7cf7428141451">optimize_gd</a> (const ValueFunction &amp;value, const GradientFunction &amp;gradient, const VectorType &amp;x0, const <a class="el" href="struct_optimization_tools_1_1_optimization_parameters.html">OptimizationParameters</a>&lt; typename VectorType::value_type &gt; &amp;parameters={}, const <a class="el" href="namespace_optimization_tools.html#af006cc1a622015844b665722042cb8ab">IterationCallback</a>&lt; VectorType &gt; &amp;callback={})</td></tr>
 <tr class="separator:a25f6899fdb5679c043e7cf7428141451"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab06a8bf1e10b4619c0b1afa9dd8fbcc8" id="r_ab06a8bf1e10b4619c0b1afa9dd8fbcc8"><td class="memTemplParams" colspan="2">template&lt;typename VectorType , typename ValueFunction , typename GradientFunction &gt; </td></tr>
-<tr class="memitem:ab06a8bf1e10b4619c0b1afa9dd8fbcc8"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_optimization_tools_1_1_optimization_result.html">OptimizationResult</a>&lt; VectorType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_optimization_tools.html#ab06a8bf1e10b4619c0b1afa9dd8fbcc8">optimize_nlcg</a> (const ValueFunction &amp;value, const GradientFunction &amp;gradient, const VectorType &amp;x0, const <a class="el" href="struct_optimization_tools_1_1_n_l_c_g_parameters.html">NLCGParameters</a>&lt; typename VectorType::value_type &gt; &amp;parameters={}, const <a class="el" href="namespace_optimization_tools.html#a971496d21ece9486ea59e53621cd2ccd">IterationCallback</a>&lt; VectorType &gt; &amp;callback={})</td></tr>
+<tr class="memitem:ab06a8bf1e10b4619c0b1afa9dd8fbcc8"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_optimization_tools_1_1_optimization_result.html">OptimizationResult</a>&lt; VectorType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_optimization_tools.html#ab06a8bf1e10b4619c0b1afa9dd8fbcc8">optimize_nlcg</a> (const ValueFunction &amp;value, const GradientFunction &amp;gradient, const VectorType &amp;x0, const <a class="el" href="struct_optimization_tools_1_1_n_l_c_g_parameters.html">NLCGParameters</a>&lt; typename VectorType::value_type &gt; &amp;parameters={}, const <a class="el" href="namespace_optimization_tools.html#af006cc1a622015844b665722042cb8ab">IterationCallback</a>&lt; VectorType &gt; &amp;callback={})</td></tr>
 <tr class="separator:ab06a8bf1e10b4619c0b1afa9dd8fbcc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ecc93b6de752c9849dd2fddd940e117" id="r_a0ecc93b6de752c9849dd2fddd940e117"><td class="memTemplParams" colspan="2">template&lt;typename VectorType , typename ValueFunction , typename GradientFunction &gt; </td></tr>
-<tr class="memitem:a0ecc93b6de752c9849dd2fddd940e117"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_optimization_tools_1_1_optimization_result.html">OptimizationResult</a>&lt; VectorType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_optimization_tools.html#a0ecc93b6de752c9849dd2fddd940e117">optimize_bfgs</a> (const ValueFunction &amp;value, const GradientFunction &amp;gradient, const VectorType &amp;x0, const <a class="el" href="struct_optimization_tools_1_1_l_b_f_g_s_parameters.html">LBFGSParameters</a>&lt; typename VectorType::value_type &gt; &amp;parameters={}, const <a class="el" href="namespace_optimization_tools.html#a971496d21ece9486ea59e53621cd2ccd">IterationCallback</a>&lt; VectorType &gt; &amp;callback={})</td></tr>
+<tr class="memitem:a0ecc93b6de752c9849dd2fddd940e117"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_optimization_tools_1_1_optimization_result.html">OptimizationResult</a>&lt; VectorType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_optimization_tools.html#a0ecc93b6de752c9849dd2fddd940e117">optimize_bfgs</a> (const ValueFunction &amp;value, const GradientFunction &amp;gradient, const VectorType &amp;x0, const <a class="el" href="struct_optimization_tools_1_1_l_b_f_g_s_parameters.html">LBFGSParameters</a>&lt; typename VectorType::value_type &gt; &amp;parameters={}, const <a class="el" href="namespace_optimization_tools.html#af006cc1a622015844b665722042cb8ab">IterationCallback</a>&lt; VectorType &gt; &amp;callback={})</td></tr>
 <tr class="separator:a0ecc93b6de752c9849dd2fddd940e117"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97a2154bcdac3196357741f841abae08" id="r_a97a2154bcdac3196357741f841abae08"><td class="memTemplParams" colspan="2">template&lt;typename VectorType , typename ValueFunction , typename GradientFunction , typename HessianFunction &gt; </td></tr>
-<tr class="memitem:a97a2154bcdac3196357741f841abae08"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_optimization_tools_1_1_optimization_result.html">OptimizationResult</a>&lt; VectorType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_optimization_tools.html#a97a2154bcdac3196357741f841abae08">optimize_trust_region_cauchy</a> (const ValueFunction &amp;value, const GradientFunction &amp;gradient, const HessianFunction &amp;hessian, const VectorType &amp;x0, const <a class="el" href="struct_optimization_tools_1_1_trust_region_parameters.html">TrustRegionParameters</a>&lt; typename VectorType::value_type &gt; &amp;parameters={}, const <a class="el" href="namespace_optimization_tools.html#a971496d21ece9486ea59e53621cd2ccd">IterationCallback</a>&lt; VectorType &gt; &amp;callback={})</td></tr>
+<tr class="memitem:a97a2154bcdac3196357741f841abae08"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_optimization_tools_1_1_optimization_result.html">OptimizationResult</a>&lt; VectorType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_optimization_tools.html#a97a2154bcdac3196357741f841abae08">optimize_trust_region_cauchy</a> (const ValueFunction &amp;value, const GradientFunction &amp;gradient, const HessianFunction &amp;hessian, const VectorType &amp;x0, const <a class="el" href="struct_optimization_tools_1_1_trust_region_parameters.html">TrustRegionParameters</a>&lt; typename VectorType::value_type &gt; &amp;parameters={}, const <a class="el" href="namespace_optimization_tools.html#af006cc1a622015844b665722042cb8ab">IterationCallback</a>&lt; VectorType &gt; &amp;callback={})</td></tr>
 <tr class="separator:a97a2154bcdac3196357741f841abae08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceAlgorithms.html">Algorithms</a> and utilities for optimization methods used in the Numerical Methods for Optimal Control laboratories. </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="a971496d21ece9486ea59e53621cd2ccd" name="a971496d21ece9486ea59e53621cd2ccd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a971496d21ece9486ea59e53621cd2ccd">&#9670;&#160;</a></span>IterationCallback</h2>
+<a id="af006cc1a622015844b665722042cb8ab" name="af006cc1a622015844b665722042cb8ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af006cc1a622015844b665722042cb8ab">&#9670;&#160;</a></span>IterationCallback</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -167,12 +167,12 @@ Functions</h2></td></tr>
 template&lt;typename VectorType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespace_optimization_tools.html#a971496d21ece9486ea59e53621cd2ccd">OptimizationTools::IterationCallback</a> = typedef std::function&lt;void( const unsigned int, const VectorType &amp;, const typename VectorType::value_type, const typename VectorType::value_type)&gt;</td>
+          <td class="memname">using <a class="el" href="namespace_optimization_tools.html#af006cc1a622015844b665722042cb8ab">OptimizationTools::IterationCallback</a> = typedef std::function&lt;void(const unsigned int, const VectorType &amp;, const typename VectorType::value_type, const typename VectorType::value_type)&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optimization__tools_8h_source.html#l00165">165</a> of file <a class="el" href="optimization__tools_8h_source.html">optimization_tools.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optimization__tools_8h_source.html#l00166">166</a> of file <a class="el" href="optimization__tools_8h_source.html">optimization_tools.h</a>.</p>
 
 </div>
 </div>
@@ -224,7 +224,7 @@ template&lt;typename VectorType , typename ValueFunction , typename GradientFunc
 </div><div class="memdoc">
 <p>Armijo backtracking line search for a differentiable objective. </p>
 
-<p class="definition">Definition at line <a class="el" href="optimization__tools_8h_source.html#l00274">274</a> of file <a class="el" href="optimization__tools_8h_source.html">optimization_tools.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optimization__tools_8h_source.html#l00277">277</a> of file <a class="el" href="optimization__tools_8h_source.html">optimization_tools.h</a>.</p>
 
 </div>
 </div>
@@ -263,7 +263,7 @@ template&lt;typename VectorType , typename ValueFunction , typename GradientFunc
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespace_optimization_tools.html#a971496d21ece9486ea59e53621cd2ccd">IterationCallback</a>&lt; VectorType &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="namespace_optimization_tools.html#af006cc1a622015844b665722042cb8ab">IterationCallback</a>&lt; VectorType &gt; &amp;&#160;</td>
           <td class="paramname"><em>callback</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
@@ -275,7 +275,7 @@ template&lt;typename VectorType , typename ValueFunction , typename GradientFunc
 </div><div class="memdoc">
 <p>Limited-memory BFGS with Armijo backtracking. </p>
 
-<p class="definition">Definition at line <a class="el" href="optimization__tools_8h_source.html#l00453">453</a> of file <a class="el" href="optimization__tools_8h_source.html">optimization_tools.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optimization__tools_8h_source.html#l00461">461</a> of file <a class="el" href="optimization__tools_8h_source.html">optimization_tools.h</a>.</p>
 
 </div>
 </div>
@@ -314,7 +314,7 @@ template&lt;typename VectorType , typename ValueFunction , typename GradientFunc
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespace_optimization_tools.html#a971496d21ece9486ea59e53621cd2ccd">IterationCallback</a>&lt; VectorType &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="namespace_optimization_tools.html#af006cc1a622015844b665722042cb8ab">IterationCallback</a>&lt; VectorType &gt; &amp;&#160;</td>
           <td class="paramname"><em>callback</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
@@ -326,7 +326,7 @@ template&lt;typename VectorType , typename ValueFunction , typename GradientFunc
 </div><div class="memdoc">
 <p>Gradient descent with Armijo backtracking. </p>
 
-<p class="definition">Definition at line <a class="el" href="optimization__tools_8h_source.html#l00311">311</a> of file <a class="el" href="optimization__tools_8h_source.html">optimization_tools.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optimization__tools_8h_source.html#l00316">316</a> of file <a class="el" href="optimization__tools_8h_source.html">optimization_tools.h</a>.</p>
 
 </div>
 </div>
@@ -365,7 +365,7 @@ template&lt;typename VectorType , typename ValueFunction , typename GradientFunc
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespace_optimization_tools.html#a971496d21ece9486ea59e53621cd2ccd">IterationCallback</a>&lt; VectorType &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="namespace_optimization_tools.html#af006cc1a622015844b665722042cb8ab">IterationCallback</a>&lt; VectorType &gt; &amp;&#160;</td>
           <td class="paramname"><em>callback</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
@@ -377,7 +377,7 @@ template&lt;typename VectorType , typename ValueFunction , typename GradientFunc
 </div><div class="memdoc">
 <p>Nonlinear conjugate-gradient with Armijo backtracking. </p>
 
-<p class="definition">Definition at line <a class="el" href="optimization__tools_8h_source.html#l00368">368</a> of file <a class="el" href="optimization__tools_8h_source.html">optimization_tools.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optimization__tools_8h_source.html#l00373">373</a> of file <a class="el" href="optimization__tools_8h_source.html">optimization_tools.h</a>.</p>
 
 </div>
 </div>
@@ -422,7 +422,7 @@ template&lt;typename VectorType , typename ValueFunction , typename GradientFunc
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespace_optimization_tools.html#a971496d21ece9486ea59e53621cd2ccd">IterationCallback</a>&lt; VectorType &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="namespace_optimization_tools.html#af006cc1a622015844b665722042cb8ab">IterationCallback</a>&lt; VectorType &gt; &amp;&#160;</td>
           <td class="paramname"><em>callback</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
@@ -435,7 +435,7 @@ template&lt;typename VectorType , typename ValueFunction , typename GradientFunc
 <p>Trust-region method based on the Cauchy step.</p>
 <p>The Hessian model is provided as a LinearOperator-valued callable. </p>
 
-<p class="definition">Definition at line <a class="el" href="optimization__tools_8h_source.html#l00580">580</a> of file <a class="el" href="optimization__tools_8h_source.html">optimization_tools.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optimization__tools_8h_source.html#l00588">588</a> of file <a class="el" href="optimization__tools_8h_source.html">optimization_tools.h</a>.</p>
 
 </div>
 </div>
@@ -445,7 +445,7 @@ template&lt;typename VectorType , typename ValueFunction , typename GradientFunc
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_optimization_tools.html">OptimizationTools</a></li>
-    <li class="footer">Generated on Fri Mar 27 2026 08:12:33 for deal.II Testbench for NMOPT Laboratories by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Fri Mar 27 2026 10:14:33 for deal.II Testbench for NMOPT Laboratories by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

@@ -204,7 +204,8 @@ KKT<dim>::setup_system()
                                                      control_block};
   DoFRenumbering::component_wise(dof_handler, block_component);
 
-  dofs_per_block = DoFTools::count_dofs_per_fe_block(dof_handler, block_component);
+  dofs_per_block =
+    DoFTools::count_dofs_per_fe_block(dof_handler, block_component);
 
   constraints.clear();
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
@@ -255,8 +256,8 @@ KKT<dim>::assemble_system()
   system_matrix = 0;
   system_rhs    = 0;
 
-  const QGauss<dim> quadrature_formula(
-    std::max(state_degree, control_degree) + 1);
+  const QGauss<dim> quadrature_formula(std::max(state_degree, control_degree) +
+                                       1);
   FEValues<dim>     fe_values(*fe,
                           quadrature_formula,
                           update_values | update_gradients |
@@ -364,14 +365,17 @@ KKT<dim>::output_results(const std::string &filename) const
   std::vector<DataComponentInterpretation::DataComponentInterpretation>
     interpretation(3, DataComponentInterpretation::component_is_scalar);
   BlockVector<double> desired_state_output;
-  desired_state_output.reinit(std::vector<types::global_dof_index>(
-    dofs_per_block.begin(), dofs_per_block.end()));
+  desired_state_output.reinit(
+    std::vector<types::global_dof_index>(dofs_per_block.begin(),
+                                         dofs_per_block.end()));
   const VectorFunctionFromScalarFunctionObject<dim> desired_state_function(
     [this](const Point<dim> &p) { return desired_state.value(p); },
     state_block,
     n_blocks);
 
-  VectorTools::interpolate(dof_handler, desired_state_function, desired_state_output);
+  VectorTools::interpolate(dof_handler,
+                           desired_state_function,
+                           desired_state_output);
 
   DataOut<dim> data_out;
   data_out.attach_dof_handler(dof_handler);

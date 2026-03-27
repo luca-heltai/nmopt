@@ -14,9 +14,7 @@
 //
 // ---------------------------------------------------------------------
 
-#include "laplacian.h"
-#include "optimization_tools.h"
-
+#include <deal.II/base/data_out_base.h>
 #include <deal.II/base/parameter_acceptor.h>
 #include <deal.II/base/parsed_function.h>
 #include <deal.II/base/utilities.h>
@@ -24,12 +22,14 @@
 #include <deal.II/lac/linear_operator_tools.h>
 #include <deal.II/lac/vector.h>
 
-#include <deal.II/base/data_out_base.h>
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
 
 #include <fstream>
 #include <iostream>
+
+#include "laplacian.h"
+#include "optimization_tools.h"
 
 using namespace dealii;
 
@@ -68,20 +68,20 @@ private:
                  const Vector<double> &target_state) const;
 
   std::string
-  output_iteration(const unsigned int   iteration,
+  output_iteration(const unsigned int    iteration,
                    const Vector<double> &control,
                    const Vector<double> &target_state) const;
 
-  Laplacian<dim>               poisson_problem;
+  Laplacian<dim>                 poisson_problem;
   Functions::ParsedFunction<dim> initial_control_function;
   Functions::ParsedFunction<dim> target_state_function;
 
-  std::string                                            optimization_method;
-  OptimizationTools::OptimizationParameters<double>      optimization_parameters;
-  OptimizationTools::NLCGParameters<double>              nlcg_parameters;
-  OptimizationTools::LBFGSParameters<double>             lbfgs_parameters;
-  double                                                 regularization;
-  std::string                                            output_name;
+  std::string                                       optimization_method;
+  OptimizationTools::OptimizationParameters<double> optimization_parameters;
+  OptimizationTools::NLCGParameters<double>         nlcg_parameters;
+  OptimizationTools::LBFGSParameters<double>        lbfgs_parameters;
+  double                                            regularization;
+  std::string                                       output_name;
 };
 
 
@@ -168,8 +168,9 @@ UnconstrainedPoissonOptimization<dim>::solve_state(
   const Vector<double> &control,
   Vector<double>       &state) const
 {
-  const auto M = linear_operator<Vector<double>>(poisson_problem.get_mass_matrix());
-  const Vector<double> rhs = poisson_problem.get_system_rhs();
+  const auto M =
+    linear_operator<Vector<double>>(poisson_problem.get_mass_matrix());
+  const Vector<double> rhs       = poisson_problem.get_system_rhs();
   const Vector<double> state_rhs = rhs + M * control;
 
   poisson_problem.solve(state_rhs, state);
@@ -184,8 +185,9 @@ UnconstrainedPoissonOptimization<dim>::solve_adjoint(
   const Vector<double> &target_state,
   Vector<double>       &adjoint) const
 {
-  const auto M = linear_operator<Vector<double>>(poisson_problem.get_mass_matrix());
-  const Vector<double> mismatch = state - target_state;
+  const auto M =
+    linear_operator<Vector<double>>(poisson_problem.get_mass_matrix());
+  const Vector<double> mismatch    = state - target_state;
   const Vector<double> adjoint_rhs = M * mismatch;
 
   poisson_problem.solve(adjoint_rhs, adjoint);
@@ -223,7 +225,7 @@ UnconstrainedPoissonOptimization<dim>::output_results(
 template <int dim>
 std::string
 UnconstrainedPoissonOptimization<dim>::output_iteration(
-  const unsigned int   iteration,
+  const unsigned int    iteration,
   const Vector<double> &control,
   const Vector<double> &target_state) const
 {
@@ -264,15 +266,16 @@ UnconstrainedPoissonOptimization<dim>::run()
   interpolate_configuration(initial_control_function, initial_control);
   interpolate_configuration(target_state_function, target_state);
 
-  const auto M = linear_operator<Vector<double>>(poisson_problem.get_mass_matrix());
+  const auto M =
+    linear_operator<Vector<double>>(poisson_problem.get_mass_matrix());
 
   const auto value = [&](const Vector<double> &control) {
     Vector<double> state;
     solve_state(control, state);
 
-    const Vector<double> mismatch = state - target_state;
+    const Vector<double> mismatch          = state - target_state;
     const Vector<double> weighted_mismatch = M * mismatch;
-    const Vector<double> weighted_control = M * control;
+    const Vector<double> weighted_control  = M * control;
 
     return 0.5 * (mismatch * weighted_mismatch) +
            0.5 * regularization * (control * weighted_control);
@@ -289,9 +292,9 @@ UnconstrainedPoissonOptimization<dim>::run()
     return result;
   };
 
-  std::vector<std::pair<double, std::string>> times_and_names;
+  std::vector<std::pair<double, std::string>>                times_and_names;
   const OptimizationTools::IterationCallback<Vector<double>> callback =
-    [&](const unsigned int iteration,
+    [&](const unsigned int    iteration,
         const Vector<double> &control,
         const double /*fx*/,
         const double /*gnorm*/) {
@@ -304,12 +307,8 @@ UnconstrainedPoissonOptimization<dim>::run()
 
   if (optimization_method == "gd")
     {
-      const auto result =
-        OptimizationTools::optimize_gd(value,
-                                       gradient,
-                                       initial_control,
-                                       optimization_parameters,
-                                       callback);
+      const auto result = OptimizationTools::optimize_gd(
+        value, gradient, initial_control, optimization_parameters, callback);
       optimized_control = result.x;
     }
   else if (optimization_method == "nlcg")
@@ -327,18 +326,19 @@ UnconstrainedPoissonOptimization<dim>::run()
   else
     AssertThrow(false, ExcMessage("Unknown optimization method."));
 
-  Vector<double>       optimized_state;
-  Vector<double>       optimized_adjoint;
+  Vector<double> optimized_state;
+  Vector<double> optimized_adjoint;
   solve_state(optimized_control, optimized_state);
   solve_adjoint(optimized_state, target_state, optimized_adjoint);
 
-  const Vector<double> final_gradient = gradient(optimized_control);
-  const Vector<double> final_mismatch = optimized_state - target_state;
+  const Vector<double> final_gradient          = gradient(optimized_control);
+  const Vector<double> final_mismatch          = optimized_state - target_state;
   const Vector<double> weighted_final_mismatch = M * final_mismatch;
   const double         final_l2_error =
     std::sqrt(final_mismatch * weighted_final_mismatch);
 
-  std::cout << "Final objective value: " << value(optimized_control) << std::endl;
+  std::cout << "Final objective value: " << value(optimized_control)
+            << std::endl;
   std::cout << "Final gradient norm:   " << final_gradient.l2_norm()
             << std::endl;
   std::cout << "Final L2 error:        " << final_l2_error << std::endl;
@@ -357,9 +357,7 @@ main(int argc, char **argv)
       UnconstrainedPoissonOptimization<DEAL_II_DIMENSION> optimization_problem;
 
       const std::string parameter_file =
-        (argc > 1 ?
-           argv[1] :
-           "unconstrained_poisson_optimization.prm");
+        (argc > 1 ? argv[1] : "unconstrained_poisson_optimization.prm");
 
       ParameterAcceptor::initialize(parameter_file);
       optimization_problem.run();

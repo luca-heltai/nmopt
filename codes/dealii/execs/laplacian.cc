@@ -26,8 +26,7 @@ main(int argc, char **argv)
     {
       Laplacian<DEAL_DIMENSION> laplace_problem;
 
-      const std::string parameter_file =
-        (argc > 1 ? argv[1] : "laplacian.prm");
+      const std::string parameter_file = (argc > 1 ? argv[1] : "laplacian.prm");
 
       ParameterAcceptor::initialize(parameter_file);
       laplace_problem.run();

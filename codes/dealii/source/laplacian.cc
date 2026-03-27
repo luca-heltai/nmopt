@@ -138,8 +138,10 @@ Laplacian<dim>::setup_system()
 
   constraints.clear();
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
-  VectorTools::interpolate_boundary_values(
-    dof_handler, 0, boundary_values, constraints);
+  VectorTools::interpolate_boundary_values(dof_handler,
+                                           0,
+                                           boundary_values,
+                                           constraints);
   constraints.close();
 
   DynamicSparsityPattern dsp(dof_handler.n_dofs());
@@ -178,9 +180,9 @@ Laplacian<dim>::assemble_system()
 
   for (const auto &cell : dof_handler.active_cell_iterators())
     {
-      cell_matrix = 0;
+      cell_matrix      = 0;
       cell_mass_matrix = 0;
-      cell_rhs    = 0;
+      cell_rhs         = 0;
 
       fe_values.reinit(cell);
 
@@ -198,9 +200,9 @@ Laplacian<dim>::assemble_system()
                   cell_matrix(i, j) +=
                     current_coefficient * fe_values.shape_grad(i, q_index) *
                     fe_values.shape_grad(j, q_index) * fe_values.JxW(q_index);
-                  cell_mass_matrix(i, j) +=
-                    fe_values.shape_value(i, q_index) *
-                    fe_values.shape_value(j, q_index) * fe_values.JxW(q_index);
+                  cell_mass_matrix(i, j) += fe_values.shape_value(i, q_index) *
+                                            fe_values.shape_value(j, q_index) *
+                                            fe_values.JxW(q_index);
                 }
 
               cell_rhs(i) += current_rhs * fe_values.shape_value(i, q_index) *
@@ -211,8 +213,9 @@ Laplacian<dim>::assemble_system()
       cell->get_dof_indices(local_dof_indices);
       constraints.distribute_local_to_global(
         cell_matrix, cell_rhs, local_dof_indices, system_matrix, system_rhs);
-      constraints.distribute_local_to_global(
-        cell_mass_matrix, local_dof_indices, mass_matrix);
+      constraints.distribute_local_to_global(cell_mass_matrix,
+                                             local_dof_indices,
+                                             mass_matrix);
     }
 }
 
@@ -233,7 +236,7 @@ Laplacian<dim>::solve(const Vector<double> &rhs, Vector<double> &dst) const
 {
   dst.reinit(solution);
 
-  SolverControl            solver_control(solver_max_iterations, solver_tolerance);
+  SolverControl solver_control(solver_max_iterations, solver_tolerance);
   SolverCG<Vector<double>> solver(solver_control);
 
   PreconditionSSOR<SparseMatrix<double>> preconditioner;

@@ -12,6 +12,7 @@
 
 
 #include <deal.II/base/config.h>
+
 #include <deal.II/base/parameter_handler.h>
 
 #include <deal.II/lac/linear_operator_tools.h>
@@ -65,10 +66,10 @@ namespace OptimizationTools
   template <typename Number>
   struct OptimizationParameters
   {
-    unsigned int             max_iterations      = 200;
-    Number                   gradient_tolerance  = Number(1.e-8);
-    bool                     store_iterates      = true;
-    bool                     log_iterations      = true;
+    unsigned int             max_iterations     = 200;
+    Number                   gradient_tolerance = Number(1.e-8);
+    bool                     store_iterates     = true;
+    bool                     log_iterations     = true;
     ArmijoParameters<Number> armijo;
 
     void
@@ -162,11 +163,11 @@ namespace OptimizationTools
 
 
   template <typename VectorType>
-  using IterationCallback = std::function<void(
-    const unsigned int,
-    const VectorType &,
-    const typename VectorType::value_type,
-    const typename VectorType::value_type)>;
+  using IterationCallback =
+    std::function<void(const unsigned int,
+                       const VectorType &,
+                       const typename VectorType::value_type,
+                       const typename VectorType::value_type)>;
 
 
   namespace internal
@@ -188,17 +189,18 @@ namespace OptimizationTools
         dst *= ((*right_ptr) * src);
       };
 
-      op.vmult_add = [left_ptr, right_ptr](VectorType &dst,
+      op.vmult_add = [left_ptr, right_ptr](VectorType       &dst,
                                            const VectorType &src) {
         dst.add((*right_ptr) * src, *left_ptr);
       };
 
-      op.Tvmult = [left_ptr, right_ptr](VectorType &dst, const VectorType &src) {
+      op.Tvmult = [left_ptr, right_ptr](VectorType       &dst,
+                                        const VectorType &src) {
         dst = *right_ptr;
         dst *= ((*left_ptr) * src);
       };
 
-      op.Tvmult_add = [left_ptr, right_ptr](VectorType &dst,
+      op.Tvmult_add = [left_ptr, right_ptr](VectorType       &dst,
                                             const VectorType &src) {
         dst.add((*left_ptr) * src, *right_ptr);
       };
@@ -253,12 +255,11 @@ namespace OptimizationTools
 
     template <typename VectorType>
     void
-    maybe_invoke_callback(
-      const IterationCallback<VectorType>       &callback,
-      const unsigned int                         iteration,
-      const VectorType                          &x,
-      const typename VectorType::value_type      fx,
-      const typename VectorType::value_type      gnorm)
+    maybe_invoke_callback(const IterationCallback<VectorType>  &callback,
+                          const unsigned int                    iteration,
+                          const VectorType                     &x,
+                          const typename VectorType::value_type fx,
+                          const typename VectorType::value_type gnorm)
     {
       if (callback)
         callback(iteration, x, fx, gnorm);
@@ -269,13 +270,15 @@ namespace OptimizationTools
   /**
    * Armijo backtracking line search for a differentiable objective.
    */
-  template <typename VectorType, typename ValueFunction, typename GradientFunction>
+  template <typename VectorType,
+            typename ValueFunction,
+            typename GradientFunction>
   typename VectorType::value_type
   armijo_backtracking(
-    const ValueFunction                                          &value,
-    const GradientFunction                                       &gradient,
-    const VectorType                                             &x,
-    const VectorType                                             &p,
+    const ValueFunction                                     &value,
+    const GradientFunction                                  &gradient,
+    const VectorType                                        &x,
+    const VectorType                                        &p,
     const ArmijoParameters<typename VectorType::value_type> &parameters = {})
   {
     using Number = typename VectorType::value_type;
@@ -306,15 +309,16 @@ namespace OptimizationTools
   /**
    * Gradient descent with Armijo backtracking.
    */
-  template <typename VectorType, typename ValueFunction, typename GradientFunction>
+  template <typename VectorType,
+            typename ValueFunction,
+            typename GradientFunction>
   OptimizationResult<VectorType>
-  optimize_gd(
-    const ValueFunction                                             &value,
-    const GradientFunction                                          &gradient,
-    const VectorType                                                &x0,
-    const OptimizationParameters<typename VectorType::value_type> &parameters = {},
-    const IterationCallback<VectorType>                           &callback   =
-      {})
+  optimize_gd(const ValueFunction    &value,
+              const GradientFunction &gradient,
+              const VectorType       &x0,
+              const OptimizationParameters<typename VectorType::value_type>
+                                                  &parameters = {},
+              const IterationCallback<VectorType> &callback   = {})
   {
     using Number = typename VectorType::value_type;
 
@@ -334,8 +338,7 @@ namespace OptimizationTools
         result.iterations = k;
         internal::maybe_invoke_callback(callback, k, x, fx, gnorm);
 
-        internal::log_iteration(
-          parameters.log_iterations, "GD", k, fx, gnorm);
+        internal::log_iteration(parameters.log_iterations, "GD", k, fx, gnorm);
 
         if (gnorm < parameters.gradient_tolerance)
           {
@@ -343,7 +346,7 @@ namespace OptimizationTools
             break;
           }
 
-        const VectorType p     = Number(-1.) * g;
+        const VectorType p = Number(-1.) * g;
         const Number     alpha =
           armijo_backtracking(value, gradient, x, p, parameters.armijo);
 
@@ -363,14 +366,16 @@ namespace OptimizationTools
   /**
    * Nonlinear conjugate-gradient with Armijo backtracking.
    */
-  template <typename VectorType, typename ValueFunction, typename GradientFunction>
+  template <typename VectorType,
+            typename ValueFunction,
+            typename GradientFunction>
   OptimizationResult<VectorType>
-  optimize_nlcg(const ValueFunction                                  &value,
-                const GradientFunction                               &gradient,
-                const VectorType                                     &x0,
-                const NLCGParameters<typename VectorType::value_type> &parameters = {},
-                const IterationCallback<VectorType>                   &callback   =
-                  {})
+  optimize_nlcg(
+    const ValueFunction                                   &value,
+    const GradientFunction                                &gradient,
+    const VectorType                                      &x0,
+    const NLCGParameters<typename VectorType::value_type> &parameters = {},
+    const IterationCallback<VectorType>                   &callback   = {})
   {
     using Number = typename VectorType::value_type;
 
@@ -408,7 +413,8 @@ namespace OptimizationTools
 
         Number beta = Number();
 
-        const Number gg = std::max(g * g, std::numeric_limits<Number>::epsilon());
+        const Number gg =
+          std::max(g * g, std::numeric_limits<Number>::epsilon());
 
         if (parameters.beta_type == "fletcher_reeves")
           beta = (g_new * g_new) / gg;
@@ -448,15 +454,16 @@ namespace OptimizationTools
   /**
    * Limited-memory BFGS with Armijo backtracking.
    */
-  template <typename VectorType, typename ValueFunction, typename GradientFunction>
+  template <typename VectorType,
+            typename ValueFunction,
+            typename GradientFunction>
   OptimizationResult<VectorType>
   optimize_bfgs(
-    const ValueFunction                                             &value,
-    const GradientFunction                                          &gradient,
-    const VectorType                                                &x0,
-    const LBFGSParameters<typename VectorType::value_type>         &parameters = {},
-    const IterationCallback<VectorType>                            &callback   =
-      {})
+    const ValueFunction                                    &value,
+    const GradientFunction                                 &gradient,
+    const VectorType                                       &x0,
+    const LBFGSParameters<typename VectorType::value_type> &parameters = {},
+    const IterationCallback<VectorType>                    &callback   = {})
   {
     using Number = typename VectorType::value_type;
 
@@ -488,9 +495,9 @@ namespace OptimizationTools
             break;
           }
 
-        VectorType           q = g;
-        const unsigned int   m = s_history.size();
-        std::vector<Number>  alphas(m);
+        VectorType          q = g;
+        const unsigned int  m = s_history.size();
+        std::vector<Number> alphas(m);
 
         for (int i = static_cast<int>(m) - 1; i >= 0; --i)
           {
@@ -556,8 +563,9 @@ namespace OptimizationTools
 
         result.step_lengths.push_back(alpha);
         internal::log_scalar(parameters.log_iterations, "alpha", alpha);
-        internal::log_scalar(
-          parameters.log_iterations, "history", s_history.size());
+        internal::log_scalar(parameters.log_iterations,
+                             "history",
+                             s_history.size());
         internal::log_endline(parameters.log_iterations);
         internal::maybe_store_iterate(result, x, parameters.store_iterates);
       }
@@ -578,13 +586,13 @@ namespace OptimizationTools
             typename HessianFunction>
   OptimizationResult<VectorType>
   optimize_trust_region_cauchy(
-    const ValueFunction                                        &value,
-    const GradientFunction                                     &gradient,
-    const HessianFunction                                      &hessian,
-    const VectorType                                           &x0,
-    const TrustRegionParameters<typename VectorType::value_type> &parameters = {},
-    const IterationCallback<VectorType>                         &callback   =
-      {})
+    const ValueFunction                                          &value,
+    const GradientFunction                                       &gradient,
+    const HessianFunction                                        &hessian,
+    const VectorType                                             &x0,
+    const TrustRegionParameters<typename VectorType::value_type> &parameters =
+      {},
+    const IterationCallback<VectorType> &callback = {})
   {
     using Number = typename VectorType::value_type;
 
@@ -607,8 +615,7 @@ namespace OptimizationTools
         result.iterations = k;
         internal::maybe_invoke_callback(callback, k, x, fx, gnorm);
 
-        internal::log_iteration(
-          parameters.log_iterations, "TR", k, fx, gnorm);
+        internal::log_iteration(parameters.log_iterations, "TR", k, fx, gnorm);
         internal::log_scalar(parameters.log_iterations, "delta", delta);
 
         if (gnorm < parameters.gradient_tolerance)
@@ -627,8 +634,7 @@ namespace OptimizationTools
         const VectorType p = (-tau * delta / gnorm) * g;
 
         const Number ared = value(x) - value(x + p);
-        const Number pred =
-          -(g * p + Number(0.5) * (p * (B * p)));
+        const Number pred = -(g * p + Number(0.5) * (p * (B * p)));
         const Number rho =
           ared / std::max(pred, std::numeric_limits<Number>::epsilon());
 

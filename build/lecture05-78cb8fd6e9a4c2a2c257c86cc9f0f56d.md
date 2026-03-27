@@ -250,6 +250,35 @@ $$
 V'\times Q'\times V'.
 $$
 
+Whenever the constraint admits a projection, the cone variable $\eta$ can also be
+written explicitly in terms of $\bar u$, the adjoint $\bar p$, and the projection.
+Indeed, for any $\rho>0$,
+
+$$
+\bar u
+=
+\Pi_{U_{\mathrm{ad}}}\!\left(\bar u-\rho(\alpha \bar u+\bar p)\right)
+$$
+
+is equivalent to the normal-cone inclusion, and therefore
+
+$$
+\eta
+=
+\frac1\rho
+\left(
+\bar u-\rho(\alpha \bar u+\bar p)
+-
+\Pi_{U_{\mathrm{ad}}}\!\left(\bar u-\rho(\alpha \bar u+\bar p)\right)
+\right).
+$$
+
+At the solution, since the projected point is exactly $\bar u$, this reduces to
+
+$$
+\eta=-(\alpha \bar u+\bar p).
+$$
+
 So the constrained problem still has the same KKT block structure as in the previous lecture,
 but now one block is nonlinear because of the cone term.
 

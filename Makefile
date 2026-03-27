@@ -5,7 +5,9 @@ DEALII_BOOK_HTML=$(BUILD_DIR)/doxygen/dealii
 
 download-dealii-tag:
 	@mkdir -p $(DEALII_DIR)
-	curl -fsSL https://dealii.org/developer/doxygen/deal.tag -o $(DEALII_DIR)/deal.tag
+	@if [ ! -f $(DEALII_DIR)/deal.tag ]; then \
+		curl -fsSL https://dealii.org/developer/doxygen/deal.tag -o $(DEALII_DIR)/deal.tag; \
+	fi
 
 build-dealii-doxygen: download-dealii-tag
 	cd $(DEALII_DIR) && doxygen doc/Doxyfile

@@ -222,5 +222,5 @@ var searchData=
   ['pure_5frefinement_219',['pure_refinement',['http://www.dealii.org/developer/doxygen/deal.II/classLegacy_1_1SolutionTransfer.html#a5eb7199c039f1000025f08ba8c725fbea0c3585ddd37523a2155de2eb64474ec1',1,'Legacy::SolutionTransfer']]],
   ['push_5fforward_5fexpression_220',['push_forward_expression',['http://www.dealii.org/developer/doxygen/deal.II/classFunctionManifold.html#ad0aa4833ae89c5c1223609193f9a3280',1,'FunctionManifold']]],
   ['push_5fforward_5ffunction_221',['push_forward_function',['http://www.dealii.org/developer/doxygen/deal.II/classFunctionManifold.html#adc20eb833d66daf2a1be062bb6aebc4e',1,'FunctionManifold']]],
-  ['pyramid_222',['Pyramid',['http://www.dealii.org/developer/doxygen/deal.II/namespaceReferenceCells.html#a4884b089cea528a84a5f3ec20f82beaa',1,'ReferenceCells']]]
+  ['pyramid_222',['Pyramid',['http://www.dealii.org/developer/doxygen/deal.II/namespaceReferenceCells.html#a968b0e09bc3bdb9c5a3f8e37e4745de1',1,'ReferenceCells']]]
 ];

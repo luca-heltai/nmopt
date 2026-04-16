@@ -82,10 +82,21 @@ public:
   output_results(const std::string &filename = "kkt_solution") const;
 
   void
+  output_results(const BlockVector<double> &solution_vector,
+                 const std::string         &filename) const;
+
+  void
   run();
 
   const BlockSparseMatrix<double> &
   get_system_matrix() const;
+
+  void
+  vmult_system(BlockVector<double>       &dst,
+               const BlockVector<double> &src) const;
+
+  void
+  copy_system_matrix(BlockSparseMatrix<double> &dst) const;
 
   const SparseMatrix<double> &
   get_system_block(const unsigned int row, const unsigned int column) const;
@@ -101,6 +112,9 @@ public:
 
   const BlockVector<double> &
   get_solution() const;
+
+  void
+  set_solution(const BlockVector<double> &new_solution);
 
   const std::vector<types::global_dof_index> &
   get_dofs_per_block() const;

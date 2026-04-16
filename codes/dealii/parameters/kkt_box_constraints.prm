@@ -1,0 +1,70 @@
+subsection KKT problem
+  set State degree             = 1
+  set Control degree           = 0
+  set Continuous control       = false
+  set Global refinements       = 5
+  set Regularization           = 1e-4
+  set Grid generator function  = hyper_cube
+  set Grid generator arguments = 0.0 : 1.0 : false
+
+  subsection Diffusion coefficient
+    set Function constants  =
+    set Function expression = 1.0
+    set Variable names      = x,y,t
+  end
+
+  subsection Reaction coefficient
+    set Function constants  =
+    set Function expression = 0.0
+    set Variable names      = x,y,t
+  end
+
+  subsection Transport field
+    set Function constants  =
+    set Function expression = 0.0; 0.0
+    set Variable names      = x,y,t
+  end
+
+  subsection Forcing term
+    set Function constants  =
+    set Function expression = 0.0
+    set Variable names      = x,y,t
+  end
+
+  subsection Desired state
+    set Function constants  =
+    set Function expression = x < 0.5 ? 1 : 0
+    set Variable names      = x,y,t
+  end
+
+  subsection State boundary values
+    set Function constants  =
+    set Function expression = 0.0
+    set Variable names      = x,y,t
+  end
+
+  subsection Adjoint boundary values
+    set Function constants  =
+    set Function expression = 0.0
+    set Variable names      = x,y,t
+  end
+end
+
+subsection Box-constrained KKT problem
+  set Max active-set iterations = 30
+  set Active-set parameter      = 1.0
+  set Active-set tolerance      = 1e-10
+  set Output name               = kkt_box_constraints
+
+  subsection Lower bound
+    set Function constants  =
+    set Function expression = -0.20
+    set Variable names      = x,y,t
+  end
+
+  subsection Upper bound
+    set Function constants  =
+    set Function expression = 0.20
+    set Variable names      = x,y,t
+  end
+end

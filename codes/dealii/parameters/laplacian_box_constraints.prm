@@ -1,0 +1,71 @@
+subsection Poisson problem
+  set FE degree                 = 1
+  set Global refinements        = 5
+  set Solver max iterations     = 1000
+  set Solver tolerance          = 1e-12
+  set Preconditioner relaxation = 1.2
+  set Grid generator function   = hyper_cube
+  set Grid generator arguments  = 0.0 : 1.0 : false
+
+  subsection Diffusion coefficient
+    set Function constants  =
+    set Function expression = 1.0
+    set Variable names      = x,y,t
+  end
+
+  subsection Forcing term
+    set Function constants  =
+    set Function expression = 0.0
+    set Variable names      = x,y,t
+  end
+
+  subsection Boundary values
+    set Function constants  =
+    set Function expression = 0.0
+    set Variable names      = x,y,t
+  end
+end
+
+subsection Box-constrained Poisson optimization
+  set Regularization = 1e-4
+  set Output name    = laplacian_box_constraints
+
+  subsection Optimization parameters
+    set Max iterations      = 80
+    set Gradient tolerance  = 1e-8
+    set Store iterates      = true
+    set Log iterations      = true
+
+    subsection Armijo
+      set Initial step length    = 1.0
+      set Armijo coefficient     = 1e-4
+      set Backtracking reduction = 0.5
+      set Max backtracks         = 30
+      set Minimum step length    = 1e-12
+    end
+  end
+
+  subsection Initial control
+    set Function constants  =
+    set Function expression = 0.0
+    set Variable names      = x,y,t
+  end
+
+  subsection Target state
+    set Function constants  =
+    set Function expression = x < 0.5 ? 1 : 0
+    set Variable names      = x,y,t
+  end
+
+  subsection Lower bound
+    set Function constants  =
+    set Function expression = -0.20
+    set Variable names      = x,y,t
+  end
+
+  subsection Upper bound
+    set Function constants  =
+    set Function expression = 0.20
+    set Variable names      = x,y,t
+  end
+end

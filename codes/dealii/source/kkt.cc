@@ -361,6 +361,16 @@ template <int dim>
 void
 KKT<dim>::output_results(const std::string &filename) const
 {
+  output_results(solution, filename);
+}
+
+
+
+template <int dim>
+void
+KKT<dim>::output_results(const BlockVector<double> &solution_vector,
+                         const std::string         &filename) const
+{
   std::vector<std::string> solution_names = {"state", "adjoint", "control"};
   std::vector<DataComponentInterpretation::DataComponentInterpretation>
     interpretation(3, DataComponentInterpretation::component_is_scalar);
@@ -380,7 +390,7 @@ KKT<dim>::output_results(const std::string &filename) const
   DataOut<dim> data_out;
   data_out.attach_dof_handler(dof_handler);
   data_out.add_data_vector(dof_handler,
-                           solution,
+                           solution_vector,
                            solution_names,
                            interpretation);
   data_out.add_data_vector(dof_handler,
@@ -439,6 +449,26 @@ KKT<dim>::get_system_matrix() const
 
 
 template <int dim>
+void
+KKT<dim>::vmult_system(BlockVector<double>       &dst,
+                       const BlockVector<double> &src) const
+{
+  system_matrix.vmult(dst, src);
+}
+
+
+
+template <int dim>
+void
+KKT<dim>::copy_system_matrix(BlockSparseMatrix<double> &dst) const
+{
+  dst.reinit(sparsity_pattern);
+  dst.copy_from(system_matrix);
+}
+
+
+
+template <int dim>
 const SparseMatrix<double> &
 KKT<dim>::get_system_block(const unsigned int row,
                            const unsigned int column) const
@@ -482,6 +512,15 @@ const BlockVector<double> &
 KKT<dim>::get_solution() const
 {
   return solution;
+}
+
+
+
+template <int dim>
+void
+KKT<dim>::set_solution(const BlockVector<double> &new_solution)
+{
+  solution = new_solution;
 }
 
 

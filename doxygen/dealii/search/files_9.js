@@ -26,11 +26,14 @@ var searchData=
   ['any_5fdata_2eh_23',['any_data.h',['http://www.dealii.org/developer/doxygen/deal.II/any__data_8h.html',1,'']]],
   ['arkode_2ecc_24',['arkode.cc',['http://www.dealii.org/developer/doxygen/deal.II/arkode_8cc.html',1,'']]],
   ['arkode_2eh_25',['arkode.h',['http://www.dealii.org/developer/doxygen/deal.II/arkode_8h.html',1,'']]],
-  ['arpack_5fsolver_2eh_26',['arpack_solver.h',['http://www.dealii.org/developer/doxygen/deal.II/arpack__solver_8h.html',1,'']]],
-  ['array_5fview_2eh_27',['array_view.h',['http://www.dealii.org/developer/doxygen/deal.II/array__view_8h.html',1,'']]],
-  ['assemble_5fflags_2eh_28',['assemble_flags.h',['http://www.dealii.org/developer/doxygen/deal.II/assemble__flags_8h.html',1,'']]],
-  ['assembler_2eh_29',['assembler.h',['http://www.dealii.org/developer/doxygen/deal.II/assembler_8h.html',1,'']]],
-  ['auto_5fderivative_5ffunction_2ecc_30',['auto_derivative_function.cc',['http://www.dealii.org/developer/doxygen/deal.II/auto__derivative__function_8cc.html',1,'']]],
-  ['auto_5fderivative_5ffunction_2eh_31',['auto_derivative_function.h',['http://www.dealii.org/developer/doxygen/deal.II/auto__derivative__function_8h.html',1,'']]],
-  ['automatic_5fand_5fsymbolic_5fdifferentiation_2eh_32',['automatic_and_symbolic_differentiation.h',['http://www.dealii.org/developer/doxygen/deal.II/automatic__and__symbolic__differentiation_8h.html',1,'']]]
+  ['arkode_5fexception_2eh_26',['arkode_exception.h',['http://www.dealii.org/developer/doxygen/deal.II/arkode__exception_8h.html',1,'']]],
+  ['arkode_5fstepper_2ecc_27',['arkode_stepper.cc',['http://www.dealii.org/developer/doxygen/deal.II/arkode__stepper_8cc.html',1,'']]],
+  ['arkode_5fstepper_2eh_28',['arkode_stepper.h',['http://www.dealii.org/developer/doxygen/deal.II/arkode__stepper_8h.html',1,'']]],
+  ['arpack_5fsolver_2eh_29',['arpack_solver.h',['http://www.dealii.org/developer/doxygen/deal.II/arpack__solver_8h.html',1,'']]],
+  ['array_5fview_2eh_30',['array_view.h',['http://www.dealii.org/developer/doxygen/deal.II/array__view_8h.html',1,'']]],
+  ['assemble_5fflags_2eh_31',['assemble_flags.h',['http://www.dealii.org/developer/doxygen/deal.II/assemble__flags_8h.html',1,'']]],
+  ['assembler_2eh_32',['assembler.h',['http://www.dealii.org/developer/doxygen/deal.II/assembler_8h.html',1,'']]],
+  ['auto_5fderivative_5ffunction_2ecc_33',['auto_derivative_function.cc',['http://www.dealii.org/developer/doxygen/deal.II/auto__derivative__function_8cc.html',1,'']]],
+  ['auto_5fderivative_5ffunction_2eh_34',['auto_derivative_function.h',['http://www.dealii.org/developer/doxygen/deal.II/auto__derivative__function_8h.html',1,'']]],
+  ['automatic_5fand_5fsymbolic_5fdifferentiation_2eh_35',['automatic_and_symbolic_differentiation.h',['http://www.dealii.org/developer/doxygen/deal.II/automatic__and__symbolic__differentiation_8h.html',1,'']]]
 ];

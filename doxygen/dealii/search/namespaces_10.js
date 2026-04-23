@@ -46,8 +46,9 @@ var searchData=
   ['std_5fcxx20_3a_3aranges_43',['ranges',['http://www.dealii.org/developer/doxygen/deal.II/namespacestd__cxx20_1_1ranges.html',1,'std_cxx20']]],
   ['sundials_44',['SUNDIALS',['http://www.dealii.org/developer/doxygen/deal.II/namespaceSUNDIALS.html',1,'']]],
   ['sundials_3a_3aarkode_45',['ARKode',['http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode_1_1AdditionalData.html',1,'SUNDIALS']]],
-  ['sundials_3a_3aida_46',['IDA',['http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1IDA_1_1AdditionalData.html',1,'SUNDIALS']]],
-  ['sundials_3a_3ainternal_47',['internal',['http://www.dealii.org/developer/doxygen/deal.II/namespaceSUNDIALS_1_1internal.html',1,'SUNDIALS']]],
-  ['sundials_3a_3akinsol_48',['KINSOL',['http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1KINSOL_1_1AdditionalData.html',1,'SUNDIALS']]],
-  ['sundials_3a_3autilities_49',['Utilities',['http://www.dealii.org/developer/doxygen/deal.II/namespaceSUNDIALS_1_1Utilities.html',1,'SUNDIALS']]]
+  ['sundials_3a_3aarkstepper_46',['ARKStepper',['http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKStepper_1_1AdditionalData.html',1,'SUNDIALS']]],
+  ['sundials_3a_3aida_47',['IDA',['http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1IDA_1_1AdditionalData.html',1,'SUNDIALS']]],
+  ['sundials_3a_3ainternal_48',['internal',['http://www.dealii.org/developer/doxygen/deal.II/namespaceSUNDIALS_1_1internal.html',1,'SUNDIALS']]],
+  ['sundials_3a_3akinsol_49',['KINSOL',['http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1KINSOL_1_1AdditionalData.html',1,'SUNDIALS']]],
+  ['sundials_3a_3autilities_50',['Utilities',['http://www.dealii.org/developer/doxygen/deal.II/namespaceSUNDIALS_1_1Utilities.html',1,'SUNDIALS']]]
 ];

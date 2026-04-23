@@ -4,7 +4,7 @@ var searchData=
   ['lagrangeequidistant_1',['LagrangeEquidistant',['http://www.dealii.org/developer/doxygen/deal.II/classPolynomials_1_1LagrangeEquidistant.html',1,'Polynomials']]],
   ['lambdaoptimizer_2',['LambdaOptimizer',['http://www.dealii.org/developer/doxygen/deal.II/structDifferentiation_1_1SD_1_1internal_1_1LambdaOptimizer.html',1,'Differentiation::SD::internal']]],
   ['lapackfullmatrix_3',['LAPACKFullMatrix',['http://www.dealii.org/developer/doxygen/deal.II/classLAPACKFullMatrix.html',1,'']]],
-  ['lapackfullmatrix_3c_20number_20_3e_4',['lapackfullmatrix&lt; number &gt;',['http://www.dealii.org/developer/doxygen/deal.II/classLAPACKFullMatrix.html',1,'LAPACKFullMatrix&lt; Number &gt;'],['http://www.dealii.org/developer/doxygen/deal.II/classLAPACKFullMatrix.html',1,'LAPACKFullMatrix&lt; number &gt;']]],
+  ['lapackfullmatrix_3c_20number_20_3e_4',['lapackfullmatrix&lt; number &gt;',['http://www.dealii.org/developer/doxygen/deal.II/classLAPACKFullMatrix.html',1,'LAPACKFullMatrix&lt; number &gt;'],['http://www.dealii.org/developer/doxygen/deal.II/classLAPACKFullMatrix.html',1,'LAPACKFullMatrix&lt; Number &gt;']]],
   ['laplaceoperator_5',['LaplaceOperator',['http://www.dealii.org/developer/doxygen/deal.II/classMatrixFreeOperators_1_1LaplaceOperator.html',1,'MatrixFreeOperators']]],
   ['laplacian_6',['Laplacian',['../class_laplacian.html',1,'']]],
   ['lazy_7',['Lazy',['http://www.dealii.org/developer/doxygen/deal.II/classLazy.html',1,'']]],

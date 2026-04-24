@@ -39,6 +39,7 @@ project:
         - file: lectures/lecture08.md
         - file: lectures/lecture09.md
         - file: lectures/lecture10.md
+        - file: lectures/lecture11.md
     - title: Python codes
       children:
         - file: codes/lecture01/finite_dim_analogy.ipynb

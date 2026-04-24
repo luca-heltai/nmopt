@@ -14,18 +14,23 @@
 //
 // ---------------------------------------------------------------------
 
-#include "kkt.h"
-
+#include <deal.II/base/data_out_base.h>
 #include <deal.II/base/parameter_acceptor.h>
 #include <deal.II/base/parsed_function.h>
+#include <deal.II/base/utilities.h>
 
+#include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/sparse_direct.h>
 
+#include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
 
 #include <algorithm>
+#include <fstream>
 #include <iostream>
 #include <vector>
+
+#include "kkt.h"
 
 using namespace dealii;
 
@@ -48,18 +53,39 @@ protected:
 
 private:
   void
+  initialize_control_mass_matrix();
+
+  std::string
+  output_iteration(const unsigned int      iteration,
+                   const BlockVector<double> &solution,
+                   const std::vector<bool> &lower_active,
+                   const std::vector<bool> &upper_active) const;
+
+  void
+  output_results(const BlockVector<double> &solution,
+                 const std::vector<bool>   &lower_active,
+                 const std::vector<bool>   &upper_active) const;
+
+  types::global_dof_index
+  control_global_offset() const;
+
+  void
   interpolate_control_function(const Function<dim> &function,
                                BlockVector<double> &vector) const;
 
   Vector<double>
-  compute_stationarity(const BlockVector<double> &solution) const;
+  compute_stationarity(const BlockVector<double> &solution);
+
+  AffineConstraints<double>
+  make_control_constraints(const std::vector<bool> &lower_active,
+                           const std::vector<bool> &upper_active) const;
 
   void
   solve_active_set_system(const std::vector<bool> &lower_active,
                           const std::vector<bool> &upper_active,
                           BlockVector<double>     &solution) const;
 
-  KKT<dim>                      kkt_problem;
+  KKT<dim>                       kkt_problem;
   Functions::ParsedFunction<dim> lower_bound_function;
   Functions::ParsedFunction<dim> upper_bound_function;
 
@@ -70,6 +96,9 @@ private:
 
   BlockVector<double> lower_bound;
   BlockVector<double> upper_bound;
+
+  SparseMatrix<double> control_mass_matrix;
+  SparseDirectUMFPACK  control_mass_inverse;
 };
 
 
@@ -139,9 +168,201 @@ BoxConstrainedKKT<dim>::interpolate_control_function(
     KKT<dim>::control_block,
     KKT<dim>::n_blocks);
 
-  VectorTools::interpolate(
-    kkt_problem.get_dof_handler(), control_function, vector);
+  VectorTools::interpolate(kkt_problem.get_dof_handler(),
+                           control_function,
+                           vector);
   kkt_problem.get_constraints().distribute(vector);
+}
+
+
+
+template <int dim>
+void
+BoxConstrainedKKT<dim>::initialize_control_mass_matrix()
+{
+  const auto &control_block =
+    kkt_problem.get_system_block(KKT<dim>::control_block,
+                                 KKT<dim>::control_block);
+  const double regularization = kkt_problem.get_regularization();
+
+  AssertThrow(regularization > 0.0,
+              ExcMessage("Regularization must be strictly positive."));
+
+  DynamicSparsityPattern dsp(control_block.m(), control_block.n());
+  for (unsigned int row = 0; row < control_block.m(); ++row)
+    for (auto entry = control_block.begin(row); entry != control_block.end(row);
+         ++entry)
+      dsp.add(row, entry->column());
+
+  SparsityPattern sparsity;
+  sparsity.copy_from(dsp);
+  control_mass_matrix.reinit(sparsity);
+
+  for (unsigned int row = 0; row < control_block.m(); ++row)
+    for (auto entry = control_block.begin(row); entry != control_block.end(row);
+         ++entry)
+      control_mass_matrix.set(row,
+                              entry->column(),
+                              entry->value() / regularization);
+
+  control_mass_inverse.initialize(control_mass_matrix);
+}
+
+
+
+template <int dim>
+std::string
+BoxConstrainedKKT<dim>::output_iteration(
+  const unsigned int        iteration,
+  const BlockVector<double> &solution,
+  const std::vector<bool>   &lower_active,
+  const std::vector<bool>   &upper_active) const
+{
+  BlockVector<double> lower_active_output(solution);
+  BlockVector<double> upper_active_output(solution);
+  BlockVector<double> inactive_output(solution);
+
+  lower_active_output = 0;
+  upper_active_output = 0;
+  inactive_output     = 0;
+
+  for (unsigned int i = 0; i < lower_active.size(); ++i)
+    if (lower_active[i])
+      lower_active_output.block(KKT<dim>::control_block)[i] = 1.0;
+    else if (upper_active[i])
+      upper_active_output.block(KKT<dim>::control_block)[i] = 1.0;
+    else
+      inactive_output.block(KKT<dim>::control_block)[i] = 1.0;
+
+  std::vector<std::string> solution_names = {"state", "adjoint", "control"};
+  std::vector<DataComponentInterpretation::DataComponentInterpretation>
+    interpretation(KKT<dim>::n_blocks,
+                   DataComponentInterpretation::component_is_scalar);
+
+  DataOut<dim> data_out;
+  data_out.attach_dof_handler(kkt_problem.get_dof_handler());
+  data_out.add_data_vector(solution,
+                           solution_names,
+                           DataOut<dim>::type_dof_data,
+                           interpretation);
+  data_out.add_data_vector(lower_bound,
+                           {"lower_bound_state",
+                            "lower_bound_adjoint",
+                            "lower_bound"},
+                           DataOut<dim>::type_dof_data,
+                           interpretation);
+  data_out.add_data_vector(upper_bound,
+                           {"upper_bound_state",
+                            "upper_bound_adjoint",
+                            "upper_bound"},
+                           DataOut<dim>::type_dof_data,
+                           interpretation);
+  data_out.add_data_vector(lower_active_output,
+                           {"lower_active_state",
+                            "lower_active_adjoint",
+                            "lower_active"},
+                           DataOut<dim>::type_dof_data,
+                           interpretation);
+  data_out.add_data_vector(upper_active_output,
+                           {"upper_active_state",
+                            "upper_active_adjoint",
+                            "upper_active"},
+                           DataOut<dim>::type_dof_data,
+                           interpretation);
+  data_out.add_data_vector(inactive_output,
+                           {"inactive_state", "inactive_adjoint", "inactive"},
+                           DataOut<dim>::type_dof_data,
+                           interpretation);
+  data_out.build_patches();
+
+  const std::string filename =
+    output_name + "-" + Utilities::int_to_string(iteration, 4) + ".vtu";
+  std::ofstream output(filename);
+  data_out.write_vtu(output);
+
+  return filename;
+}
+
+
+
+template <int dim>
+void
+BoxConstrainedKKT<dim>::output_results(
+  const BlockVector<double> &solution,
+  const std::vector<bool>   &lower_active,
+  const std::vector<bool>   &upper_active) const
+{
+  BlockVector<double> lower_active_output(solution);
+  BlockVector<double> upper_active_output(solution);
+  BlockVector<double> inactive_output(solution);
+
+  lower_active_output = 0;
+  upper_active_output = 0;
+  inactive_output     = 0;
+
+  for (unsigned int i = 0; i < lower_active.size(); ++i)
+    if (lower_active[i])
+      lower_active_output.block(KKT<dim>::control_block)[i] = 1.0;
+    else if (upper_active[i])
+      upper_active_output.block(KKT<dim>::control_block)[i] = 1.0;
+    else
+      inactive_output.block(KKT<dim>::control_block)[i] = 1.0;
+
+  std::vector<std::string> solution_names = {"state", "adjoint", "control"};
+  std::vector<DataComponentInterpretation::DataComponentInterpretation>
+    interpretation(KKT<dim>::n_blocks,
+                   DataComponentInterpretation::component_is_scalar);
+
+  DataOut<dim> data_out;
+  data_out.attach_dof_handler(kkt_problem.get_dof_handler());
+  data_out.add_data_vector(solution,
+                           solution_names,
+                           DataOut<dim>::type_dof_data,
+                           interpretation);
+  data_out.add_data_vector(lower_bound,
+                           {"lower_bound_state",
+                            "lower_bound_adjoint",
+                            "lower_bound"},
+                           DataOut<dim>::type_dof_data,
+                           interpretation);
+  data_out.add_data_vector(upper_bound,
+                           {"upper_bound_state",
+                            "upper_bound_adjoint",
+                            "upper_bound"},
+                           DataOut<dim>::type_dof_data,
+                           interpretation);
+  data_out.add_data_vector(lower_active_output,
+                           {"lower_active_state",
+                            "lower_active_adjoint",
+                            "lower_active"},
+                           DataOut<dim>::type_dof_data,
+                           interpretation);
+  data_out.add_data_vector(upper_active_output,
+                           {"upper_active_state",
+                            "upper_active_adjoint",
+                            "upper_active"},
+                           DataOut<dim>::type_dof_data,
+                           interpretation);
+  data_out.add_data_vector(inactive_output,
+                           {"inactive_state", "inactive_adjoint", "inactive"},
+                           DataOut<dim>::type_dof_data,
+                           interpretation);
+  data_out.build_patches();
+
+  std::ofstream output(output_name + ".vtu");
+  data_out.write_vtu(output);
+}
+
+
+
+template <int dim>
+types::global_dof_index
+BoxConstrainedKKT<dim>::control_global_offset() const
+{
+  const auto &dofs_per_block = kkt_problem.get_dofs_per_block();
+
+  return dofs_per_block[KKT<dim>::state_block] +
+         dofs_per_block[KKT<dim>::adjoint_block];
 }
 
 
@@ -149,16 +370,51 @@ BoxConstrainedKKT<dim>::interpolate_control_function(
 template <int dim>
 Vector<double>
 BoxConstrainedKKT<dim>::compute_stationarity(
-  const BlockVector<double> &solution) const
+  const BlockVector<double> &solution)
 {
   BlockVector<double> residual(solution);
   kkt_problem.vmult_system(residual, solution);
   residual -= kkt_problem.get_system_rhs();
 
+  Vector<double> dual_stationarity(solution.block(KKT<dim>::control_block).size());
+  dual_stationarity = residual.block(KKT<dim>::control_block);
+
   Vector<double> stationarity(solution.block(KKT<dim>::control_block).size());
-  stationarity = residual.block(KKT<dim>::control_block);
+  control_mass_inverse.vmult(stationarity, dual_stationarity);
 
   return stationarity;
+}
+
+
+
+template <int dim>
+AffineConstraints<double>
+BoxConstrainedKKT<dim>::make_control_constraints(
+  const std::vector<bool> &lower_active,
+  const std::vector<bool> &upper_active) const
+{
+  AssertDimension(lower_active.size(), upper_active.size());
+
+  AffineConstraints<double> control_constraints;
+  const auto                offset = control_global_offset();
+
+  for (unsigned int i = 0; i < lower_active.size(); ++i)
+    if (lower_active[i] || upper_active[i])
+      {
+        control_constraints.add_line(offset + i);
+        control_constraints.set_inhomogeneity(
+          offset + i,
+          lower_active[i] ? lower_bound.block(KKT<dim>::control_block)[i] :
+                            upper_bound.block(KKT<dim>::control_block)[i]);
+      }
+
+  control_constraints.close();
+
+  AffineConstraints<double> combined_constraints;
+  combined_constraints.copy_from(kkt_problem.get_constraints());
+  combined_constraints.merge(control_constraints);
+
+  return combined_constraints;
 }
 
 
@@ -170,34 +426,19 @@ BoxConstrainedKKT<dim>::solve_active_set_system(
   const std::vector<bool> &upper_active,
   BlockVector<double>     &solution) const
 {
+  const AffineConstraints<double> combined_constraints =
+    make_control_constraints(lower_active, upper_active);
+
   BlockSparseMatrix<double> modified_matrix;
   kkt_problem.copy_system_matrix(modified_matrix);
   BlockVector<double> modified_rhs = kkt_problem.get_system_rhs();
 
-  for (unsigned int i = 0; i < lower_active.size(); ++i)
-    if (lower_active[i] || upper_active[i])
-      {
-        for (unsigned int block_column = 0; block_column < KKT<dim>::n_blocks;
-             ++block_column)
-          {
-            auto &block =
-              modified_matrix.block(KKT<dim>::control_block, block_column);
-            for (auto entry = block.begin(i); entry != block.end(i); ++entry)
-              entry->value() = 0.0;
-          }
-
-        modified_matrix
-          .block(KKT<dim>::control_block, KKT<dim>::control_block)
-          .set(i, i, 1.0);
-        modified_rhs.block(KKT<dim>::control_block)[i] =
-          lower_active[i] ? lower_bound.block(KKT<dim>::control_block)[i] :
-                            upper_bound.block(KKT<dim>::control_block)[i];
-      }
+  combined_constraints.condense(modified_matrix, modified_rhs);
 
   SparseDirectUMFPACK direct_solver;
   direct_solver.initialize(modified_matrix);
   direct_solver.vmult(solution, modified_rhs);
-  kkt_problem.get_constraints().distribute(solution);
+  combined_constraints.distribute(solution);
 }
 
 
@@ -207,6 +448,7 @@ void
 BoxConstrainedKKT<dim>::run()
 {
   kkt_problem.initialize();
+  initialize_control_mass_matrix();
 
   interpolate_control_function(lower_bound_function, lower_bound);
   interpolate_control_function(upper_bound_function, upper_bound);
@@ -222,12 +464,14 @@ BoxConstrainedKKT<dim>::run()
 
   std::vector<bool> lower_active(control_lower.size(), false);
   std::vector<bool> upper_active(control_lower.size(), false);
+  std::vector<std::pair<double, std::string>> times_and_names;
 
   for (unsigned int iteration = 0; iteration < max_iterations; ++iteration)
     {
-      const Vector<double> stationarity = compute_stationarity(current_solution);
-      std::vector<bool>    next_lower_active(control_lower.size(), false);
-      std::vector<bool>    next_upper_active(control_lower.size(), false);
+      const Vector<double> stationarity =
+        compute_stationarity(current_solution);
+      std::vector<bool> next_lower_active(control_lower.size(), false);
+      std::vector<bool> next_upper_active(control_lower.size(), false);
 
       for (unsigned int i = 0; i < control_lower.size(); ++i)
         {
@@ -247,8 +491,9 @@ BoxConstrainedKKT<dim>::run()
         }
 
       BlockVector<double> next_solution(current_solution);
-      solve_active_set_system(
-        next_lower_active, next_upper_active, next_solution);
+      solve_active_set_system(next_lower_active,
+                              next_upper_active,
+                              next_solution);
 
       Vector<double> control_update =
         next_solution.block(KKT<dim>::control_block);
@@ -263,10 +508,17 @@ BoxConstrainedKKT<dim>::run()
                 << ", |A_+|=" << n_upper
                 << ", ||delta_u||=" << control_update.l2_norm() << std::endl;
 
+      times_and_names.emplace_back(
+        static_cast<double>(iteration),
+        output_iteration(
+          iteration, next_solution, next_lower_active, next_upper_active));
+
       if (next_lower_active == lower_active &&
           next_upper_active == upper_active &&
           control_update.l2_norm() < active_set_tolerance)
         {
+          lower_active     = std::move(next_lower_active);
+          upper_active     = std::move(next_upper_active);
           current_solution = next_solution;
           break;
         }
@@ -277,7 +529,10 @@ BoxConstrainedKKT<dim>::run()
     }
 
   kkt_problem.set_solution(current_solution);
-  kkt_problem.output_results(output_name);
+  output_results(current_solution, lower_active, upper_active);
+
+  std::ofstream pvd_output(output_name + ".pvd");
+  DataOutBase::write_pvd_record(pvd_output, times_and_names);
 }
 
 

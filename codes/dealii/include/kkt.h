@@ -113,6 +113,9 @@ public:
   const BlockVector<double> &
   get_solution() const;
 
+  double
+  get_regularization() const;
+
   void
   set_solution(const BlockVector<double> &new_solution);
 

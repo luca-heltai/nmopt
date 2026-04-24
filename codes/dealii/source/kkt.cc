@@ -517,6 +517,15 @@ KKT<dim>::get_solution() const
 
 
 template <int dim>
+double
+KKT<dim>::get_regularization() const
+{
+  return regularization;
+}
+
+
+
+template <int dim>
 void
 KKT<dim>::set_solution(const BlockVector<double> &new_solution)
 {

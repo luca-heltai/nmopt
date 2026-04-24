@@ -664,27 +664,38 @@ $(document).ready(function(){initNavTree('kkt_8cc_source.html',''); initResizabl
 <div class="line"><a id="l00517" name="l00517"></a><span class="lineno">  517</span> </div>
 <div class="line"><a id="l00518" name="l00518"></a><span class="lineno">  518</span> </div>
 <div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span><span class="keyword">template</span> &lt;<span class="keywordtype">int</span> dim&gt;</div>
-<div class="line"><a id="l00520" name="l00520"></a><span class="lineno">  520</span><span class="keywordtype">void</span></div>
+<div class="line"><a id="l00520" name="l00520"></a><span class="lineno">  520</span><span class="keywordtype">double</span></div>
 <div class="foldopen" id="foldopen00521" data-start="{" data-end="}">
-<div class="line"><a id="l00521" name="l00521"></a><span class="lineno"><a class="line" href="class_k_k_t.html#a64418be820a55456dff5c79e627e2a16">  521</a></span><a class="code hl_function" href="class_k_k_t.html#a64418be820a55456dff5c79e627e2a16">KKT&lt;dim&gt;::set_solution</a>(<span class="keyword">const</span> <a class="code hl_classRef" href="http://www.dealii.org/developer/doxygen/deal.II/classBlockVector.html">BlockVector&lt;double&gt;</a> &amp;new_solution)</div>
-<div class="line"><a id="l00522" name="l00522"></a><span class="lineno">  522</span>{</div>
-<div class="line"><a id="l00523" name="l00523"></a><span class="lineno">  523</span>  solution = new_solution;</div>
+<div class="line"><a id="l00521" name="l00521"></a><span class="lineno"><a class="line" href="class_k_k_t.html#a80623b6ad8553bbe1cebf7cd3f204f1c">  521</a></span><a class="code hl_function" href="class_k_k_t.html#a80623b6ad8553bbe1cebf7cd3f204f1c">KKT&lt;dim&gt;::get_regularization</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00522" name="l00522"></a><span class="lineno">  522</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00523" name="l00523"></a><span class="lineno">  523</span>  <span class="keywordflow">return</span> regularization;</div>
 <div class="line"><a id="l00524" name="l00524"></a><span class="lineno">  524</span>}</div>
 </div>
 <div class="line"><a id="l00525" name="l00525"></a><span class="lineno">  525</span> </div>
 <div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span> </div>
 <div class="line"><a id="l00527" name="l00527"></a><span class="lineno">  527</span> </div>
 <div class="line"><a id="l00528" name="l00528"></a><span class="lineno">  528</span><span class="keyword">template</span> &lt;<span class="keywordtype">int</span> dim&gt;</div>
-<div class="line"><a id="l00529" name="l00529"></a><span class="lineno">  529</span><span class="keyword">const</span> std::vector&lt;types::global_dof_index&gt; &amp;</div>
+<div class="line"><a id="l00529" name="l00529"></a><span class="lineno">  529</span><span class="keywordtype">void</span></div>
 <div class="foldopen" id="foldopen00530" data-start="{" data-end="}">
-<div class="line"><a id="l00530" name="l00530"></a><span class="lineno"><a class="line" href="class_k_k_t.html#a286689a9aa4c267e71189f95569699e7">  530</a></span><a class="code hl_function" href="class_k_k_t.html#a286689a9aa4c267e71189f95569699e7">KKT&lt;dim&gt;::get_dofs_per_block</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span>  <span class="keywordflow">return</span> dofs_per_block;</div>
+<div class="line"><a id="l00530" name="l00530"></a><span class="lineno"><a class="line" href="class_k_k_t.html#a64418be820a55456dff5c79e627e2a16">  530</a></span><a class="code hl_function" href="class_k_k_t.html#a64418be820a55456dff5c79e627e2a16">KKT&lt;dim&gt;::set_solution</a>(<span class="keyword">const</span> <a class="code hl_classRef" href="http://www.dealii.org/developer/doxygen/deal.II/classBlockVector.html">BlockVector&lt;double&gt;</a> &amp;new_solution)</div>
+<div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span>{</div>
+<div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span>  solution = new_solution;</div>
 <div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span>}</div>
 </div>
 <div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span> </div>
 <div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span> </div>
-<div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="class_k_k_t.html">KKT&lt;DEAL_DIMENSION&gt;</a>;</div>
+<div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span> </div>
+<div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span><span class="keyword">template</span> &lt;<span class="keywordtype">int</span> dim&gt;</div>
+<div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span><span class="keyword">const</span> std::vector&lt;types::global_dof_index&gt; &amp;</div>
+<div class="foldopen" id="foldopen00539" data-start="{" data-end="}">
+<div class="line"><a id="l00539" name="l00539"></a><span class="lineno"><a class="line" href="class_k_k_t.html#a286689a9aa4c267e71189f95569699e7">  539</a></span><a class="code hl_function" href="class_k_k_t.html#a286689a9aa4c267e71189f95569699e7">KKT&lt;dim&gt;::get_dofs_per_block</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00540" name="l00540"></a><span class="lineno">  540</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00541" name="l00541"></a><span class="lineno">  541</span>  <span class="keywordflow">return</span> dofs_per_block;</div>
+<div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span>}</div>
+</div>
+<div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span> </div>
+<div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span> </div>
+<div class="line"><a id="l00545" name="l00545"></a><span class="lineno">  545</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="class_k_k_t.html">KKT&lt;DEAL_DIMENSION&gt;</a>;</div>
 <div class="ttc" id="aclassAffineConstraints_html"><div class="ttname"><a href="http://www.dealii.org/developer/doxygen/deal.II/classAffineConstraints.html">AffineConstraints</a></div></div>
 <div class="ttc" id="aclassBlockDynamicSparsityPattern_html"><div class="ttname"><a href="http://www.dealii.org/developer/doxygen/deal.II/classBlockDynamicSparsityPattern.html">BlockDynamicSparsityPattern</a></div></div>
 <div class="ttc" id="aclassBlockMatrixBase_html_a9c21ba26dd8a2dc81e65259f9c5cb596"><div class="ttname"><a href="http://www.dealii.org/developer/doxygen/deal.II/classBlockMatrixBase.html#a9c21ba26dd8a2dc81e65259f9c5cb596">BlockSparseMatrix::copy_from</a></div><div class="ttdeci">BlockMatrixBase &amp; copy_from(const BlockMatrixType &amp;source)</div></div>
@@ -727,15 +738,16 @@ $(document).ready(function(){initNavTree('kkt_8cc_source.html',''); initResizabl
 <div class="ttc" id="aclass_k_k_t_html"><div class="ttname"><a href="class_k_k_t.html">KKT</a></div><div class="ttdef"><b>Definition</b> <a href="kkt_8h_source.html#l00065">kkt.h:66</a></div></div>
 <div class="ttc" id="aclass_k_k_t_html_a00a39eccb87ef44a8a64e5b620a96d24"><div class="ttname"><a href="class_k_k_t.html#a00a39eccb87ef44a8a64e5b620a96d24">KKT::KKT</a></div><div class="ttdeci">KKT(const std::string &amp;subsection_name=&quot;KKT problem&quot;)</div><div class="ttdef"><b>Definition</b> <a href="kkt_8cc_source.html#l00040">kkt.cc:40</a></div></div>
 <div class="ttc" id="aclass_k_k_t_html_a0d9602b874051d318aa60eb890e2335d"><div class="ttname"><a href="class_k_k_t.html#a0d9602b874051d318aa60eb890e2335d">KKT::output_results</a></div><div class="ttdeci">void output_results(const std::string &amp;filename=&quot;kkt_solution&quot;) const</div><div class="ttdef"><b>Definition</b> <a href="kkt_8cc_source.html#l00362">kkt.cc:362</a></div></div>
-<div class="ttc" id="aclass_k_k_t_html_a286689a9aa4c267e71189f95569699e7"><div class="ttname"><a href="class_k_k_t.html#a286689a9aa4c267e71189f95569699e7">KKT::get_dofs_per_block</a></div><div class="ttdeci">const std::vector&lt; types::global_dof_index &gt; &amp; get_dofs_per_block() const</div><div class="ttdef"><b>Definition</b> <a href="kkt_8cc_source.html#l00530">kkt.cc:530</a></div></div>
+<div class="ttc" id="aclass_k_k_t_html_a286689a9aa4c267e71189f95569699e7"><div class="ttname"><a href="class_k_k_t.html#a286689a9aa4c267e71189f95569699e7">KKT::get_dofs_per_block</a></div><div class="ttdeci">const std::vector&lt; types::global_dof_index &gt; &amp; get_dofs_per_block() const</div><div class="ttdef"><b>Definition</b> <a href="kkt_8cc_source.html#l00539">kkt.cc:539</a></div></div>
 <div class="ttc" id="aclass_k_k_t_html_a2c0bb4a0d82ebe9e3b0b4150b39e5687"><div class="ttname"><a href="class_k_k_t.html#a2c0bb4a0d82ebe9e3b0b4150b39e5687">KKT::get_system_block</a></div><div class="ttdeci">const SparseMatrix&lt; double &gt; &amp; get_system_block(const unsigned int row, const unsigned int column) const</div><div class="ttdef"><b>Definition</b> <a href="kkt_8cc_source.html#l00473">kkt.cc:473</a></div></div>
 <div class="ttc" id="aclass_k_k_t_html_a390f48497adcef581274ab2c43b40183"><div class="ttname"><a href="class_k_k_t.html#a390f48497adcef581274ab2c43b40183">KKT::setup_system</a></div><div class="ttdeci">void setup_system()</div><div class="ttdef"><b>Definition</b> <a href="kkt_8cc_source.html#l00198">kkt.cc:198</a></div></div>
 <div class="ttc" id="aclass_k_k_t_html_a44742c9cb6caac4bd991a77ab55461c1"><div class="ttname"><a href="class_k_k_t.html#a44742c9cb6caac4bd991a77ab55461c1">KKT::make_grid</a></div><div class="ttdeci">void make_grid()</div><div class="ttdef"><b>Definition</b> <a href="kkt_8cc_source.html#l00174">kkt.cc:174</a></div></div>
 <div class="ttc" id="aclass_k_k_t_html_a4610a6676287032e684a8a8547d805c0"><div class="ttname"><a href="class_k_k_t.html#a4610a6676287032e684a8a8547d805c0">KKT::get_dof_handler</a></div><div class="ttdeci">const DoFHandler&lt; dim &gt; &amp; get_dof_handler() const</div><div class="ttdef"><b>Definition</b> <a href="kkt_8cc_source.html#l00494">kkt.cc:494</a></div></div>
 <div class="ttc" id="aclass_k_k_t_html_a57ec66b95ca7e0e1b2c02ce24f196974"><div class="ttname"><a href="class_k_k_t.html#a57ec66b95ca7e0e1b2c02ce24f196974">KKT::declare_parameters</a></div><div class="ttdeci">void declare_parameters(ParameterHandler &amp;prm) override</div><div class="ttdef"><b>Definition</b> <a href="kkt_8cc_source.html#l00070">kkt.cc:70</a></div></div>
-<div class="ttc" id="aclass_k_k_t_html_a64418be820a55456dff5c79e627e2a16"><div class="ttname"><a href="class_k_k_t.html#a64418be820a55456dff5c79e627e2a16">KKT::set_solution</a></div><div class="ttdeci">void set_solution(const BlockVector&lt; double &gt; &amp;new_solution)</div><div class="ttdef"><b>Definition</b> <a href="kkt_8cc_source.html#l00521">kkt.cc:521</a></div></div>
+<div class="ttc" id="aclass_k_k_t_html_a64418be820a55456dff5c79e627e2a16"><div class="ttname"><a href="class_k_k_t.html#a64418be820a55456dff5c79e627e2a16">KKT::set_solution</a></div><div class="ttdeci">void set_solution(const BlockVector&lt; double &gt; &amp;new_solution)</div><div class="ttdef"><b>Definition</b> <a href="kkt_8cc_source.html#l00530">kkt.cc:530</a></div></div>
 <div class="ttc" id="aclass_k_k_t_html_a64c60f7d45feb3daa190f945e1797726"><div class="ttname"><a href="class_k_k_t.html#a64c60f7d45feb3daa190f945e1797726">KKT::initialize</a></div><div class="ttdeci">void initialize()</div><div class="ttdef"><b>Definition</b> <a href="kkt_8cc_source.html#l00187">kkt.cc:187</a></div></div>
 <div class="ttc" id="aclass_k_k_t_html_a77b2738659e71b8e381210da0a5e4a2d"><div class="ttname"><a href="class_k_k_t.html#a77b2738659e71b8e381210da0a5e4a2d">KKT::solve</a></div><div class="ttdeci">void solve()</div><div class="ttdef"><b>Definition</b> <a href="kkt_8cc_source.html#l00410">kkt.cc:410</a></div></div>
+<div class="ttc" id="aclass_k_k_t_html_a80623b6ad8553bbe1cebf7cd3f204f1c"><div class="ttname"><a href="class_k_k_t.html#a80623b6ad8553bbe1cebf7cd3f204f1c">KKT::get_regularization</a></div><div class="ttdeci">double get_regularization() const</div><div class="ttdef"><b>Definition</b> <a href="kkt_8cc_source.html#l00521">kkt.cc:521</a></div></div>
 <div class="ttc" id="aclass_k_k_t_html_a89add6f997ad6aefb1890a9db60aec52"><div class="ttname"><a href="class_k_k_t.html#a89add6f997ad6aefb1890a9db60aec52">KKT::copy_system_matrix</a></div><div class="ttdeci">void copy_system_matrix(BlockSparseMatrix&lt; double &gt; &amp;dst) const</div><div class="ttdef"><b>Definition</b> <a href="kkt_8cc_source.html#l00463">kkt.cc:463</a></div></div>
 <div class="ttc" id="aclass_k_k_t_html_a9ae4cd5a96ce5b460eada206e799f70e"><div class="ttname"><a href="class_k_k_t.html#a9ae4cd5a96ce5b460eada206e799f70e">KKT::get_solution</a></div><div class="ttdeci">const BlockVector&lt; double &gt; &amp; get_solution() const</div><div class="ttdef"><b>Definition</b> <a href="kkt_8cc_source.html#l00512">kkt.cc:512</a></div></div>
 <div class="ttc" id="aclass_k_k_t_html_a9b273018fed1c8bd3765329606203fe5"><div class="ttname"><a href="class_k_k_t.html#a9b273018fed1c8bd3765329606203fe5">KKT::assemble_system</a></div><div class="ttdeci">void assemble_system()</div><div class="ttdef"><b>Definition</b> <a href="kkt_8cc_source.html#l00254">kkt.cc:254</a></div></div>
@@ -783,7 +795,7 @@ $(document).ready(function(){initNavTree('kkt_8cc_source.html',''); initResizabl
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html">source</a></li><li class="navelem"><a class="el" href="kkt_8cc.html">kkt.cc</a></li>
-    <li class="footer">Generated on Thu Apr 23 2026 04:28:46 for deal.II Testbench for NMOPT Laboratories by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Fri Apr 24 2026 09:11:01 for deal.II Testbench for NMOPT Laboratories by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

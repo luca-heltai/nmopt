@@ -8,6 +8,7 @@ var class_k_k_t =
     [ "get_constraints", "class_k_k_t.html#aa44693828aab1c5d4fb52806a1ebb45e", null ],
     [ "get_dof_handler", "class_k_k_t.html#a4610a6676287032e684a8a8547d805c0", null ],
     [ "get_dofs_per_block", "class_k_k_t.html#a286689a9aa4c267e71189f95569699e7", null ],
+    [ "get_regularization", "class_k_k_t.html#a80623b6ad8553bbe1cebf7cd3f204f1c", null ],
     [ "get_solution", "class_k_k_t.html#a9ae4cd5a96ce5b460eada206e799f70e", null ],
     [ "get_system_block", "class_k_k_t.html#a2c0bb4a0d82ebe9e3b0b4150b39e5687", null ],
     [ "get_system_matrix", "class_k_k_t.html#ab82d491955b735d36b879e74050fdad4", null ],

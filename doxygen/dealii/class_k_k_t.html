@@ -154,6 +154,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac256ac8e35ffe40a2b21f9f37d3ca134"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ae4cd5a96ce5b460eada206e799f70e" id="r_a9ae4cd5a96ce5b460eada206e799f70e"><td class="memItemLeft" align="right" valign="top">const <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classBlockVector.html">BlockVector</a>&lt; double &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_t.html#a9ae4cd5a96ce5b460eada206e799f70e">get_solution</a> () const</td></tr>
 <tr class="separator:a9ae4cd5a96ce5b460eada206e799f70e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80623b6ad8553bbe1cebf7cd3f204f1c" id="r_a80623b6ad8553bbe1cebf7cd3f204f1c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_t.html#a80623b6ad8553bbe1cebf7cd3f204f1c">get_regularization</a> () const</td></tr>
+<tr class="separator:a80623b6ad8553bbe1cebf7cd3f204f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64418be820a55456dff5c79e627e2a16" id="r_a64418be820a55456dff5c79e627e2a16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_t.html#a64418be820a55456dff5c79e627e2a16">set_solution</a> (const <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classBlockVector.html">BlockVector</a>&lt; double &gt; &amp;new_solution)</td></tr>
 <tr class="separator:a64418be820a55456dff5c79e627e2a16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a286689a9aa4c267e71189f95569699e7" id="r_a286689a9aa4c267e71189f95569699e7"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespacetypes.html#a3543786f7dc7c57385fc923a6afd5917">types::global_dof_index</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_t.html#a286689a9aa4c267e71189f95569699e7">get_dofs_per_block</a> () const</td></tr>
@@ -552,7 +554,28 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8cc_source.html#l00530">530</a> of file <a class="el" href="kkt_8cc_source.html">kkt.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8cc_source.html#l00539">539</a> of file <a class="el" href="kkt_8cc_source.html">kkt.cc</a>.</p>
+
+</div>
+</div>
+<a id="a80623b6ad8553bbe1cebf7cd3f204f1c" name="a80623b6ad8553bbe1cebf7cd3f204f1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80623b6ad8553bbe1cebf7cd3f204f1c">&#9670;&#160;</a></span>get_regularization()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int dim&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="class_k_k_t.html">KKT</a>&lt; dim &gt;::get_regularization </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="kkt_8cc_source.html#l00521">521</a> of file <a class="el" href="kkt_8cc_source.html">kkt.cc</a>.</p>
 
 </div>
 </div>
@@ -836,7 +859,7 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8cc_source.html#l00521">521</a> of file <a class="el" href="kkt_8cc_source.html">kkt.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8cc_source.html#l00530">530</a> of file <a class="el" href="kkt_8cc_source.html">kkt.cc</a>.</p>
 
 </div>
 </div>
@@ -977,7 +1000,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00169">169</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00172">172</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1003,7 +1026,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00146">146</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00149">149</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1029,7 +1052,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00157">157</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00160">160</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1081,7 +1104,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00156">156</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00159">159</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1107,7 +1130,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00167">167</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00170">170</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1133,7 +1156,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00163">163</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00166">166</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1159,7 +1182,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00144">144</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00147">147</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1185,7 +1208,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00153">153</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00156">156</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1211,7 +1234,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00143">143</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00146">146</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1237,7 +1260,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00166">166</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00169">169</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1263,7 +1286,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00158">158</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00161">161</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1289,7 +1312,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00161">161</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00164">164</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1315,7 +1338,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00160">160</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00163">163</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1367,7 +1390,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00164">164</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00167">167</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1393,7 +1416,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00159">159</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00162">162</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1419,7 +1442,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00150">150</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00153">153</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1445,7 +1468,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00148">148</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00151">151</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1497,7 +1520,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00168">168</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00171">171</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1523,7 +1546,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00155">155</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00158">158</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1549,7 +1572,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00149">149</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00152">152</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1575,7 +1598,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00151">151</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00154">154</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1601,7 +1624,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00165">165</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00168">168</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1627,7 +1650,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00141">141</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kkt_8h_source.html#l00144">144</a> of file <a class="el" href="kkt_8h_source.html">kkt.h</a>.</p>
 
 </div>
 </div>
@@ -1641,7 +1664,7 @@ template&lt;int dim&gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_k_k_t.html">KKT</a></li>
-    <li class="footer">Generated on Thu Apr 23 2026 04:28:46 for deal.II Testbench for NMOPT Laboratories by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Fri Apr 24 2026 09:11:01 for deal.II Testbench for NMOPT Laboratories by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

@@ -1,0 +1,91 @@
+subsection Parabolic projected-gradient problem
+  set State degree                    = 1
+  set Control degree                  = 0
+  set Continuous control              = false
+  set Global refinements              = 5
+  set Final time                      = 1.0
+  set Number of time steps            = 20
+  set Regularization                  = 1e-3
+  set Terminal tracking weight        = 1.0
+  set Max optimization iterations     = 20
+  set Gradient tolerance              = 1e-8
+  set Projected gradient tolerance    = 1e-8
+  set Fixed step length               = 0.5
+  set Output name                     = parabolic_projected_gradient
+  set Grid generator function         = hyper_cube
+  set Grid generator arguments        = 0.0 : 1.0 : false
+
+  subsection Armijo exercise parameters
+    set Initial step length      = 1.0
+    set Armijo coefficient       = 1e-4
+    set Backtracking reduction   = 0.5
+    set Max backtracks           = 20
+    set Minimum step length      = 1e-12
+  end
+
+  subsection Diffusion coefficient
+    set Function constants  =
+    set Function expression = 1.0
+    set Variable names      = x,t
+  end
+
+  subsection Reaction coefficient
+    set Function constants  =
+    set Function expression = 0.0
+    set Variable names      = x,t
+  end
+
+  subsection Forcing term
+    set Function constants  =
+    set Function expression = 0.0
+    set Variable names      = x,t
+  end
+
+  subsection Initial state
+    set Function constants  =
+    set Function expression = 0.0
+    set Variable names      = x,t
+  end
+
+  subsection Initial control
+    set Function constants  =
+    set Function expression = 0.0
+    set Variable names      = x,t
+  end
+
+  subsection Desired state
+    set Function constants  =
+    set Function expression = x > 0.35 ? (x < 0.65 ? (t > 0.25 ? (t < 0.75 ? 1 : 0) : 0) : 0) : 0
+    set Variable names      = x,t
+  end
+
+  subsection Terminal target
+    set Function constants  =
+    set Function expression = 0.0
+    set Variable names      = x,t
+  end
+
+  subsection Lower bound
+    set Function constants  =
+    set Function expression = -2.0
+    set Variable names      = x,t
+  end
+
+  subsection Upper bound
+    set Function constants  =
+    set Function expression = 2.0
+    set Variable names      = x,t
+  end
+
+  subsection State boundary values
+    set Function constants  =
+    set Function expression = 0.0
+    set Variable names      = x,t
+  end
+
+  subsection Adjoint boundary values
+    set Function constants  =
+    set Function expression = 0.0
+    set Variable names      = x,t
+  end
+end

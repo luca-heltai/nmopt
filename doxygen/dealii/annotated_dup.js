@@ -9,5 +9,6 @@ var annotated_dup =
       [ "TrustRegionParameters", "struct_optimization_tools_1_1_trust_region_parameters.html", "struct_optimization_tools_1_1_trust_region_parameters" ]
     ] ],
     [ "KKT", "class_k_k_t.html", "class_k_k_t" ],
-    [ "Laplacian", "class_laplacian.html", "class_laplacian" ]
+    [ "Laplacian", "class_laplacian.html", "class_laplacian" ],
+    [ "ParabolicProjectedGradient", "class_parabolic_projected_gradient.html", "class_parabolic_projected_gradient" ]
 ];

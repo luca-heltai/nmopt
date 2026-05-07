@@ -1,10 +1,13 @@
 var hierarchy =
 [
     [ "OptimizationTools::ArmijoParameters< Number >", "struct_optimization_tools_1_1_armijo_parameters.html", null ],
+    [ "OptimizationTools::ArmijoParameters< double >", "struct_optimization_tools_1_1_armijo_parameters.html", null ],
+    [ "ParabolicProjectedGradient< dim >::Diagnostics", "struct_parabolic_projected_gradient_1_1_diagnostics.html", null ],
     [ "EnableObserverPointer", "http://www.dealii.org/developer/doxygen/deal.II/classEnableObserverPointer.html", [
       [ "ParameterAcceptor", "http://www.dealii.org/developer/doxygen/deal.II/classParameterAcceptor.html", [
         [ "KKT< dim >", "class_k_k_t.html", null ],
-        [ "Laplacian< dim >", "class_laplacian.html", null ]
+        [ "Laplacian< dim >", "class_laplacian.html", null ],
+        [ "ParabolicProjectedGradient< dim >", "class_parabolic_projected_gradient.html", null ]
       ] ]
     ] ],
     [ "OptimizationTools::OptimizationParameters< Number >", "struct_optimization_tools_1_1_optimization_parameters.html", [

@@ -5,9 +5,6 @@
 This laboratory turns the fully discrete optimality system of the previous
 lecture into a reduced algorithm.
 
-We do not rederive the parabolic theory, the active-set machinery, or the
-discrete adjoint.  We use them.
-
 The computational pattern is:
 
 1. choose a space-time control sequence;

@@ -288,6 +288,12 @@ ParabolicProjectedGradient<dim>::make_grid()
   GridGenerator::generate_from_name_and_arguments(triangulation,
                                                   grid_generator_function,
                                                   grid_generator_arguments);
+
+  for (const auto &cell : triangulation.active_cell_iterators())
+    for (const auto &face : cell->face_iterators())
+      if (face->at_boundary())
+        face->set_boundary_id(0);
+
   triangulation.refine_global(global_refinements);
 }
 

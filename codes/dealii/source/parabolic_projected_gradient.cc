@@ -294,6 +294,9 @@ ParabolicProjectedGradient<dim>::make_grid()
       if (face->at_boundary())
         face->set_boundary_id(0);
 
+  const auto ids = triangulation.get_boundary_ids();
+  deallog << "Boundary IDs: " << Patterns::Tools::to_string(ids) << std::endl;
+
   triangulation.refine_global(global_refinements);
 }
 

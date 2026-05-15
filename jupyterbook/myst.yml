@@ -43,6 +43,7 @@ project:
         - file: lectures/lecture12.md
         - file: lectures/lecture13.md
         - file: lectures/lecture14.md
+        - file: lectures/lecture15.md
     - title: Python codes
       children:
         - file: codes/lecture01/finite_dim_analogy.ipynb
@@ -66,6 +67,7 @@ site:
     logo_text: ""
     favicon: slides/logo.png
     folders: true
+    mermaid: true
     footer_text: ""
     style: custom.css
   template: book-theme

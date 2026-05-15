@@ -410,10 +410,10 @@ diagram than from the exact file layout.
 ```{mermaid}
 flowchart TD
     A[Choose mesh, FE spaces, data, bounds] --> B[Initialize coefficient a^0]
-    B --> C[Assemble nonlinear KKT residual F(y,p,a)]
+    B --> C[Assemble nonlinear KKT residual]
     C --> D[Compute stationarity lambda]
     D --> E[Predict lower and upper active sets]
-    E --> F[Assemble Jacobian DF(y,p,a)]
+    E --> F[Assemble KKT Jacobian]
     F --> G[Impose active controls with AffineConstraints]
     G --> H[Solve linearized KKT system for Newton correction]
     H --> I[Line search / damping on the one-shot update]

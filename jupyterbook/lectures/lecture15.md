@@ -12,13 +12,13 @@ The goal of this lecture is twofold:
 - derive the optimality system for a coefficient-identification problem with
   box constraints;
 - explain in detail the deal.II implementation in
-  [`codes/dealii/source/inverse_poisson_kkt.cc`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/inverse_poisson_kkt.cc),
+  [`codes/dealii/source/inverse_poisson_kkt.cc`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/inverse_poisson_kkt.cc),
   together with the class declaration
-  [`codes/dealii/include/inverse_poisson_kkt.h`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/include/inverse_poisson_kkt.h),
+  [`codes/dealii/include/inverse_poisson_kkt.h`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/include/inverse_poisson_kkt.h),
   the driver
-  [`codes/dealii/execs/inverse_poisson_kkt.cc`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/execs/inverse_poisson_kkt.cc),
+  [`codes/dealii/execs/inverse_poisson_kkt.cc`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/execs/inverse_poisson_kkt.cc),
   and the default parameter file
-  [`codes/dealii/parameters/inverse_poisson_kkt.prm`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/parameters/inverse_poisson_kkt.prm).
+  [`codes/dealii/parameters/inverse_poisson_kkt.prm`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/parameters/inverse_poisson_kkt.prm).
 
 The computational strategy is not reduced optimization.  Instead, we assemble
 and solve the Karush-Kuhn-Tucker system for the state, adjoint, and control
@@ -391,14 +391,14 @@ is natural:
   local.
 
 The implementation creates exactly this structure in
-[`create_fe_system()` is implicit in the constructor and parameter parsing](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/inverse_poisson_kkt.cc:45)
+[`create_fe_system()` is implicit in the constructor and parameter parsing](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/inverse_poisson_kkt.cc#L45)
 through
 `FE_Q(state_degree)`, `FE_Q(state_degree)`, and `FE_DGQ(control_degree)`.
 
 Homogeneous Dirichlet conditions for state and adjoint are imposed with
 `VectorTools::interpolate_boundary_values(...)` on the corresponding
 components in
-[setup_system()](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/inverse_poisson_kkt.cc:186).
+[setup_system()](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/inverse_poisson_kkt.cc#L186).
 
 ---
 
@@ -434,36 +434,36 @@ implemented by the solver.
 ## Mapping the Theory to the deal.II Class
 
 The main class is
-[`InversePoissonKKT`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/include/inverse_poisson_kkt.h).
+[`InversePoissonKKT`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/include/inverse_poisson_kkt.h).
 Its public interface is intentionally small: the driver constructs the class,
 reads the parameter file, and calls `run()`.
 
 The most important internal methods are:
 
-- [setup_system()](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/inverse_poisson_kkt.cc:186):
+- [setup_system()](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/inverse_poisson_kkt.cc#L186):
   distributes DoFs, renumbers by block, and builds the global constraint
   object for homogeneous Dirichlet data and hanging nodes.
-- [initialize_control_mass_matrix()](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/inverse_poisson_kkt.cc:276):
+- [initialize_control_mass_matrix()](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/inverse_poisson_kkt.cc#L276):
   assembles the mass matrix on the control block and factorizes it.  This is
   used to transform the control residual into an $L^2$-type stationarity
   indicator.
-- [assemble_system()](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/inverse_poisson_kkt.cc:366):
+- [assemble_system()](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/inverse_poisson_kkt.cc#L366):
   assembles both the nonlinear KKT residual and its Jacobian at the current
   iterate.
-- [compute_stationarity()](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/inverse_poisson_kkt.cc:579):
+- [compute_stationarity()](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/inverse_poisson_kkt.cc#L579):
   extracts the control residual and applies the inverse control mass matrix to
   obtain the stationarity quantity used by PDAS.
-- [compute_lower_active_set()](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/inverse_poisson_kkt.cc:595)
+- [compute_lower_active_set()](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/inverse_poisson_kkt.cc#L595)
   and
-  [compute_upper_active_set()](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/inverse_poisson_kkt.cc:618):
+  [compute_upper_active_set()](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/inverse_poisson_kkt.cc#L618):
   implement the shifted active-set tests.
-- [make_control_constraints()](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/inverse_poisson_kkt.cc:643):
+- [make_control_constraints()](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/inverse_poisson_kkt.cc#L643):
   converts the active-set prediction into `AffineConstraints<double>` by
   freezing active control degrees of freedom to lower or upper bounds.
-- [solve_linearized_system()](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/inverse_poisson_kkt.cc:676):
+- [solve_linearized_system()](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/inverse_poisson_kkt.cc#L676):
   condenses the matrix with the active constraints and solves the Newton
   system with `SparseDirectUMFPACK`.
-- [run()](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/inverse_poisson_kkt.cc:833):
+- [run()](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/inverse_poisson_kkt.cc#L833):
   orchestrates the full PDAS/Newton loop, damping, convergence logic, and
   output.
 
@@ -472,7 +472,7 @@ The most important internal methods are:
 ## The Residual Assembled by the Code
 
 In
-[assemble_system()](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/inverse_poisson_kkt.cc:366)
+[assemble_system()](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/inverse_poisson_kkt.cc#L366)
 the code evaluates the current state, adjoint, and control at quadrature
 points and assembles three residual contributions on each cell.
 
@@ -544,9 +544,9 @@ The constrained linear system is built by:
 5. redistributing the constrained values.
 
 This is exactly the role of
-[make_control_constraints()](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/inverse_poisson_kkt.cc:643)
+[make_control_constraints()](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/inverse_poisson_kkt.cc#L643)
 and
-[solve_linearized_system()](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/inverse_poisson_kkt.cc:676).
+[solve_linearized_system()](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/inverse_poisson_kkt.cc#L676).
 
 For teaching purposes, this is an excellent example of how a nonsmooth
 optimization idea can be translated into standard finite element tools.
@@ -558,7 +558,7 @@ optimization idea can be translated into standard finite element tools.
 Because the KKT system is nonlinear in the coefficient, a full Newton step may
 be too aggressive.  The code therefore performs a simple residual-based
 damping strategy inside
-[run()](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/inverse_poisson_kkt.cc:833):
+[run()](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/inverse_poisson_kkt.cc#L833):
 
 - compute the Newton update;
 - try step lengths $1,1/2,1/4,\ldots$;

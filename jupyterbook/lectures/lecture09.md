@@ -39,7 +39,7 @@ the same constrained problem changes when viewed through:
 - two different code organizations in deal.II.
 
 This lecture should now be read together with
-[Lecture 11](/Users/heltai/latex/courses/2025/02_nmopt/jupyterbook/lectures/lecture11.md),
+[Lecture 11](lecture11.md),
 where the active-set viewpoint is reformulated directly in terms of box
 constraints on the control and `AffineConstraints<double>`.
 
@@ -49,20 +49,20 @@ constraints on the control and `AffineConstraints<double>`.
 
 The two executables used in this laboratory are:
 
-- [`codes/dealii/execs/laplacian_box_constraints.cc`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/execs/laplacian_box_constraints.cc)
+- [`codes/dealii/execs/laplacian_box_constraints.cc`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/execs/laplacian_box_constraints.cc)
   for the reduced formulation;
-- [`codes/dealii/execs/kkt_box_constraints.cc`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/execs/kkt_box_constraints.cc)
+- [`codes/dealii/execs/kkt_box_constraints.cc`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/execs/kkt_box_constraints.cc)
   for the all-at-once KKT formulation.
 
 The associated parameter files are:
 
-- [`codes/dealii/parameters/laplacian_box_constraints.prm`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/parameters/laplacian_box_constraints.prm)
-- [`codes/dealii/parameters/kkt_box_constraints.prm`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/parameters/kkt_box_constraints.prm)
+- [`codes/dealii/parameters/laplacian_box_constraints.prm`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/parameters/laplacian_box_constraints.prm)
+- [`codes/dealii/parameters/kkt_box_constraints.prm`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/parameters/kkt_box_constraints.prm)
 
 The underlying unconstrained KKT assembly is provided by:
 
-- [`codes/dealii/include/kkt.h`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/include/kkt.h)
-- [`codes/dealii/source/kkt.cc`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/kkt.cc)
+- [`codes/dealii/include/kkt.h`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/include/kkt.h)
+- [`codes/dealii/source/kkt.cc`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/kkt.cc)
 
 ---
 
@@ -202,7 +202,7 @@ A useful in-class workflow is:
 
 ## Useful Commands
 
-Assuming you are working inside [`codes/dealii`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii):
+Assuming you are working inside [`codes/dealii`](https://github.com/luca-heltai/nmopt/tree/main/codes/dealii):
 
 ```bash
 cmake -S . -B build

@@ -6,11 +6,11 @@ title: deal.II laboratories
 
 This section documents the C++/**deal.II** laboratory infrastructure used in the course for finite element experiments on PDE-constrained optimal control problems.
 
-The source tree lives in [`codes/dealii`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii). It is organized as a course testbench: a small, inspectable code base that students can compile, modify, test, and extend during the laboratories.
+The source tree lives in [`codes/dealii`](https://github.com/luca-heltai/nmopt/tree/main/codes/dealii). It is organized as a course testbench: a small, inspectable code base that students can compile, modify, test, and extend during the laboratories.
 
 ## Purpose
 
-The deal.II laboratory track complements the Python notebooks in [`jupyterbook/codes`](/Users/heltai/latex/courses/2025/02_nmopt/jupyterbook/codes).
+The deal.II laboratory track complements the Python notebooks in [`jupyterbook/codes`](https://github.com/luca-heltai/nmopt/tree/main/jupyterbook/codes).
 
 - The notebooks are used for fast experimentation and visualization.
 - The deal.II code is used for realistic finite element implementations.
@@ -22,9 +22,9 @@ The directory is meant to contain:
 
 - reference finite element applications for state, adjoint, and coupled optimality systems;
 - a `CMake` build system with dimension-dependent executables;
-- regression tests in deal.II style under [`codes/dealii/tests`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/tests);
-- unit tests under [`codes/dealii/gtests`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/gtests);
-- a Doxygen configuration under [`codes/dealii/doc`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/doc).
+- regression tests in deal.II style under [`codes/dealii/tests`](https://github.com/luca-heltai/nmopt/tree/main/codes/dealii/tests);
+- unit tests under [`codes/dealii/gtests`](https://github.com/luca-heltai/nmopt/tree/main/codes/dealii/gtests);
+- a Doxygen configuration under [`codes/dealii/doc`](https://github.com/luca-heltai/nmopt/tree/main/codes/dealii/doc).
 
 ## Planned evolution
 
@@ -49,6 +49,6 @@ Students should be able to:
 
 ## Repository guide
 
-For a directory-level overview and build instructions, see [`codes/dealii/README.md`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/README.md).
+For a directory-level overview and build instructions, see [`codes/dealii/README.md`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/README.md).
 
 The generated API documentation is available in the companion page [API reference](dealii-api.md).

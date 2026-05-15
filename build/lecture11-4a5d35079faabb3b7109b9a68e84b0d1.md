@@ -321,12 +321,12 @@ fits the normal deal.II workflow.
 ## Translation into the Course Code
 
 The implementation in
-[`codes/dealii/execs/kkt_box_constraints.cc`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/execs/kkt_box_constraints.cc)
+[`codes/dealii/execs/kkt_box_constraints.cc`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/execs/kkt_box_constraints.cc)
 follows exactly this structure.
 
 ### Step 1: Build the unconstrained KKT system
 
-The class [`KKT`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/include/kkt.h)
+The class [`KKT`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/include/kkt.h)
 assembles the monolithic state-adjoint-control matrix and the corresponding
 right-hand side.
 
@@ -422,13 +422,13 @@ This is often the natural entry point if the emphasis is on:
 - Technical reference for the active-set strategy:
   [`step_41`](https://www.dealii.org/current/doxygen/deal.II/step_41.html)
 - Existing unconstrained KKT code:
-  [`codes/dealii/include/kkt.h`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/include/kkt.h)
+  [`codes/dealii/include/kkt.h`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/include/kkt.h)
   and
-  [`codes/dealii/source/kkt.cc`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/kkt.cc)
+  [`codes/dealii/source/kkt.cc`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/kkt.cc)
 - Box-constrained executable:
-  [`codes/dealii/execs/kkt_box_constraints.cc`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/execs/kkt_box_constraints.cc)
+  [`codes/dealii/execs/kkt_box_constraints.cc`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/execs/kkt_box_constraints.cc)
 - Parameter file:
-  [`codes/dealii/parameters/kkt_box_constraints.prm`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/parameters/kkt_box_constraints.prm)
+  [`codes/dealii/parameters/kkt_box_constraints.prm`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/parameters/kkt_box_constraints.prm)
 
 ---
 

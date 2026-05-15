@@ -14,14 +14,14 @@ The computational pattern is:
 5. project the gradient step onto the box constraints.
 
 The algorithm is implemented in the new deal.II class
-[`ParabolicProjectedGradient`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/include/parabolic_projected_gradient.h)
+[`ParabolicProjectedGradient`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/include/parabolic_projected_gradient.h)
 and in the source file
-[`codes/dealii/source/parabolic_projected_gradient.cc`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/source/parabolic_projected_gradient.cc).
+[`codes/dealii/source/parabolic_projected_gradient.cc`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/source/parabolic_projected_gradient.cc).
 
 The executable driver is
-[`codes/dealii/execs/parabolic_projected_gradient.cc`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/execs/parabolic_projected_gradient.cc),
+[`codes/dealii/execs/parabolic_projected_gradient.cc`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/execs/parabolic_projected_gradient.cc),
 with default parameters in
-[`codes/dealii/parameters/parabolic_projected_gradient.prm`](/Users/heltai/latex/courses/2025/02_nmopt/codes/dealii/parameters/parabolic_projected_gradient.prm).
+[`codes/dealii/parameters/parabolic_projected_gradient.prm`](https://github.com/luca-heltai/nmopt/blob/main/codes/dealii/parameters/parabolic_projected_gradient.prm).
 
 The default experiment is one-dimensional and intentionally small, so that
 the whole optimization history can be written and inspected quickly.

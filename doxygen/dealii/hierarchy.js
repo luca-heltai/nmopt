@@ -5,6 +5,7 @@ var hierarchy =
     [ "ParabolicProjectedGradient< dim >::Diagnostics", "struct_parabolic_projected_gradient_1_1_diagnostics.html", null ],
     [ "EnableObserverPointer", "http://www.dealii.org/developer/doxygen/deal.II/classEnableObserverPointer.html", [
       [ "ParameterAcceptor", "http://www.dealii.org/developer/doxygen/deal.II/classParameterAcceptor.html", [
+        [ "InversePoissonKKT< dim >", "class_inverse_poisson_k_k_t.html", null ],
         [ "KKT< dim >", "class_k_k_t.html", null ],
         [ "Laplacian< dim >", "class_laplacian.html", null ],
         [ "ParabolicProjectedGradient< dim >", "class_parabolic_projected_gradient.html", null ]

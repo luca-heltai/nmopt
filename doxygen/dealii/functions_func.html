@@ -107,7 +107,8 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 <h3><a id="index_a" name="index_a"></a>- a -</h3><ul>
 <li>add_parameters()&#160;:&#160;<a class="el" href="struct_optimization_tools_1_1_armijo_parameters.html#a9e161bb54888f369a08337183294edc8">OptimizationTools::ArmijoParameters&lt; Number &gt;</a>, <a class="el" href="struct_optimization_tools_1_1_l_b_f_g_s_parameters.html#a9f48b8d763c3fd01f6953187a92e7278">OptimizationTools::LBFGSParameters&lt; Number &gt;</a>, <a class="el" href="struct_optimization_tools_1_1_n_l_c_g_parameters.html#a0c14c1478a0185e8c6bd461da7767471">OptimizationTools::NLCGParameters&lt; Number &gt;</a>, <a class="el" href="struct_optimization_tools_1_1_optimization_parameters.html#a6706e1fea03ea29c95f7e3453f5dd9b2">OptimizationTools::OptimizationParameters&lt; Number &gt;</a>, <a class="el" href="struct_optimization_tools_1_1_trust_region_parameters.html#a1ac7319f9aa1e618c64ffce265c3ffcb">OptimizationTools::TrustRegionParameters&lt; Number &gt;</a></li>
 <li>assemble_matrices()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#a141d7477ed6cb492fa51f1a3a302303f">ParabolicProjectedGradient&lt; dim &gt;</a></li>
-<li>assemble_system()&#160;:&#160;<a class="el" href="class_k_k_t.html#a9b273018fed1c8bd3765329606203fe5">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a711968be3da6b2b3c8dd126be3e9536b">Laplacian&lt; dim &gt;</a></li>
+<li>assemble_residual_only()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#a43d7099cf275835c30b208ce9811a6f9">InversePoissonKKT&lt; dim &gt;</a></li>
+<li>assemble_system()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#afbafc29a4f5f32883331b88b5aa13f0b">InversePoissonKKT&lt; dim &gt;</a>, <a class="el" href="class_k_k_t.html#a9b273018fed1c8bd3765329606203fe5">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a711968be3da6b2b3c8dd126be3e9536b">Laplacian&lt; dim &gt;</a></li>
 </ul>
 
 
@@ -115,7 +116,11 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 <li>choose_step_length()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#af1649284d9544ad81523f117168de3f7">ParabolicProjectedGradient&lt; dim &gt;</a></li>
 <li>compute_diagnostics()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#afe1d5048b8cde23f58e3d4f21cf107ff">ParabolicProjectedGradient&lt; dim &gt;</a></li>
 <li>compute_gradient()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#aa676d2e8a3da79a8d847f54904277135">ParabolicProjectedGradient&lt; dim &gt;</a></li>
+<li>compute_lower_active_set()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#a01929fb71857f248814d3048f8a61d62">InversePoissonKKT&lt; dim &gt;</a></li>
 <li>compute_projected_gradient_norm()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#a44449c7ac1cd5eba5aca064caf084b39">ParabolicProjectedGradient&lt; dim &gt;</a></li>
+<li>compute_stationarity()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#a3a69c462926bc2e7c1707ced02c492b5">InversePoissonKKT&lt; dim &gt;</a></li>
+<li>compute_upper_active_set()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#a6f6c3efdcd88be17ed47309e1ee1baeb">InversePoissonKKT&lt; dim &gt;</a></li>
+<li>control_global_offset()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#a92e909323eefa0665ab029f22295696e">InversePoissonKKT&lt; dim &gt;</a></li>
 <li>control_inner_product()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#ac026190482bcc4c0e7798e2307e9905d">ParabolicProjectedGradient&lt; dim &gt;</a></li>
 <li>control_norm()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#a55d0b41535d2672a81f64e6a727ed12e">ParabolicProjectedGradient&lt; dim &gt;</a></li>
 <li>copy_system_matrix()&#160;:&#160;<a class="el" href="class_k_k_t.html#a89add6f997ad6aefb1890a9db60aec52">KKT&lt; dim &gt;</a></li>
@@ -124,9 +129,14 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 
 
 <h3><a id="index_d" name="index_d"></a>- d -</h3><ul>
-<li>declare_parameters()&#160;:&#160;<a class="el" href="class_k_k_t.html#a57ec66b95ca7e0e1b2c02ce24f196974">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a05a3c06f65fb978759211551a2504227">Laplacian&lt; dim &gt;</a>, <a class="el" href="class_parabolic_projected_gradient.html#ae40b12674a13e653a6c00f6c6dca4921">ParabolicProjectedGradient&lt; dim &gt;</a></li>
+<li>declare_parameters()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#a40b0377cb55f40afdacbe04cbf2d1da3">InversePoissonKKT&lt; dim &gt;</a>, <a class="el" href="class_k_k_t.html#a57ec66b95ca7e0e1b2c02ce24f196974">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a05a3c06f65fb978759211551a2504227">Laplacian&lt; dim &gt;</a>, <a class="el" href="class_parabolic_projected_gradient.html#ae40b12674a13e653a6c00f6c6dca4921">ParabolicProjectedGradient&lt; dim &gt;</a></li>
 <li>default_variable_names()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#a5c97d8e6d49c3e3dc2c0771be279f3af">ParabolicProjectedGradient&lt; dim &gt;</a></li>
 <li>distribute_block()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#a503d4ea1f5036cff61d334aeb575d784">ParabolicProjectedGradient&lt; dim &gt;</a></li>
+</ul>
+
+
+<h3><a id="index_e" name="index_e"></a>- e -</h3><ul>
+<li>enforce_box_constraints()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#a454ab2019368520b784f5ca3fc93e81f">InversePoissonKKT&lt; dim &gt;</a></li>
 </ul>
 
 
@@ -146,9 +156,14 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 <h3><a id="index_i" name="index_i"></a>- i -</h3><ul>
 <li>initialize()&#160;:&#160;<a class="el" href="class_k_k_t.html#a64c60f7d45feb3daa190f945e1797726">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a892e4f06d0a66991c861f33361031432">Laplacian&lt; dim &gt;</a>, <a class="el" href="class_parabolic_projected_gradient.html#ac338789b070459fce4efdd55b9bed637">ParabolicProjectedGradient&lt; dim &gt;</a></li>
 <li>initialize_control()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#a68959425da28060786bc74f6f787e6ae">ParabolicProjectedGradient&lt; dim &gt;</a></li>
+<li>initialize_control_mass_matrix()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#a2636c540e52c6d2373d3062cd0381238">InversePoissonKKT&lt; dim &gt;</a></li>
+<li>initialize_solution()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#a03162fb5b38d65e929542385edeaa223">InversePoissonKKT&lt; dim &gt;</a></li>
 <li>initialize_time_data()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#a973af012ade3118474c129b7a6839425">ParabolicProjectedGradient&lt; dim &gt;</a></li>
 <li>initialize_time_step_solvers()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#abae3febe8aec98af2b4805f22ea4dd2f">ParabolicProjectedGradient&lt; dim &gt;</a></li>
+<li>initialize_vectors()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#a5473792e79588071eee94674dd8ccc73">InversePoissonKKT&lt; dim &gt;</a></li>
+<li>interpolate_component_function()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#adf5a9ec63a981bd86c04e1d50c86785e">InversePoissonKKT&lt; dim &gt;</a></li>
 <li>interpolate_function_to_block()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#a9f2c348fcf0b747b1067760162586425">ParabolicProjectedGradient&lt; dim &gt;</a></li>
+<li>InversePoissonKKT()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#adb9b81710a23a0d807d9b8aaf72908d4">InversePoissonKKT&lt; dim &gt;</a></li>
 </ul>
 
 
@@ -163,19 +178,21 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 
 
 <h3><a id="index_m" name="index_m"></a>- m -</h3><ul>
-<li>make_grid()&#160;:&#160;<a class="el" href="class_k_k_t.html#a44742c9cb6caac4bd991a77ab55461c1">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a37310548144fc611b6be9cae687f8d84">Laplacian&lt; dim &gt;</a>, <a class="el" href="class_parabolic_projected_gradient.html#a1c7435dfa8204c2ebc091c392d9732f1">ParabolicProjectedGradient&lt; dim &gt;</a></li>
+<li>make_control_constraints()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#a46205970af4c756148be2e4d5991bfa9">InversePoissonKKT&lt; dim &gt;</a></li>
+<li>make_grid()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#ac8d8bd95c00d0711e84c09bc84781e5e">InversePoissonKKT&lt; dim &gt;</a>, <a class="el" href="class_k_k_t.html#a44742c9cb6caac4bd991a77ab55461c1">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a37310548144fc611b6be9cae687f8d84">Laplacian&lt; dim &gt;</a>, <a class="el" href="class_parabolic_projected_gradient.html#a1c7435dfa8204c2ebc091c392d9732f1">ParabolicProjectedGradient&lt; dim &gt;</a></li>
 </ul>
 
 
 <h3><a id="index_o" name="index_o"></a>- o -</h3><ul>
-<li>output_results()&#160;:&#160;<a class="el" href="class_k_k_t.html#a0d9602b874051d318aa60eb890e2335d">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a06e438be28b441ed50d213d504ed743c">Laplacian&lt; dim &gt;</a></li>
+<li>output_iteration()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#a8113e0c76dc56bacea65d99a1594fce2">InversePoissonKKT&lt; dim &gt;</a></li>
+<li>output_results()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#a10e767147486bb2bcbd6d927b744616b">InversePoissonKKT&lt; dim &gt;</a>, <a class="el" href="class_k_k_t.html#a0d9602b874051d318aa60eb890e2335d">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a06e438be28b441ed50d213d504ed743c">Laplacian&lt; dim &gt;</a></li>
 <li>output_time_sequence()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#ac5e9495e9b3aff7f5a54eee695126bab">ParabolicProjectedGradient&lt; dim &gt;</a></li>
 </ul>
 
 
 <h3><a id="index_p" name="index_p"></a>- p -</h3><ul>
 <li>ParabolicProjectedGradient()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#a5043468fcab8e509df0bec1954e8904a">ParabolicProjectedGradient&lt; dim &gt;</a></li>
-<li>parse_parameters()&#160;:&#160;<a class="el" href="class_k_k_t.html#add148a2c5413d5ca3da934264736b62b">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#ad5d0d6cda15114e1341833ce2a7b4602">Laplacian&lt; dim &gt;</a>, <a class="el" href="class_parabolic_projected_gradient.html#aa57629674441b58f7ffceeba966125ef">ParabolicProjectedGradient&lt; dim &gt;</a></li>
+<li>parse_parameters()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#a46b9220aef01457eae7231731e6f4057">InversePoissonKKT&lt; dim &gt;</a>, <a class="el" href="class_k_k_t.html#add148a2c5413d5ca3da934264736b62b">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#ad5d0d6cda15114e1341833ce2a7b4602">Laplacian&lt; dim &gt;</a>, <a class="el" href="class_parabolic_projected_gradient.html#aa57629674441b58f7ffceeba966125ef">ParabolicProjectedGradient&lt; dim &gt;</a></li>
 <li>project_onto_box()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#afac4f4b0f0ac6b4a47e2cbc40cec87a8">ParabolicProjectedGradient&lt; dim &gt;</a></li>
 <li>project_time_level()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#a8d3e1ca62baea5046860a4785c60e3d2">ParabolicProjectedGradient&lt; dim &gt;</a></li>
 <li>projected_gradient_step()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#a567dcda447a0c1574dde8b5d7b97256e">ParabolicProjectedGradient&lt; dim &gt;</a></li>
@@ -184,15 +201,16 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 
 <h3><a id="index_r" name="index_r"></a>- r -</h3><ul>
 <li>reinit_time_vector()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#a969ae31d47a71e3d575181c9017be046">ParabolicProjectedGradient&lt; dim &gt;</a></li>
-<li>run()&#160;:&#160;<a class="el" href="class_k_k_t.html#ac76ef28d27f7cd21d5d3e96666d5729f">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a4f042bfd5921b67fd362e841b6963509">Laplacian&lt; dim &gt;</a>, <a class="el" href="class_parabolic_projected_gradient.html#a997e56ccea4b55952d186a678dd2bf5f">ParabolicProjectedGradient&lt; dim &gt;</a></li>
+<li>run()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#a4e22e87e89341a268c21132cbd1b8850">InversePoissonKKT&lt; dim &gt;</a>, <a class="el" href="class_k_k_t.html#ac76ef28d27f7cd21d5d3e96666d5729f">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a4f042bfd5921b67fd362e841b6963509">Laplacian&lt; dim &gt;</a>, <a class="el" href="class_parabolic_projected_gradient.html#a997e56ccea4b55952d186a678dd2bf5f">ParabolicProjectedGradient&lt; dim &gt;</a></li>
 </ul>
 
 
 <h3><a id="index_s" name="index_s"></a>- s -</h3><ul>
 <li>set_solution()&#160;:&#160;<a class="el" href="class_k_k_t.html#a64418be820a55456dff5c79e627e2a16">KKT&lt; dim &gt;</a></li>
-<li>setup_system()&#160;:&#160;<a class="el" href="class_k_k_t.html#a390f48497adcef581274ab2c43b40183">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a8e79a428286cb5439b943eaea49e6af2">Laplacian&lt; dim &gt;</a>, <a class="el" href="class_parabolic_projected_gradient.html#ab707f2a0a8bf5e13c06b40f8b0e7dcab">ParabolicProjectedGradient&lt; dim &gt;</a></li>
+<li>setup_system()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#a88d73c38bde00ae7fd969d215425f53e">InversePoissonKKT&lt; dim &gt;</a>, <a class="el" href="class_k_k_t.html#a390f48497adcef581274ab2c43b40183">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#a8e79a428286cb5439b943eaea49e6af2">Laplacian&lt; dim &gt;</a>, <a class="el" href="class_parabolic_projected_gradient.html#ab707f2a0a8bf5e13c06b40f8b0e7dcab">ParabolicProjectedGradient&lt; dim &gt;</a></li>
 <li>solve()&#160;:&#160;<a class="el" href="class_k_k_t.html#a77b2738659e71b8e381210da0a5e4a2d">KKT&lt; dim &gt;</a>, <a class="el" href="class_laplacian.html#afb5e3bc7ea47f6b81332e13932aa8a21">Laplacian&lt; dim &gt;</a></li>
 <li>solve_adjoint()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#a875087f78760360471644853b1910a03">ParabolicProjectedGradient&lt; dim &gt;</a></li>
+<li>solve_linearized_system()&#160;:&#160;<a class="el" href="class_inverse_poisson_k_k_t.html#a688ec040731ffab4235d16ae0a0eac04">InversePoissonKKT&lt; dim &gt;</a></li>
 <li>solve_state()&#160;:&#160;<a class="el" href="class_parabolic_projected_gradient.html#a1f5c6a0c8e5a1505c826e3f46053b64d">ParabolicProjectedGradient&lt; dim &gt;</a></li>
 </ul>
 
@@ -211,7 +229,7 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri May 8 2026 00:22:08 for deal.II Testbench for NMOPT Laboratories by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Fri May 15 2026 07:19:28 for deal.II Testbench for NMOPT Laboratories by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

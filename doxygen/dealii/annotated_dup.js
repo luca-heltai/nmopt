@@ -8,6 +8,7 @@ var annotated_dup =
       [ "OptimizationResult", "struct_optimization_tools_1_1_optimization_result.html", "struct_optimization_tools_1_1_optimization_result" ],
       [ "TrustRegionParameters", "struct_optimization_tools_1_1_trust_region_parameters.html", "struct_optimization_tools_1_1_trust_region_parameters" ]
     ] ],
+    [ "InversePoissonKKT", "class_inverse_poisson_k_k_t.html", "class_inverse_poisson_k_k_t" ],
     [ "KKT", "class_k_k_t.html", "class_k_k_t" ],
     [ "Laplacian", "class_laplacian.html", "class_laplacian" ],
     [ "ParabolicProjectedGradient", "class_parabolic_projected_gradient.html", "class_parabolic_projected_gradient" ]

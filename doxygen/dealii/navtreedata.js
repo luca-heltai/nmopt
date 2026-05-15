@@ -58,7 +58,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"parabolic__projected__gradient_8cc.html"
+"functions_n.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -16,9 +16,10 @@
 
 #include "inverse_poisson_kkt.h"
 
+#include <deal.II/base/data_out_base.h>
+#include <deal.II/base/function_lib.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/utilities.h>
-#include <deal.II/base/function_lib.h>
 
 #include <deal.II/dofs/dof_renumbering.h>
 #include <deal.II/dofs/dof_tools.h>
@@ -31,7 +32,6 @@
 #include <deal.II/lac/full_matrix.h>
 
 #include <deal.II/numerics/data_out.h>
-#include <deal.II/base/data_out_base.h>
 #include <deal.II/numerics/vector_tools.h>
 
 #include <algorithm>
@@ -177,6 +177,11 @@ InversePoissonKKT<dim>::make_grid()
   GridGenerator::generate_from_name_and_arguments(triangulation,
                                                   grid_generator_function,
                                                   grid_generator_arguments);
+
+  if constexpr (dim == 1)
+    if (triangulation.n_active_cells() == 1)
+      triangulation.begin_active()->face(1)->set_boundary_id(0);
+
   triangulation.refine_global(global_refinements);
 }
 
@@ -279,10 +284,10 @@ InversePoissonKKT<dim>::initialize_control_mass_matrix()
   AssertThrow(regularization > 0.0,
               ExcMessage("Regularization must be strictly positive."));
 
-  DynamicSparsityPattern dsp(dofs_per_block[control_block],
+  DynamicSparsityPattern               dsp(dofs_per_block[control_block],
                              dofs_per_block[control_block]);
   std::vector<types::global_dof_index> local_dof_indices(fe->n_dofs_per_cell());
-  const auto                          offset = control_global_offset();
+  const auto                           offset = control_global_offset();
 
   for (const auto &cell : dof_handler.active_cell_iterators())
     {
@@ -388,11 +393,11 @@ InversePoissonKKT<dim>::assemble_system()
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-  std::vector<double>               state_values(quadrature_formula.size());
-  std::vector<Tensor<1, dim>>       state_gradients(quadrature_formula.size());
-  std::vector<double>               adjoint_values(quadrature_formula.size());
-  std::vector<Tensor<1, dim>>       adjoint_gradients(quadrature_formula.size());
-  std::vector<double>               control_values(quadrature_formula.size());
+  std::vector<double>         state_values(quadrature_formula.size());
+  std::vector<Tensor<1, dim>> state_gradients(quadrature_formula.size());
+  std::vector<double>         adjoint_values(quadrature_formula.size());
+  std::vector<Tensor<1, dim>> adjoint_gradients(quadrature_formula.size());
+  std::vector<double>         control_values(quadrature_formula.size());
 
   for (const auto &cell : dof_handler.active_cell_iterators())
     {
@@ -401,7 +406,8 @@ InversePoissonKKT<dim>::assemble_system()
 
       fe_values.reinit(cell);
       fe_values[state].get_function_values(current_solution, state_values);
-      fe_values[state].get_function_gradients(current_solution, state_gradients);
+      fe_values[state].get_function_gradients(current_solution,
+                                              state_gradients);
       fe_values[adjoint].get_function_values(current_solution, adjoint_values);
       fe_values[adjoint].get_function_gradients(current_solution,
                                                 adjoint_gradients);
@@ -409,18 +415,17 @@ InversePoissonKKT<dim>::assemble_system()
 
       for (const unsigned int q_index : fe_values.quadrature_point_indices())
         {
-          const Point<dim> &x_q = fe_values.quadrature_point(q_index);
+          const Point<dim> &x_q           = fe_values.quadrature_point(q_index);
           const double      forcing_value = forcing_term.value(x_q);
           const double      desired_value = desired_state_function.value(x_q);
           const double      reference_value =
             reference_coefficient_function.value(x_q);
 
-          const double            coefficient_value = control_values[q_index];
-          const double            state_value       = state_values[q_index];
-          const double            adjoint_value     = adjoint_values[q_index];
-          const Tensor<1, dim>   &state_gradient    = state_gradients[q_index];
-          const Tensor<1, dim>   &adjoint_gradient =
-            adjoint_gradients[q_index];
+          const double          coefficient_value = control_values[q_index];
+          const double          state_value       = state_values[q_index];
+          const double          adjoint_value     = adjoint_values[q_index];
+          const Tensor<1, dim> &state_gradient    = state_gradients[q_index];
+          const Tensor<1, dim> &adjoint_gradient  = adjoint_gradients[q_index];
 
           (void)adjoint_value;
 
@@ -460,8 +465,7 @@ InversePoissonKKT<dim>::assemble_system()
                     (coefficient_value * (grad_state_j * grad_state_i) +
                      phi_control_j * (state_gradient * grad_state_i) +
                      phi_state_j * phi_adjoint_i +
-                     coefficient_value *
-                       (grad_adjoint_j * grad_adjoint_i) +
+                     coefficient_value * (grad_adjoint_j * grad_adjoint_i) +
                      phi_control_j * (adjoint_gradient * grad_adjoint_i) +
                      regularization * phi_control_j * phi_control_i -
                      phi_control_i * (grad_state_j * adjoint_gradient) -
@@ -475,11 +479,8 @@ InversePoissonKKT<dim>::assemble_system()
 
       cell->get_dof_indices(local_dof_indices);
 
-      constraints.distribute_local_to_global(cell_matrix,
-                                             cell_residual,
-                                             local_dof_indices,
-                                             system_matrix,
-                                             residual);
+      constraints.distribute_local_to_global(
+        cell_matrix, cell_residual, local_dof_indices, system_matrix, residual);
     }
 
   system_rhs = residual;
@@ -507,7 +508,7 @@ InversePoissonKKT<dim>::assemble_residual_only(
   const FEValuesExtractors::Scalar adjoint(adjoint_block);
   const FEValuesExtractors::Scalar control(control_block);
 
-  Vector<double> cell_residual(fe->n_dofs_per_cell());
+  Vector<double>                       cell_residual(fe->n_dofs_per_cell());
   std::vector<types::global_dof_index> local_dof_indices(fe->n_dofs_per_cell());
 
   std::vector<double>         state_values(quadrature_formula.size());
@@ -529,17 +530,16 @@ InversePoissonKKT<dim>::assemble_residual_only(
 
       for (const unsigned int q_index : fe_values.quadrature_point_indices())
         {
-          const Point<dim> &x_q = fe_values.quadrature_point(q_index);
+          const Point<dim> &x_q           = fe_values.quadrature_point(q_index);
           const double      forcing_value = forcing_term.value(x_q);
           const double      desired_value = desired_state_function.value(x_q);
           const double      reference_value =
             reference_coefficient_function.value(x_q);
 
-          const double            coefficient_value = control_values[q_index];
-          const double            state_value       = state_values[q_index];
-          const Tensor<1, dim>   &state_gradient    = state_gradients[q_index];
-          const Tensor<1, dim>   &adjoint_gradient =
-            adjoint_gradients[q_index];
+          const double          coefficient_value = control_values[q_index];
+          const double          state_value       = state_values[q_index];
+          const Tensor<1, dim> &state_gradient    = state_gradients[q_index];
+          const Tensor<1, dim> &adjoint_gradient  = adjoint_gradients[q_index];
 
           (void)adjoint_values;
 
@@ -726,7 +726,7 @@ InversePoissonKKT<dim>::enforce_box_constraints(
 template <int dim>
 std::string
 InversePoissonKKT<dim>::output_iteration(
-  const unsigned int        iteration,
+  const unsigned int         iteration,
   const BlockVector<double> &iterate,
   const std::vector<bool>   &lower_active,
   const std::vector<bool>   &upper_active) const
@@ -741,11 +741,10 @@ InversePoissonKKT<dim>::output_iteration(
 
 template <int dim>
 void
-InversePoissonKKT<dim>::output_results(
-  const BlockVector<double> &iterate,
-  const std::vector<bool>   &lower_active,
-  const std::vector<bool>   &upper_active,
-  const std::string         &filename) const
+InversePoissonKKT<dim>::output_results(const BlockVector<double> &iterate,
+                                       const std::vector<bool>   &lower_active,
+                                       const std::vector<bool>   &upper_active,
+                                       const std::string &filename) const
 {
   BlockVector<double> lower_active_output(iterate);
   BlockVector<double> upper_active_output(iterate);
@@ -764,8 +763,7 @@ InversePoissonKKT<dim>::output_results(
 
   std::vector<std::string> solution_names = {"state", "adjoint", "diffusion"};
   std::vector<DataComponentInterpretation::DataComponentInterpretation>
-    interpretation(n_blocks,
-                   DataComponentInterpretation::component_is_scalar);
+    interpretation(n_blocks, DataComponentInterpretation::component_is_scalar);
 
   DataOut<dim> data_out;
   data_out.attach_dof_handler(dof_handler);
@@ -837,8 +835,12 @@ InversePoissonKKT<dim>::run()
   setup_system();
   initialize_vectors();
 
-  interpolate_component_function(lower_bound_function, control_block, lower_bound);
-  interpolate_component_function(upper_bound_function, control_block, upper_bound);
+  interpolate_component_function(lower_bound_function,
+                                 control_block,
+                                 lower_bound);
+  interpolate_component_function(upper_bound_function,
+                                 control_block,
+                                 upper_bound);
   interpolate_component_function(reference_coefficient_function,
                                  control_block,
                                  reference_coefficient_vector);
@@ -881,13 +883,13 @@ InversePoissonKKT<dim>::run()
 
       BlockVector<double> next_solution(current_solution);
       BlockVector<double> next_residual(current_solution);
-      next_residual = residual;
-      double accepted_step   = 0.0;
-      double residual_norm   = std::numeric_limits<double>::infinity();
-      double best_norm       = current_residual_norm;
-      double best_step       = 0.0;
-      auto   best_solution   = current_solution;
-      auto   best_residual   = residual;
+      next_residual        = residual;
+      double accepted_step = 0.0;
+      double residual_norm = std::numeric_limits<double>::infinity();
+      double best_norm     = current_residual_norm;
+      double best_step     = 0.0;
+      auto   best_solution = current_solution;
+      auto   best_residual = residual;
 
       for (double step_length = 1.0; step_length >= 1.0 / 1024.0;
            step_length *= 0.5)
@@ -937,17 +939,16 @@ InversePoissonKKT<dim>::run()
       const unsigned int n_upper =
         std::count(next_upper_active.begin(), next_upper_active.end(), true);
 
-      std::cout << "PDAS/Newton iteration " << iteration << ": |A_-|="
-                << n_lower << ", |A_+|=" << n_upper
+      std::cout << "PDAS/Newton iteration " << iteration
+                << ": |A_-|=" << n_lower << ", |A_+|=" << n_upper
                 << ", step=" << accepted_step << ", ||delta||=" << update_norm
                 << ", ||R||=" << residual_norm << std::endl;
 
-      times_and_names.emplace_back(
-        static_cast<double>(iteration),
-        output_iteration(iteration,
-                         next_solution,
-                         next_lower_active,
-                         next_upper_active));
+      times_and_names.emplace_back(static_cast<double>(iteration),
+                                   output_iteration(iteration,
+                                                    next_solution,
+                                                    next_lower_active,
+                                                    next_upper_active));
 
       if (next_lower_active == lower_active &&
           next_upper_active == upper_active && update_norm < newton_tolerance &&
@@ -961,8 +962,7 @@ InversePoissonKKT<dim>::run()
         }
 
       if (next_lower_active == lower_active &&
-          next_upper_active == upper_active &&
-          accepted_step == 0.0)
+          next_upper_active == upper_active && accepted_step == 0.0)
         {
           current_solution = next_solution;
           residual         = next_residual;
@@ -981,10 +981,7 @@ InversePoissonKKT<dim>::run()
                   << std::endl;
     }
 
-  output_results(current_solution,
-                 lower_active,
-                 upper_active,
-                 output_name);
+  output_results(current_solution, lower_active, upper_active, output_name);
 
   std::ofstream pvd_output(output_name + ".pvd");
   DataOutBase::write_pvd_record(pvd_output, times_and_names);

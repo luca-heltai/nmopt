@@ -1,9 +1,9 @@
 subsection Inverse Poisson KKT problem
   set State degree             = 1
-  set Control degree           = 0
+  set Control degree           = 1
   set Global refinements       = 5
-  set Regularization           = 1e-4
-  set Max PDAS iterations      = 20
+  set Regularization           = 1e-5
+  set Max PDAS iterations      = 200
   set Active-set parameter     = 1.0
   set Newton tolerance         = 1e-10
   set Grid generator function  = hyper_cube
@@ -12,13 +12,13 @@ subsection Inverse Poisson KKT problem
 
   subsection Forcing term
     set Function constants  = pi=3.141592653589793
-    set Function expression = 2*pi^2*(1+x+y)*sin(pi*x)*sin(pi*y)-pi*(cos(pi*x)*sin(pi*y)+sin(pi*x)*cos(pi*y))
+    set Function expression = -32*(x^2 - x +y^2-y)
     set Variable names      = x,y,t
   end
 
   subsection Desired state
-    set Function constants  = pi=3.141592653589793
-    set Function expression = sin(pi*x)*sin(pi*y)
+    set Function constants  = 
+    set Function expression = min(0.5, 16*x*(1-x)*y*(1-y))
     set Variable names      = x,y,t
   end
 
@@ -48,7 +48,7 @@ subsection Inverse Poisson KKT problem
 
   subsection Upper bound
     set Function constants  =
-    set Function expression = 3.0
+    set Function expression = 30000.0
     set Variable names      = x,y,t
   end
 end
